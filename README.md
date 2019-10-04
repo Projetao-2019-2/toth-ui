@@ -2,9 +2,35 @@
 
 > Toth front end app
 
-## Build Setup
+## Run with docker
 
-``` bash
+- Make sure you have [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) and [docker-compose](https://docs.docker.com/compose/install/) installed on your machine.
+- Run:
+
+```bash
+  $ docker-compose up
+```
+
+And then the app should be available in http://localhost:3000
+
+## Run locally
+
+- Make sure you have node 12.0 installed on your machine.
+- Install Dependencies:
+
+```
+$ yarn
+```
+
+- Run development environment:
+
+```
+$ yarn dev
+```
+
+## Nuxt Build tips
+
+```bash
 # install dependencies
 $ yarn install
 
