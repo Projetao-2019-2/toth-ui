@@ -1,50 +1,67 @@
 <template>
-  <div class="form-container">
+  <div class="form-register-container">
     <form @submit.prevent="onSubmit()">
-      <div class="input-block">
-        <input type="text" placeholder="Nome" v-model="firstName">
-        <input type="text" placeholder="Sobrenome" v-model="lastName">
+      <div class="register-input-block">
+        <input type="text" placeholder="Nome" required 
+          class="input-form-register"
+          v-model="firstName">
+        <input type="text" placeholder="Sobrenome" required
+          class="input-form-register" 
+          v-model="lastName">
       </div>
-      <input type="text" placeholder="E-mail" v-model="email">
-      <input type="text" placeholder="Curso" v-model="course">
-      <input type="password" placeholder="Senha" v-model="password">
-      <input type="password" placeholder="Repetir Senha">
-      <input type="submit" value="Inscrever-se">
+      <input type="text" placeholder="E-mail" required
+        class="input-form-register"
+        v-model="email">
+      <input type="text" placeholder="Universidade" required
+        class="input-form-register"
+        v-model="university">
+      <input type="text" placeholder="Curso" required
+        class="input-form-register" 
+        v-model="course">
+      <input type="password" placeholder="Senha" required
+        class="input-form-register"
+        v-model="password">
+      <input type="password" placeholder="Repetir Senha" required
+        class="input-form-register"
+        v-model="repeatPassword">
+      <MessagePassword 
+        :firstPassword="password" 
+        :secondPassword="repeatPassword"/>
+      <input type="submit" value="Inscrever-se"
+        class="input-form-register">
     </form>
   </div>
 </template>
 
 <script>
+import MessagePassword from "../register/MessagePassword"
+
 export default {
   name: 'RegisterForm',
+  components: {
+    MessagePassword
+  },
   data () {
     return {
       firstName: '',
       lastName: '',
       email: '',
+      university: '',
       course: '',
-      password: ''
+      password: '',
+      repeatPassword: ''
     }
   },
   methods: {
     onSubmit () {
-      console.log('firsName: ' + this.firstName);
-      console.log('lastName: ' + this.lastName);
-      console.log('email: ' + this.email);
-      console.log('course: ' + this.course);
-      console.log('password:' + this.password);
+      console.log('Submit')
     }
   }
 }
 </script>
 
 <style>
-
-  .title-form-register {
-    margin: 20px 0;
-  }
-
-  .form-container {
+  .form-register-container {
     width: 450px;
     display: flex;
     flex-direction: column;
@@ -52,7 +69,7 @@ export default {
     justify-content: center;
   }
 
-  input {
+  .input-form-register {
     width: 100%;
     margin-bottom: 10px;
     height: 35px;
@@ -62,24 +79,24 @@ export default {
     animation: moveInput 1s;
   }
 
-  input[type="submit"] {
+  .input-form-register[type="submit"] {
     padding-left: 0;
     animation: moveSubmit 1.5s;
     background: #8EAFE1;
     font-weight: bold;
   }
 
-  input[type="submit"]:hover {
+  .input-form-register[type="submit"]:hover {
     cursor: pointer;
     background: #88CBE2;
   }
 
-  .input-block {
+  .register-input-block {
     display: flex;
     justify-content: space-between;
   }
 
-  .input-block input {
+  .register-input-block input {
     width: 49%;
   }
 

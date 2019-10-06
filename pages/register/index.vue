@@ -1,10 +1,10 @@
 <template>
   <div class="register-container">
-    <div class="logo-form-wrapper">
+    <div class="logo-form-container">
       <RegisterLogo />
       <RegisterForm />
     </div>
-    <div class="footer-wrapper">
+    <div class="footer-container">
       <RegisterFooter />
     </div>
   </div>
@@ -25,14 +25,13 @@ export default {
 </script>
 
 <style>
-
 .register-container{
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-.logo-form-wrapper {
+.logo-form-container {
   align-items: center;
   display: flex;
   flex: 1;
@@ -40,14 +39,13 @@ export default {
   justify-content: center;
 }
 
-.footer-wrapper {
+.footer-container {
   align-items: center;
   background-image: linear-gradient(#88CBE2, #8EAFE1);
   border-top: 1px solid grey;
   display: flex;
   justify-content: center;
-  height: 120px;
+  height: 80px;
   width: 100%;
 }
-
 </style>
