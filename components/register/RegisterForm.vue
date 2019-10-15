@@ -26,7 +26,9 @@
         v-model="repeatPassword">
       <MessagePassword 
         :firstPassword="password" 
-        :secondPassword="repeatPassword"/>
+        :secondPassword="repeatPassword"
+        @validPasswords="passwordStatus = true"
+        @invalidPasswords="passwordStatus = false"/>
       <input type="submit" value="Inscrever-se"
         class="input-form-register">
     </form>
@@ -49,12 +51,17 @@ export default {
       university: '',
       course: '',
       password: '',
-      repeatPassword: ''
+      repeatPassword: '',
+      passwordStatus: false
     }
   },
   methods: {
     onSubmit () {
-      console.log('Submit')
+      if (!this.passwordStatus) {
+        console.log('As senhas não são válidas!');
+      } else {
+        console.log('Submit');
+      }
     }
   }
 }
@@ -120,4 +127,16 @@ export default {
     }
   }
 
+  @media only screen and (max-width: 460px) {
+    .form-register-container {
+      width: 99%;
+    }
+    .register-input-block {
+      display: flex;
+      flex-direction: column;
+    }
+    .register-input-block input {
+      width: 100%;
+    }
+  }
 </style>

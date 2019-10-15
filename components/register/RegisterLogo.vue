@@ -1,7 +1,6 @@
 <template>
   <div class="register-logo-container">
-    <img src="./junte_se_logo.png"
-      class="img-juntese-logo"/>
+    <h1 class="register-logo"> LOGO </h1>
   </div>
 </template>
 
@@ -11,9 +10,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
-.img-juntese-logo {
+<style>
+.register-logo {
   animation: moveLogo 2s;
 }
 

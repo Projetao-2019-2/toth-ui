@@ -22,26 +22,32 @@ export default {
     checkEqualPasswords (first_pass, second_pass) {
       if (first_pass === second_pass) {
         this.equalPasswordColor = 'green';
-        return true
+        return true;
       } else {
         this.equalPasswordColor = 'red';
-        return false
+        return false;
       }
     },
 
     checkLengthPassowrd (password) {
       if (password.length >= 6 && password.length <= 15) {
         this.lengthPasswordColor = 'green';
-        return true
+        return true;
       } else {
         this.lengthPasswordColor = 'red';
-        return false
+        return false;
       }
     },
 
     checkPasswords (first_pass, second_pass) {
       let areEquals = this.checkEqualPasswords(first_pass, second_pass);
       let validLength = this.checkLengthPassowrd(first_pass);
+
+      if (areEquals && validLength) {
+        this.$emit('validPasswords');
+      } else {
+        this.$emit('invalidPasswords');
+      }
     }
   },
   watch: {
