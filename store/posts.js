@@ -29,6 +29,7 @@ export const actions = {
           " buscando caraio! Sai de casa comi pra caralho porra. AHHHHHHHHHHHHHHHHHHHHHH..., porra! Negativa Bambam negativa." +
           "Sai de casa comi pra caralho porra. Sai de casa comi pra caralho porra.Vai subir árvore é o caralho porra! É 13 porra!" +
           "Sai de casa comi pra caralho porra. Sabe o que é isso daí? Trapézio descendente é o nome disso aí.É esse que a gente quer, é ele que nóis vamo buscar.",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTtMKMnYUGqhDXd1AzttMejKimEmFR-DMBTVb7T-5Btv2EK7ogr",
         comments: [
           {
             texto: "Isso aí é bom demais",
@@ -48,7 +49,7 @@ export const actions = {
         categoria: {
           nome: "Infraestrutura"
         }
-      },
+      }
     ];
     commit("setList", data);
   },

@@ -1,17 +1,27 @@
 <template>
   <b-container class="bv-example-row">
     <h2>{{post.categoria ? post.categoria.nome : 'Geral'}}</h2>
-    <b-row v-if="post.categoria">
+    <b-row class="post-details">
       <b-col>
-        <p>{{post.texto}}</p>
+        <b-img v-if="post.img" fluid-grow :src="post.img" class="post-img" />
+        <p class="post-text">{{post.texto}}</p>
       </b-col>
     </b-row>
 
     <b-row>
-      <b-col>
-        Esse post foi relevante?
-        <b-form-radio v-model="selected" name="some-radios" :value="true">Sim</b-form-radio>
-        <b-form-radio v-model="selected" name="some-radios" :value="false">Nao</b-form-radio>
+      <b-col class="rate-section">
+        <div class="d-flex">Esse post foi relevante?</div>
+        <font-awesome-icon
+          :icon="['fas', 'thumbs-up']"
+          v-on:click="click('voce achou o post útil')"
+          class="thumb-icon yes"
+        />
+
+        <font-awesome-icon
+          :icon="['fas', 'thumbs-down']"
+          v-on:click="click('voce achou o post inútil')"
+          class="thumb-icon no"
+        />
       </b-col>
     </b-row>
     <hr />
@@ -51,6 +61,45 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch("posts/getPosts");
+  },
+  methods: {
+    click(string) {
+      alert(string);
+    }
   }
 };
 </script>
+
+<style scoped>
+.post-details {
+  margin-bottom: 20px;
+}
+.post-img {
+  margin: 12px 0;
+}
+
+.post-text {
+  text-align: justify;
+}
+
+.rate-section {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+
+.thumb-icon {
+  font-size: 30px;
+  display: flex;
+
+  margin: 0px 20px;
+}
+
+.thumb-icon.yes {
+  color: green;
+}
+
+.thumb-icon.no {
+  color: red;
+}
+</style>
