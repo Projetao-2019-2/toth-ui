@@ -36,7 +36,14 @@ export const actions = {
             user: {
               nome: "Joao Coutinho",
               email: "jvsc@cin.ufpe.br"
-            }
+            },
+            replys:[{
+              texto: "Concordo Bro!",
+              user: {
+                nome: "Rosinaldo Guedes",
+                email: "rglj2@cin.ufpe.br"
+              }
+            }]
           },
           {
             texto: "O que significa CCEN?",
