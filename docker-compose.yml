@@ -8,6 +8,6 @@ services:
     working_dir: /tmp/app/
     ports:
       - "3000:3000"
-    command: "yarn dev"
+    command: bash -c "yarn && yarn dev"
     environment:
       HOST: 0.0.0.0
