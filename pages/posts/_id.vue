@@ -1,43 +1,55 @@
 <template>
   <b-container class="bv-example-row">
-    <h2>{{post.categoria ? post.categoria.nome : 'Geral'}}</h2>
-    <b-row class="post-details">
-      <b-col>
-        <b-img v-if="post.img" fluid-grow :src="post.img" class="post-img" />
-        <p class="post-text">{{post.texto}}</p>
-      </b-col>
-    </b-row>
+    <h2 class="category-title">
+      <span class="inline-border">{{post.categoria ? post.categoria.nome : 'Geral'}}</span>
+    </h2>
+    <div class="white-bg">
+      <b-row class="post-details">
+        <b-col>
+          <b-img v-if="post.img" fluid-grow :src="post.img" class="post-img" />
+          <p class="post-text">{{post.texto}}</p>
+        </b-col>
+      </b-row>
 
-    <b-row>
-      <b-col class="rate-section">
-        <div class="d-flex">Esse post foi relevante?</div>
-        <font-awesome-icon
-          :icon="['fas', 'thumbs-up']"
-          v-on:click="click('voce achou o post útil')"
-          class="thumb-icon yes"
-        />
+      <b-row>
+        <b-col class="rate-section">
+          <div class="d-flex">Esse post foi relevante?</div>
+          <font-awesome-icon
+            :icon="['fas', 'thumbs-up']"
+            v-on:click="click('voce achou o post útil')"
+            class="thumb-icon yes"
+          />
 
-        <font-awesome-icon
-          :icon="['fas', 'thumbs-down']"
-          v-on:click="click('voce achou o post inútil')"
-          class="thumb-icon no"
-        />
-      </b-col>
-    </b-row>
-    <hr />
-    <b-row>
-      <b-col>
-        <h3>Comentários</h3>
-        <b-form-input :v-model="this.newComment" type="text" required placeholder="Dê sua opinião"></b-form-input>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <div v-for="(comment, index) in post.comments" :key="index">
-          <CommentDetails :comment="comment" />
-        </div>
-      </b-col>
-    </b-row>
+          <font-awesome-icon
+            :icon="['fas', 'thumbs-down']"
+            v-on:click="click('voce achou o post inútil')"
+            class="thumb-icon no"
+          />
+        </b-col>
+      </b-row>
+
+      <hr />
+
+      <b-row>
+        <b-col>
+          <h3>Comentários</h3>
+          <b-form-input
+            :v-model="this.newComment"
+            type="text"
+            required
+            placeholder="Dê sua opinião"
+          ></b-form-input>
+        </b-col>
+      </b-row>
+
+      <b-row>
+        <b-col>
+          <div v-for="(comment, index) in post.comments" :key="index">
+            <CommentDetails :comment="comment" />
+          </div>
+        </b-col>
+      </b-row>
+    </div>
   </b-container>
 </template>
 
@@ -74,6 +86,21 @@ export default {
 .post-details {
   margin-bottom: 20px;
 }
+
+.category-title {
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.inline-border {
+  border-top: 8px solid #1dbdff;
+}
+
+.white-bg {
+  padding: 16px;
+  background-color: white;
+}
+
 .post-img {
   margin: 12px 0;
 }

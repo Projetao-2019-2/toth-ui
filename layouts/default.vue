@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <b-navbar toggleable="lg" type="dark" variant="info">
+    <b-navbar toggleable="lg" type="dark">
       <b-navbar-brand href="#">Nortuni</b-navbar-brand>
 
       <b-collapse id="nav-collapse" is-nav>
@@ -20,9 +20,11 @@
 .main {
   background-color: #eeeeee;
 }
+
+nav {
+  background-color: #011932;
+}
 .route-info {
-  padding: 16px;
-  margin-top: 16px;
-  background-color: white;
+  margin-top: 24px;
 }
 </style>
