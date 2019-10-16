@@ -118,7 +118,7 @@ export default {
 .thumb-icon {
   font-size: 30px;
   display: flex;
-
+  cursor: pointer;
   margin: 0px 20px;
 }
 
