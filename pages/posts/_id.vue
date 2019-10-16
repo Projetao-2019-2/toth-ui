@@ -1,7 +1,10 @@
 <template>
   <b-container class="bv-example-row">
-    <h2 class="category-title">
-      <span class="inline-border">{{post.categoria ? post.categoria.nome : 'Geral'}}</span>
+    <h2 class="category-title" v-if="post.categoria">
+      <span
+        class="inline-border"
+        :style="{borderColor: post.categoria.cor}"
+      >{{post.categoria ? post.categoria.nome : 'Geral'}}</span>
     </h2>
     <div class="white-bg">
       <b-row class="post-details">
@@ -93,7 +96,7 @@ export default {
 }
 
 .inline-border {
-  border-top: 8px solid #1dbdff;
+  border-top: 8px solid black;
 }
 
 .white-bg {

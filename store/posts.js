@@ -54,7 +54,8 @@ export const actions = {
           }
         ],
         categoria: {
-          nome: "Infraestrutura"
+          nome: "Infraestrutura",
+          cor: "#1dbdff"
         }
       }
     ];
