@@ -1,10 +1,19 @@
 <template>
   <b-container class="bv-example-row">
-    <h1>{{post.categoria.nome}}</h1>
-    <b-row>
-      <b-col>{{post.texto}}</b-col>
+    <h2>{{post.categoria ? post.categoria.nome : 'Geral'}}</h2>
+    <b-row v-if="post.categoria">
+      <b-col>
+        <p>{{post.texto}}</p>
+      </b-col>
     </b-row>
 
+    <b-row>
+      <b-col>
+        Esse post foi relevante?
+        <b-form-radio v-model="selected" name="some-radios" :value="true">Sim</b-form-radio>
+        <b-form-radio v-model="selected" name="some-radios" :value="false">Nao</b-form-radio>
+      </b-col>
+    </b-row>
     <hr />
     <b-row>
       <b-col>
@@ -36,7 +45,8 @@ export default {
   },
   data() {
     return {
-      newComment: ""
+      newComment: "",
+      selected: null
     };
   },
   async mounted() {
@@ -44,4 +54,3 @@ export default {
   }
 };
 </script>
-

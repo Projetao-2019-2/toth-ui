@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <p>{{comment.texto}}</p>
-
-    <p>{{comment.user.nome}} | {{comment.user.email}} </p>
-  </div>
+  <b-card class="comment-details-card" :sub-title="comment.user.nome + ' | ' + comment.user.email">
+    <b-card-text>{{comment.texto}}</b-card-text>
+  </b-card>
 </template>
 
 <script>
@@ -12,3 +10,9 @@ export default {
   props: ["comment"]
 };
 </script>
+
+<style scoped>
+.comment-details-card{
+  margin-top: 16px;
+}
+</style>

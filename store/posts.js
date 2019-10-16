@@ -36,12 +36,19 @@ export const actions = {
               nome: "Joao Coutinho",
               email: "jvsc@cin.ufpe.br"
             }
+          },
+          {
+            texto: "O que significa CCEN?",
+            user: {
+              nome: "Thiago ",
+              email: "titi@cin.ufpe.br"
+            }
           }
         ],
         categoria: {
           nome: "Infraestrutura"
         }
-      }
+      },
     ];
     commit("setList", data);
   },
