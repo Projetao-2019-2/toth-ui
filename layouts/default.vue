@@ -8,13 +8,38 @@
         <b-navbar-nav class="ml-auto">
           <b-nav-item href="#">Cadastrar</b-nav-item>
           <b-nav-item href="#">Login</b-nav-item>
+          <b-nav-item href="#"><font-awesome-icon :icon="['fas', 'pencil-alt']" @click="showNewPost()"></font-awesome-icon></b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-
+    <transition name="showNewPost">
+      <div class="new-post-screen" v-if="newPostActive">
+        <NewPostContainer />
+      </div>
+    </transition>
     <nuxt class="route-info" />
   </div>
 </template>
+
+<script>
+import NewPostContainer from "../components/newPost/Container"
+
+export default {
+  components: {
+    NewPostContainer
+  },
+  data () {
+    return {
+      newPostActive: false
+    }
+  },
+  methods: {
+    showNewPost () {
+      this.newPostActive = !this.newPostActive;
+    }
+  }
+}
+</script>
 
 <style scoped>
 .main {
@@ -25,6 +50,33 @@ nav {
   background-color: #011932;
 }
 .route-info {
-  margin-top: 24px;
+  /* margin-top: 24px; */
+}
+
+.new-post-screen {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  right: 0;
+  height: 100vh;
+  width: 900px;
+  background: #011932;
+}
+
+.showNewPost-enter-active {
+  animation: show-newpost .5s;
+}
+
+.showNewPost-leave-active {
+  animation: show-newpost .5s reverse;
+}
+
+@keyframes show-newpost {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 </style>

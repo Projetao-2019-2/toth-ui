@@ -111,7 +111,7 @@ export default {
 <style>
   .newpost-container {
     background: #011932;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width: 800px;
   }
   .button-wrapper {
