@@ -1,31 +1,20 @@
 <template>
-  <div class="box-theme-container" :style="{ background: backg }" @click="selectTheme()" 
-    v-bind:class="{ themeActive: selected, themeNotActive: !selected }">
-    <h6> {{ theme }} </h6>
+  <div 
+    class="box-theme-container" 
+    :style="{ background: theme.color }" 
+    @click="selectTheme()"
+    :class="{ themeActive: theme.selected, themeNotActive: !theme.selected }">
+    <h6> {{ theme.name }} </h6>
   </div>
 </template>
 
 <script>
 export default {
   name: 'PostThemes',
-  props: ['theme','selected'],
+  props: ['theme'],
   methods: {
     selectTheme () {
       this.$emit('themeClick', this.theme);
-    }
-  },
-  computed: {
-    backg: function () {
-      switch (this.theme) {
-        case 'INFRAESTRUTURA':
-          return '#1DBDFF';
-        case 'EXPERIÊNCIA EM DISCIPLINAS':
-          return '#16D64C';
-        case 'ATIVIDADES EXTRACURRICULARES':
-          return '#FF8E20';
-        case 'ARREDORES':
-          return '#FF6DD5';
-      }
     }
   }
 }

@@ -1,6 +1,9 @@
 <template>
   <div class="input-text-container">
-    <textarea v-model="message" :placeholder="themeDescription"></textarea>
+    <textarea 
+      v-model="message" 
+      :placeholder="themeDescription">
+    </textarea>
   </div>
 </template>
 
@@ -10,23 +13,29 @@ export default {
   props: ['themeDescription'],
   data () {
     return {
-      message: '',
-      teste: 'kkkk'
+      message: ''
+    }
+  },
+  watch: {
+    message: function () {
+      this.$emit('newMessage', this.message);
     }
   }
 }
 </script>
 
 <style>
-.input-text-container {
-  width: 100%;
-  height: 100%;
-}
-  textarea {
-    width: 100%;
+  .input-text-container {
     height: 100%;
+    width: 100%;
+    margin-top: 30px;
+  }
+  textarea {
+    height: 100%;
+    width: 100%;
     margin: 0;
     padding: 5px;
-    font-size: 17px;
+    font-size: 18px;
+    resize: none;
   }
 </style>

@@ -1,6 +1,8 @@
 <template>
   <div class="text-box-container">
-    <InputText :themeDescription="themeDescription"/>
+    <InputText 
+      :themeDescription="theme.description"
+      @newMessage="updateMessage"/>
   </div>
 </template>
 
@@ -9,9 +11,14 @@ import InputText from "./InputText"
 
 export default {
   name: 'TextBoxContainer',
-  props: ['themeDescription'],
+  props: ['theme'],
   components: {
     InputText
+  },
+  methods: {
+    updateMessage(msg) {
+      this.$emit('newMessage', msg);
+    }
   }
 }
 </script>
@@ -20,6 +27,5 @@ export default {
   .text-box-container {
     height: 150px;
     width: 100%;
-    /*border: 1px solid orange*/
   }
 </style>

@@ -1,9 +1,17 @@
 <template>
   <div class="input-file-container">
     <label for="file">
-      <img src="./uploadphoto.png" width="100px" height="100px"/>
+      <img 
+        src="./uploadphoto.png" 
+        width="100px" 
+        height="100px"/>
     </label>
-    <input type="file" accept="image/*" name="file" id="file" class="inputfile" @change="selectFile"/>
+    <input 
+      type="file" 
+      accept="image/*" 
+      name="file" id="file" 
+      class="inputfile" 
+      @change="selectFile"/>
   </div>
 </template>
 

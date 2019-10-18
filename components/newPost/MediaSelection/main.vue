@@ -1,5 +1,7 @@
 <template>
-  <div class="media-selection-container" :style="{ background: backg }">
+  <div 
+    class="media-selection-container" 
+    :style="{ background: theme.color }">
     <InputFile />
   </div>
 </template>
@@ -12,20 +14,6 @@ export default {
   props: ['theme'],
   components: {
     InputFile
-  },
-  computed: {
-    backg: function () {
-      switch (this.theme) {
-        case 'INFRAESTRUTURA':
-          return '#1DBDFF';
-        case 'EXPERIÊNCIA EM DISCIPLINAS':
-          return '#16D64C';
-        case 'ATIVIDADES EXTRACURRICULARES':
-          return '#FF8E20';
-        case 'ARREDORES':
-          return '#FF6DD5';
-      }
-    }
   }
 }
 </script>
