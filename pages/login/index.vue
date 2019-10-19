@@ -12,7 +12,7 @@
 <style>
 #container{
   position: absolute;
-  height: 100%;
+  height: 85%;
   width: 100%;
   background-color: #eeeeee;
 }
