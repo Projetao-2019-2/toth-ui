@@ -1,7 +1,29 @@
 <template>
-  <div class="container">
-    <h1 class="title">
-        Hi Peter
-    </h1>
+  <div id="container">
+    <div id="login">
+      <h1>Login</h1>
+      <input type="text" name="username" placeholder="Username" />
+      <input type="password" name="password" placeholder="Password" />
+      <button type="button">Login</button>
+    </div>
   </div>
-</template?
+</template>
+
+<style>
+#container{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #eeeeee;
+}
+#login {
+  width: 500px;
+  border: 1px solid #cccccc;
+  background-color: #ffffff;
+  margin: auto;
+  margin-top: 200px;
+  margin-bottom: 200px;
+
+  padding: 20px;
+}
+</style>
