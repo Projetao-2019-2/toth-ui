@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Dashboard from "../../components/posts/Dashboard"
+// import Dashboard from "../../components/posts/Dashboard"
 
 export default {
   components: {
