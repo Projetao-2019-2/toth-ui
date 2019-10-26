@@ -4,15 +4,17 @@
       :themes="themes" 
       @selectedTheme="updateSelectedTheme"/>
     <MediaSelection 
-      :theme="selectedTheme"/>
+      :theme="selectedTheme"
+      @onFileSelected ="imageSelected"/>
     <TextBox 
       :theme="selectedTheme"
       @newMessage="updateInputMessage"/>
     <div class="button-wrapper">
-      <button 
-        class="newpost-button" 
-        @click="doPost()"
-        :disabled="buttonNotActive"> Postar </button>
+      <b-button 
+        variant="light" 
+        size="lg" 
+        @click="doPost()" 
+        :disabled="buttonNotActive"> Postar </b-button>
     </div>
   </div>
 </template>
@@ -33,6 +35,7 @@ export default {
     return {
       buttonNotActive: true,
       selectedTheme: null,
+      image: null,
       inputMessage: '',
       themes: [
         {
@@ -69,6 +72,13 @@ export default {
     }
   },
   methods: {
+    imageSelected (file) {
+      // const fd = new FormData();
+      // fd.append('image', file, file.name);
+      // console.log(fd);
+      this.image = file;
+    },
+
     checkInputMessage (msg) {
       if (msg.length === 0) {
         this.buttonNotActive = true;
@@ -96,6 +106,18 @@ export default {
     doPost () {
       console.log('O tema da postagem é: ' + this.selectedTheme.name);
       console.log('O texto da postagem é: ' + this.inputMessage);
+      console.log(this.image);
+
+      // this.$axios.post('https://project-toth.herokuapp.com/v1/posts', {
+      //   texto: this.inputMessage,
+      //   file: []
+      // })
+      // .then(function (response) {
+      //   console.log(response);
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // });
     }
   },
   created () {
@@ -119,15 +141,5 @@ export default {
     justify-content: flex-end;
     width: 100%;
     margin-top: 30px;
-  }
-  .newpost-button {
-    width: 150px;
-    border-radius: 3px;
-    border: 1px solid gray;
-    font-size: 20px;
-    font-weight: bold;
-  }
-  .newpost-button:hover {
-    cursor: pointer;
   }
 </style>

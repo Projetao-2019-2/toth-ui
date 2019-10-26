@@ -1,22 +1,20 @@
 <template>
   <div class="post-themes-container">
-    <BoxTheme 
-      v-for="theme in themes"
-      :key="theme.name" 
-      :theme="theme" 
-      @themeClick="$emit('selectedTheme', theme)"/>
+    <b-button 
+      v-for="theme in themes" 
+      :key="theme.name"
+      :style="{ background: theme.selected ? theme.color : '#6D767F'}"
+      @click="$emit('selectedTheme', theme)"> 
+      {{theme.name}} 
+    </b-button>
   </div>
 </template>
 
 <script>
-import BoxTheme from "./BoxTheme"
 
 export default {
   name: 'PostThemes',
-  props: ['themes'],
-  components: {
-    BoxTheme
-  }
+  props: ['themes']
 }
 </script>
 
