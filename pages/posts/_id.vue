@@ -75,7 +75,7 @@ export default {
     };
   },
   async mounted() {
-    await this.$store.dispatch("posts/getPosts");
+    await this.$store.dispatch("posts/getPostDetails", this.postId);
   },
   methods: {
     click(string) {
