@@ -38,7 +38,8 @@ export default {
   modules: [
     // Doc: https://bootstrap-vue.js.org
     "bootstrap-vue/nuxt",
-
+    "@nuxtjs/axios",
+    "@nuxtjs/proxy",
     [
       "nuxt-fontawesome",
       {
@@ -55,6 +56,20 @@ export default {
       }
     ]
   ],
+
+  axios: {
+    proxy: true,
+    prefix: "/api",
+    https: true
+  },
+
+  proxy: {
+    "/api/": {
+      target: "https://project-toth.herokuapp.com/v1/",
+      pathRewrite: { "^/api/": "" },
+      changeOrigin: true
+    }
+  },
   /*
    ** Build configuration
    */

@@ -8,7 +8,9 @@
         <b-navbar-nav class="ml-auto">
           <b-nav-item href="#">Cadastrar</b-nav-item>
           <b-nav-item href="#">Login</b-nav-item>
-          <b-nav-item href="#"><font-awesome-icon :icon="['fas', 'pencil-alt']" @click="showNewPost()"></font-awesome-icon></b-nav-item>
+          <b-nav-item href="#">
+            <font-awesome-icon :icon="['fas', 'pencil-alt']" @click="showNewPost()"></font-awesome-icon>
+          </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -22,23 +24,23 @@
 </template>
 
 <script>
-import NewPostContainer from "../components/newPost/Container"
+import NewPostContainer from "../components/newPost/Container";
 
 export default {
   components: {
     NewPostContainer
   },
-  data () {
+  data() {
     return {
       newPostActive: false
-    }
+    };
   },
   methods: {
-    showNewPost () {
+    showNewPost() {
       this.newPostActive = !this.newPostActive;
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -50,7 +52,7 @@ nav {
   background-color: #011932;
 }
 .route-info {
-  /* margin-top: 24px; */
+  margin-top: 24px;
 }
 
 .new-post-screen {
@@ -61,14 +63,15 @@ nav {
   height: 100vh;
   width: 900px;
   background: #011932;
+  z-index: 5;
 }
 
 .showNewPost-enter-active {
-  animation: show-newpost .5s;
+  animation: show-newpost 0.5s;
 }
 
 .showNewPost-leave-active {
-  animation: show-newpost .5s reverse;
+  animation: show-newpost 0.5s reverse;
 }
 
 @keyframes show-newpost {

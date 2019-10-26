@@ -24,11 +24,7 @@ export const actions = {
       {
         id: "1",
         texto:
-          "Aqui é Body Builder Ipsum PORRA! É 13 porra! Sabe o que é isso daí? Trapézio descendente é o nome disso aí. " +
-          "É esse que a gente quer, é ele que nóis vamo buscar. AHHHHHHHHHHHHHHHHHHHHHH..., porra! É nóis caraio é trapezera" +
-          " buscando caraio! Sai de casa comi pra caralho porra. AHHHHHHHHHHHHHHHHHHHHHH..., porra! Negativa Bambam negativa." +
-          "Sai de casa comi pra caralho porra. Sai de casa comi pra caralho porra.Vai subir árvore é o caralho porra! É 13 porra!" +
-          "Sai de casa comi pra caralho porra. Sabe o que é isso daí? Trapézio descendente é o nome disso aí.É esse que a gente quer, é ele que nóis vamo buscar.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consequat sed arcu et malesuada. In feugiat quis tellus at interdum. Maecenas eu sapien at eros porttitor sollicitudin at sed eros. Donec nec augue fringilla ante pharetra porta vel non purus. Aenean at cursus nisi. Duis ac commodo quam. Praesent maximus quis velit non viverra. Mauris porttitor nisl eu arcu interdum, ac commodo massa commodo. Nullam nulla purus, molestie at elementum vitae, tincidunt eget sem. Donec gravida mi sit amet rutrum pharetra. Aenean cursus malesuada vestibulum. In interdum arcu at sem viverra aliquam.",
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTtMKMnYUGqhDXd1AzttMejKimEmFR-DMBTVb7T-5Btv2EK7ogr",
         comments: [
           {
@@ -37,7 +33,7 @@ export const actions = {
               nome: "Joao Coutinho",
               email: "jvsc@cin.ufpe.br"
             },
-            replys:[{
+            replys: [{
               texto: "Concordo Bro!",
               user: {
                 nome: "Rosinaldo Guedes",
