@@ -1,7 +1,7 @@
 <template>
   <div class="register-container">
     <RegisterLogo />
-    <RegisterForm @submitFormRegister="onSubmitForm"/>
+    <RegisterForm @submitFormRegister="onSubmitForm" :disableButton = "disableButton"/>
   </div>
 </template>
 
@@ -10,14 +10,27 @@ import RegisterLogo from "../../components/register/RegisterLogo"
 import RegisterForm from "../../components/register/RegisterForm"
 
 export default {
+  data () {
+    return {
+      disableButton: false
+    }
+  },
   components: {
     RegisterLogo,
     RegisterForm
   },
   methods: {
-    onSubmitForm (data) {
+    async onSubmitForm (data) {
       console.log(data);
-      alert('Cadastro realizado com sucesso! Teste ... ')
+      try {
+        this.disableButton = true
+        const response = await this.$axios.$post('users', data);
+        console.log(response);
+        alert('Cadastro realizado!');
+      } catch(e) {
+        console.log("Ocorreu um erro! " + e);
+        this.disableButton = false
+      }
     }
   }
 }

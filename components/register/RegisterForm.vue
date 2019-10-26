@@ -58,7 +58,8 @@
       <b-button 
         type="submit" 
         variant="success" 
-        class="button-form-reg"> Inscrever-se </b-button>
+        class="button-form-reg"
+        :disabled="disableButton"> Inscrever-se </b-button>
     </form>
   </div>
 </template>
@@ -68,6 +69,7 @@ import MessagePassword from "../register/MessagePassword"
 
 export default {
   name: 'RegisterForm',
+  props: ['disableButton'],
   components: {
     MessagePassword
   },
@@ -80,11 +82,13 @@ export default {
       course: '',
       password: '',
       repeatPassword: '',
-      passwordStatus: false
+      passwordStatus: false,
+      buttonNotActive: false
     }
   },
   methods: {
     onSubmit () {
+      this.buttonNotActive = true
       if (!this.passwordStatus) {
         alert('Senhas inválidas!')
       } else {
@@ -93,7 +97,7 @@ export default {
           email: this.email,
           curso: this.course,
           ies: this.university,
-          type: 'Student',
+          type: 'highschool',
           password: this.password
         }
         this.$emit('submitFormRegister', dataFormRegister);
