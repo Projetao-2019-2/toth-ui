@@ -1,36 +1,64 @@
 <template>
   <div class="form-register-container">
     <form @submit.prevent="onSubmit()">
-      <div class="register-input-block">
-        <input type="text" placeholder="Nome" required 
-          class="input-form-register"
-          v-model="firstName">
-        <input type="text" placeholder="Sobrenome" required
-          class="input-form-register" 
-          v-model="lastName">
+      <div class="register-input-block item-form-reg">
+        <b-form-input 
+          type="text" 
+          v-model="firstName" 
+          placeholder="Nome" 
+          required>
+        </b-form-input>
+        <b-form-input 
+          type="text" 
+          v-model="lastName" 
+          placeholder="Sobrenome" 
+          required>
+        </b-form-input>
       </div>
-      <input type="text" placeholder="E-mail" required
-        class="input-form-register"
-        v-model="email">
-      <input type="text" placeholder="Universidade" required
-        class="input-form-register"
-        v-model="university">
-      <input type="text" placeholder="Curso" required
-        class="input-form-register" 
-        v-model="course">
-      <input type="password" placeholder="Senha" required
-        class="input-form-register"
-        v-model="password">
-      <input type="password" placeholder="Repetir Senha" required
-        class="input-form-register"
-        v-model="repeatPassword">
+      <b-form-input 
+        type="email" 
+        v-model="email" 
+        placeholder="E-mail" 
+        required 
+        class="item-form-reg">
+      </b-form-input>
+      <b-form-input 
+        type="text" 
+        v-model="university" 
+        placeholder="Universidade" 
+        required 
+        class="item-form-reg">
+      </b-form-input>
+      <b-form-input 
+        type="text" 
+        v-model="course" 
+        placeholder="Curso" 
+        required 
+        class="item-form-reg">
+      </b-form-input>
+      <b-form-input 
+        type="password" 
+        v-model="password" 
+        placeholder="Senha" 
+        required 
+        class="item-form-reg">
+      </b-form-input>
+      <b-form-input 
+        type="password" 
+        v-model="repeatPassword" 
+        placeholder="Repetir Senha" 
+        required 
+        class="item-form-reg">
+      </b-form-input>
       <MessagePassword 
         :firstPassword="password" 
         :secondPassword="repeatPassword"
         @validPasswords="passwordStatus = true"
         @invalidPasswords="passwordStatus = false"/>
-      <input type="submit" value="Inscrever-se"
-        class="input-form-register">
+      <b-button 
+        type="submit" 
+        variant="success" 
+        class="button-form-reg"> Inscrever-se </b-button>
     </form>
   </div>
 </template>
@@ -84,26 +112,13 @@ export default {
     justify-content: center;
   }
 
-  .input-form-register {
+  .item-form-reg {
+    margin-bottom: 5px;
+  }
+
+  .button-form-reg {
     width: 100%;
-    margin-bottom: 10px;
-    height: 35px;
-    border-radius: 3px;
-    border: 1px solid grey;
-    padding-left: 5px;
-    animation: moveInput 1s;
-  }
-
-  .input-form-register[type="submit"] {
-    padding-left: 0;
     animation: moveSubmit 1.5s;
-    background: #8EAFE1;
-    font-weight: bold;
-  }
-
-  .input-form-register[type="submit"]:hover {
-    cursor: pointer;
-    background: #88CBE2;
   }
 
   .register-input-block {
@@ -113,16 +128,6 @@ export default {
 
   .register-input-block input {
     width: 49%;
-  }
-
-  @keyframes moveInput{
-    from {
-      opacity: 0;
-      transform: translateX(-100%);
-    } to {
-      opacity: 1;
-      transform: translateX(0);
-    }
   }
 
   @keyframes moveSubmit{
