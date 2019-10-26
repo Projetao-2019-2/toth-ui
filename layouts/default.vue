@@ -54,6 +54,7 @@ export default {
 <style scoped>
 .main {
   background-color: #eeeeee;
+  height: 100vh;
 }
 
 nav {
@@ -61,6 +62,7 @@ nav {
 }
 .route-info {
   margin-top: 24px;
+  min-height: calc(100vh - 24px);
 }
 
 .new-post-screen {
