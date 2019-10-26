@@ -4,10 +4,34 @@
       <div class="photo-networks-wrapper">
         <div class="photo-wrapper"></div>
         <div class="networks-wrapper">
-          <font-awesome-icon :icon="['fab', 'facebook-square']" size="2x"></font-awesome-icon>
-          <font-awesome-icon :icon="['fab', 'instagram']" size="2x"></font-awesome-icon>
-          <font-awesome-icon :icon="['fab', 'twitter-square']" size="2x"></font-awesome-icon>
-          <font-awesome-icon :icon="['fas', 'envelope']" size="2x"></font-awesome-icon>
+          <a href="https://www.facebook.com" target="_blank">
+            <font-awesome-icon 
+              :icon="['fab', 'facebook-square']" 
+              size="2x" 
+              class="icon-social-network">
+            </font-awesome-icon>
+          </a>
+          <a href="https://www.instagram.com" target="_blank">
+            <font-awesome-icon 
+              :icon="['fab', 'instagram']" 
+              size="2x" 
+              class="icon-social-network">
+            </font-awesome-icon>
+          </a>
+          <a href="https://www.twitter.com" target="_blank">
+            <font-awesome-icon 
+              :icon="['fab', 'twitter-square']" 
+              size="2x" 
+              class="icon-social-network">
+            </font-awesome-icon>
+          </a>
+          <a href="mailto:#" target="_blank">
+            <font-awesome-icon 
+              :icon="['fas', 'envelope']" 
+              size="2x" 
+              class="icon-social-network">
+            </font-awesome-icon>
+          </a>
         </div>
       </div>
       <div class="name-course-rank-wrapper">
@@ -15,13 +39,21 @@
           <span class="name-user"> Rosinaldo Guedes </span>
         </div>
         <div class="university-user">
-          <font-awesome-icon :icon="['fas', 'graduation-cap']" size="2x" class="icon-uni"></font-awesome-icon>
+          <font-awesome-icon 
+            :icon="['fas', 'graduation-cap']" 
+            size="2x" 
+            class="icon-uni">
+          </font-awesome-icon>
           <p> Engenharia da Computação - UFPE</p>
         </div>
         <div class="ranking-user">
-          <font-awesome-icon :icon="['fas', 'medal']" size="2x" class="icon-uni"></font-awesome-icon>
+          <font-awesome-icon 
+            :icon="['fas', 'medal']" 
+            size="2x" 
+            class="icon-uni">
+          </font-awesome-icon>
           <p> Veterano Engajador </p>
-          <b-button variant="success"> Ranking </b-button>
+          <b-button variant="success" @click="goToRank"> Ranking </b-button>
         </div>
       </div>
     </div>
@@ -36,10 +68,14 @@
 import Post from "./post"
 
 export default {
+  name: 'ProfileScreen',
   components: {
     Post
   },
   methods: {
+    goToRank () {
+      alert('Deveria ir para a página rank!');
+    },
     resizeGridItem(item){
       let grid = document.getElementsByClassName("grid")[0];
       let rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
@@ -82,7 +118,6 @@ export default {
     display: flex;
     justify-content: center;
     width: 100%;
-    /*border-bottom: 1px solid grey;*/
     margin-bottom: 20px;
   }
   .photo-networks-wrapper {
@@ -90,7 +125,6 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /*border: 1px solid greenyellow;*/
     margin-top: 50px;
   }
   .photo-wrapper {
@@ -105,11 +139,16 @@ export default {
     align-items: center;
     width: 100%;
   }
+  .icon-social-network:hover {
+    cursor: pointer;
+  }
+  .input-link-social-network {
+    margin-top: 10px;
+  }
   .name-course-rank-wrapper {
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
-    /*border: 1px solid palevioletred;*/
     margin-top: 50px;
     margin-left: 50px;
   }
