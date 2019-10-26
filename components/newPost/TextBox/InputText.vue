@@ -1,9 +1,12 @@
 <template>
   <div class="input-text-container">
-    <textarea 
+    <b-form-textarea
+      id="textarea-rows"
       v-model="message" 
-      :placeholder="themeDescription">
-    </textarea>
+      :placeholder="themeDescription"
+      rows="5"
+      no-resize
+    ></b-form-textarea>
   </div>
 </template>
 
@@ -29,13 +32,5 @@ export default {
     height: 100%;
     width: 100%;
     margin-top: 30px;
-  }
-  textarea {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 5px;
-    font-size: 18px;
-    resize: none;
   }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="register-container">
     <RegisterLogo />
-    <RegisterForm />
+    <RegisterForm @submitFormRegister="onSubmitForm"/>
   </div>
 </template>
 
@@ -13,6 +13,12 @@ export default {
   components: {
     RegisterLogo,
     RegisterForm
+  },
+  methods: {
+    onSubmitForm (data) {
+      console.log(data);
+      alert('Cadastro realizado com sucesso! Teste ... ')
+    }
   }
 }
 </script>

@@ -1,17 +1,14 @@
 <template>
   <div class="input-file-container">
     <label for="file">
-      <img 
-        src="./uploadphoto.png" 
-        width="100px" 
-        height="100px"/>
+      <font-awesome-icon :icon="['fas', 'file-upload']" size="6x"></font-awesome-icon>
     </label>
     <input 
       type="file" 
       accept="image/*" 
       name="file" id="file" 
-      class="inputfile" 
-      @change="selectFile"/>
+      class="inputfile"
+      @change="onFileSelected"/>
   </div>
 </template>
 
@@ -19,8 +16,9 @@
 export default {
   name: 'InputFile',
   methods: {
-    selectFile () {
-      console.log('Arquivo selecionado');
+    onFileSelected (event) {
+      const selectedFile = event.target.files[0];
+      this.$emit('onFileSelected', selectedFile);
     }
   }
 }

@@ -58,9 +58,17 @@ export default {
   methods: {
     onSubmit () {
       if (!this.passwordStatus) {
-        console.log('As senhas não são válidas!');
+        alert('Senhas inválidas!')
       } else {
-        console.log('Submit');
+        const dataFormRegister = {
+          nome: this.firstName + ' ' + this.lastName,
+          email: this.email,
+          curso: this.course,
+          ies: this.university,
+          type: 'Student',
+          password: this.password
+        }
+        this.$emit('submitFormRegister', dataFormRegister);
       }
     }
   }
