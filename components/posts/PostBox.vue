@@ -1,14 +1,17 @@
 <template>
     <div class="postbox">
+        <nuxt-link :to="'posts/' + id">
             <div class="post">
                 <img src="../../assets/2.jpg" alt="">
             </div>
+        </nuxt-link> 
     </div>
 </template>
 
 <script>
 export default {
     name: 'PostBox',
+    props: ['id']
 }
 </script>
 
