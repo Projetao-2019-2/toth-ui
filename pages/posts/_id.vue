@@ -1,58 +1,62 @@
 <template>
   <b-container class="bv-example-row">
-    <h2 class="category-title" v-if="post.categoria">
-      <span
-        class="inline-border"
-        :style="{borderColor: post.categoria.cor}"
-      >{{post.categoria ? post.categoria.nome : 'Geral'}}</span>
-    </h2>
-    <div class="white-bg">
-      <b-row class="post-details">
-        <b-col>
-          <b-img v-if="post.img" fluid-grow :src="post.img" class="post-img" />
-          <p class="post-text">{{post.texto}}</p>
-        </b-col>
-      </b-row>
+    <div v-if="post">
+      <h2 class="category-title" v-if="post.categoria">
+        <span
+          class="inline-border"
+          :style="{borderColor: post.categoria.cor}"
+        >{{post.categoria ? post.categoria.nome : 'Geral'}}</span>
+      </h2>
+      <div class="white-bg">
+        <b-row class="post-details">
+          <b-col>
+            <b-img v-if="post.img" fluid-grow :src="post.img" class="post-img" />
+            <p class="post-text">{{post.texto}}</p>
+          </b-col>
+        </b-row>
 
-      <b-row>
-        <b-col class="rate-section">
-          <div class="d-flex">Esse post foi relevante?</div>
-          <font-awesome-icon
-            :icon="['fas', 'thumbs-up']"
-            v-on:click="click('voce achou o post útil')"
-            class="thumb-icon yes"
-          />
+        <b-row>
+          <b-col class="rate-section">
+            <div class="d-flex">Esse post foi relevante?</div>
+            <font-awesome-icon
+              :icon="['fas', 'thumbs-up']"
+              v-on:click="click('voce achou o post útil')"
+              class="thumb-icon yes"
+            />
 
-          <font-awesome-icon
-            :icon="['fas', 'thumbs-down']"
-            v-on:click="click('voce achou o post inútil')"
-            class="thumb-icon no"
-          />
-        </b-col>
-      </b-row>
+            <font-awesome-icon
+              :icon="['fas', 'thumbs-down']"
+              v-on:click="click('voce achou o post inútil')"
+              class="thumb-icon no"
+            />
+          </b-col>
+        </b-row>
 
-      <hr />
+        <hr />
 
-      <b-row>
-        <b-col>
-          <h3>Comentários</h3>
-          <b-form-input
-            :v-model="this.newComment"
-            type="text"
-            required
-            placeholder="Dê sua opinião"
-          ></b-form-input>
-        </b-col>
-      </b-row>
+        <b-row>
+          <b-col>
+            <h3>Comentários</h3>
+            <b-form-input
+              :v-model="this.newComment"
+              type="text"
+              required
+              placeholder="Dê sua opinião"
+            ></b-form-input>
+          </b-col>
+        </b-row>
 
-      <b-row>
-        <b-col>
-          <div v-for="(comment, index) in post.comments" :key="index">
-            <CommentDetails :comment="comment" />
-          </div>
-        </b-col>
-      </b-row>
+        <b-row>
+          <b-col>
+            <div v-for="(comment, index) in post.comments" :key="index">
+              <CommentDetails :comment="comment" />
+            </div>
+          </b-col>
+        </b-row>
+      </div>
     </div>
+
+    <div v-else>Nao tem post com esse id</div>
   </b-container>
 </template>
 
@@ -64,8 +68,8 @@ export default {
     postId: function() {
       return this.$route.params.id;
     },
-    post: function() {
-      return this.$store.getters["posts/getPostById"](this.postId) || {};
+    post: function(){
+      return this.$store.getters["posts/getById"](this.postId)
     }
   },
   data() {
@@ -74,8 +78,9 @@ export default {
       selected: null
     };
   },
-  async mounted() {
-    await this.$store.dispatch("posts/getPostDetails", this.postId);
+
+  async fetch({ store, params }) {
+    await store.dispatch("posts/getDetails", params.id);
   },
   methods: {
     click(string) {

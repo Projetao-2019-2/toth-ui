@@ -14,7 +14,7 @@ export const mutations = {
   setList(state, data) {
     state.list = data;
   },
-  setPostById(state, { id, post: newPost }) {
+  setById(state, { id, post: newPost }) {
     if (state.list && state.list.length > 0) {
       let post = state.list.find(post => post.id.toString() === id);
       const index = state.list.indexOf(post);
@@ -26,7 +26,7 @@ export const mutations = {
 };
 
 export const actions = {
-  async getPosts({ commit }) {
+  async getAll({ commit }) {
     const data = await this.$axios.$get("posts");
     // const data = [
     //   {
@@ -65,15 +65,15 @@ export const actions = {
     // ];
     commit("setList", data.posts);
   },
-  async sendPosts({ commit }, data) {
+  async send({ commit }, data) {
     // await axios.post("http://localhost:3030/courses", data);
     commit("setList", data);
   },
-  async getPostDetails({ commit }, id) {
-    const data = await this.$axios.$get(`posts/${id}`);
+  async getDetails({ commit }, id) {
+    const data = await this.$axios.$get(`/posts/${id}`);
 
     if (data && data.post) {
-      commit("setPostById", { id, post: data.post });
+      commit("setById", { id, post: data.post });
     } else {
       console.log("could not get post " + id + " details");
     }
@@ -81,7 +81,7 @@ export const actions = {
 };
 
 export const getters = {
-  getPostById: state => id => {
+  getById: state => id => {
     let output = {};
     if (state.list && state.list.length > 0) {
       output = state.list.find(post => post.id.toString() === id);
