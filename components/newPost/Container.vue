@@ -103,21 +103,34 @@ export default {
       this.checkInputMessage(msg);
     },
 
-    doPost () {
+    async doPost () {
       console.log('O tema da postagem é: ' + this.selectedTheme.name);
       console.log('O texto da postagem é: ' + this.inputMessage);
       console.log(this.image);
 
-      // this.$axios.post('https://project-toth.herokuapp.com/v1/posts', {
-      //   texto: this.inputMessage,
-      //   file: []
-      // })
-      // .then(function (response) {
-      //   console.log(response);
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      // });
+      var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsIm5vbWUiOiJyb3NpZyIsImVtYWlsIjoicm9zaWdAZ21haWwuY29tIiwidGlwbyI6ImFkbWluIiwiY3Vyc28iOiJFQyIsImllcyI6IlVGUEUiLCJhY2Nlc3MiOiIyMDE5LTEwLTI3VDE1OjE2OjEzLjczM1oiLCJleHBpcmVzIjo4NjQwMCwiaWF0IjoxNTcyMTg5MzczfQ.Kj1fSozAsLwjItJxZ7DbK_igStD3U7BnVqNZSggewIU";
+
+      var fd = new FormData();
+      fd.append('image', this.image, this.image.name);
+
+      var data = {
+        texto: this.inputMessage,
+        categoryid: 1,
+        file: fd
+      }
+
+      var config = {
+        headers: {Authorization: "Bearer " + token}
+      }
+
+      try {
+        const response = await this.$axios.$post('posts', data, config);
+        console.log(response);
+        alert('Cadastro realizado!');
+      } catch(e) {
+        console.log("Ocorreu um erro! " + e);
+      }
+    
     }
   },
   created () {
