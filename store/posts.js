@@ -3,10 +3,8 @@ export const state = () => ({
 });
 
 export const mutations = {
-  add(state, text) {
-    state.list.push({
-      name: text
-    });
+  add(state, post) {
+    state.list.push(post);
   },
   remove(state, { post }) {
     state.list.splice(state.list.indexOf(post), 1);
@@ -65,11 +63,12 @@ export const actions = {
     // ];
     commit("setList", data.posts);
   },
-  async send({ commit, auth }, data) {
-    // await axios.post("http://localhost:3030/courses", data);
-
-    commit("setList", data);
+  async send({ commit }, data) {
+    const response = await this.$axios.$post("posts", data);
+    commit("add", response.post);
+    return response.post;
   },
+
   async getDetails({ commit }, id) {
     const data = await this.$axios.$get(`/posts/${id}`);
 

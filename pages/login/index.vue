@@ -28,11 +28,9 @@ export default {
             password: this.password
           }
         });
-        alert("logged");
         this.$router.push("/");
       } catch (e) {
         console.log(e);
-        alert("not logged");
       }
     }
   }

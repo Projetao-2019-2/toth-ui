@@ -66,7 +66,7 @@ export default {
           user: null
         },
         tokenRequired: true,
-        tokenType: 'bearer'
+        tokenType: 'Bearer'
       }
     }
   },
