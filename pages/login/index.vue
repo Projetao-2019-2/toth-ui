@@ -2,15 +2,45 @@
   <div id="container">
     <div id="login">
       <h1>Login</h1>
-      <input type="text" name="username" placeholder="Username" />
-      <input type="password" name="password" placeholder="Password" />
-      <button type="button">Login</button>
+      <input type="text" name="username" v-model="email" placeholder="Email" />
+      <input type="password" name="password" v-model="password" placeholder="Password" />
+      <button type="button" v-on:click="login()">Login</button>
     </div>
   </div>
 </template>
 
+<script>
+export default {
+  middleware: "auth",
+  auth: "guest",
+  data: function() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
+  methods: {
+    async login() {
+      try {
+        await this.$auth.loginWith("local", {
+          data: {
+            email: this.email,
+            password: this.password
+          }
+        });
+        alert("logged");
+        this.$router.push("/");
+      } catch (e) {
+        console.log(e);
+        alert("not logged");
+      }
+    }
+  }
+};
+</script>
+
 <style>
-#container{
+#container {
   position: absolute;
   height: 85%;
   width: 100%;

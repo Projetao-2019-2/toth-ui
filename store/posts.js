@@ -65,8 +65,9 @@ export const actions = {
     // ];
     commit("setList", data.posts);
   },
-  async send({ commit }, data) {
+  async send({ commit, auth }, data) {
     // await axios.post("http://localhost:3030/courses", data);
+
     commit("setList", data);
   },
   async getDetails({ commit }, id) {
