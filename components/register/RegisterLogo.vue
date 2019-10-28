@@ -1,6 +1,6 @@
 <template>
   <div class="register-logo-container">
-    <img src="./junte_se_logo.png"/>
+    <h1 class="register-logo"> LOGO </h1>
   </div>
 </template>
 
@@ -11,8 +11,7 @@ export default {
 </script>
 
 <style>
-
-img {
+.register-logo {
   animation: moveLogo 2s;
 }
 
