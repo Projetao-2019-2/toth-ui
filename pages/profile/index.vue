@@ -57,6 +57,7 @@ export default {
       listPosts: []
     };
   },
+  middleware: "auth",
   components: {
     Post
   },

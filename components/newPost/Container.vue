@@ -102,29 +102,23 @@ export default {
       console.log("O texto da postagem é: " + this.inputMessage);
       console.log(this.image);
 
-      var token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsIm5vbWUiOiJyb3NpZyIsImVtYWlsIjoicm9zaWdAZ21haWwuY29tIiwidGlwbyI6ImFkbWluIiwiY3Vyc28iOiJFQyIsImllcyI6IlVGUEUiLCJhY2Nlc3MiOiIyMDE5LTEwLTI3VDE1OjE2OjEzLjczM1oiLCJleHBpcmVzIjo4NjQwMCwiaWF0IjoxNTcyMTg5MzczfQ.Kj1fSozAsLwjItJxZ7DbK_igStD3U7BnVqNZSggewIU";
-
-      // if (this.image) {
-      //   var fd = new FormData();
-      //   fd.append("image", this.image, this.image.name);
-      // }
+      if (this.image) {
+        var fd = new FormData();
+        fd.append("image", this.image, this.image.name);
+      }
 
       var body = new FormData();
       body.append("texto", this.inputMessage);
       body.append("categoryid", 1);
       body.append("file", this.image || []);
 
-      var config = {
-        headers: { authorization: "Bearer " + token }
-      };
-
       try {
-        const response = await this.$axios.$post("posts", body, config);
-        console.log(response);
-        alert("Postagem realizada!");
+        const newPost = await this.$store.dispatch("posts/send", body);
+        debugger;
+        this.$router.push(`/posts/${newPost.id}`);
       } catch (e) {
         console.log("Ocorreu um erro! " + e);
+        alert("Ocorreu um erro!");
       }
     }
   },
