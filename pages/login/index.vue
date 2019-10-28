@@ -5,7 +5,7 @@
       <b-form-input class="mb-1 form-control" type="email" v-model="email" placeholder="Email"></b-form-input>
       <b-form-input class="form-control" type="password" v-model="password" placeholder="Password" ></b-form-input>
       <br />
-      <b-button variant="outline-primary" v-on:click="login()">Login</b-button>
+      <b-button class="form-control" variant="success" v-on:click="login()">Entrar</b-button>
     </div>
   </div>
 </template>
@@ -62,7 +62,7 @@ export default {
 
   padding: 20px;
 }
-b-form-input{
-  margin-bottom: 5px;
+h1{
+  text-align : center
 }
 </style>
