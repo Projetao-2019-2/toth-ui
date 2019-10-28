@@ -1,6 +1,7 @@
 <template>
   <div class="register-logo-container">
-    <h1 class="register-logo"> LOGO </h1>
+    <img src="./logo.png" width="200px" height="200px"/>
+    <p class="register-logo"> Junte-se à Nortuni </p>
   </div>
 </template>
 
@@ -11,6 +12,18 @@ export default {
 </script>
 
 <style>
+.register-logo-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-logo-container p {
+  font-size: 3em;
+  margin-bottom: 30px;
+}
+
 .register-logo {
   animation: moveLogo 2s;
 }
