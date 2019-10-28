@@ -2,15 +2,51 @@
   <div id="container">
     <div id="login">
       <h1>Login</h1>
-      <input type="text" name="username" placeholder="Username" />
-      <input type="password" name="password" placeholder="Password" />
-      <button type="button">Login</button>
+      <b-form-input class="mb-1 form-control" type="email" v-model="email" placeholder="Email"></b-form-input>
+      <b-form-input class="form-control" type="password" v-model="password" placeholder="Password" ></b-form-input>
+      <br />
+      <b-button variant="outline-primary" v-on:click="login()">Login</b-button>
     </div>
   </div>
 </template>
 
+<script>
+export default {
+  middleware: "auth",
+  auth: "guest",
+  data: function() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
+  methods: {
+    async login() {
+    if(this.validEmail(this.email)){
+        try {
+          await this.$auth.loginWith("local", {
+            data: {
+              email: this.email,
+              password: this.password
+            }
+          });
+          this.$router.push("/");
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    },
+    validEmail: function(email){
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    }
+
+  }
+};
+</script>
+
 <style>
-#container{
+#container {
   position: absolute;
   height: 85%;
   width: 100%;
@@ -25,5 +61,8 @@
   margin-bottom: 200px;
 
   padding: 20px;
+}
+b-form-input{
+  margin-bottom: 5px;
 }
 </style>
