@@ -35,9 +35,15 @@
           <p>Engenharia da Computação - UFPE</p>
         </div>
         <div class="ranking-user">
-          <font-awesome-icon :icon="['fas', 'medal']" size="2x" class="icon-uni"></font-awesome-icon>
-          <p>Veterano Engajador</p>
-          <b-button variant="success" @click="goToRank">Ranking</b-button>
+          <font-awesome-icon 
+            :icon="['fas', 'medal']" 
+            size="2x" 
+            class="icon-uni">
+          </font-awesome-icon>
+          <p> Veterano Engajador </p>
+          <nuxt-link to="/ranking">
+            <b-button variant="success"> Ranking </b-button>
+          </nuxt-link>
         </div>
       </div>
     </div>
