@@ -1,11 +1,11 @@
 <template>
   <b-container class="bv-example-row">
     <div v-if="post">
-      <h2 class="category-title" v-if="post.categoria">
+      <h2 class="category-title">
         <span
           class="inline-border"
-          :style="{borderColor: post.categoria.cor}"
-        >{{post.categoria ? post.categoria.nome : 'Geral'}}</span>
+          :style="{borderColor: post.category.color}"
+        >{{post.category ? post.category.name : 'Geral'}}</span>
       </h2>
       <div class="white-bg">
         <b-row class="post-details">
@@ -68,8 +68,8 @@ export default {
     postId: function() {
       return this.$route.params.id;
     },
-    post: function(){
-      return this.$store.getters["posts/getById"](this.postId)
+    post: function() {
+      return this.$store.getters["posts/getById"](this.postId);
     }
   },
   data() {
