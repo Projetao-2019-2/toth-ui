@@ -87,5 +87,9 @@ export const getters = {
       output = state.list.find(post => post.id.toString() === id);
     }
     return output;
+  },
+
+  getAllPosts: state => {
+    return state.list;
   }
 };

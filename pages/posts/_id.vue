@@ -1,5 +1,5 @@
 <template>
-  <b-container class="bv-example-row">
+  <b-container class="bv-example-row screen-post-id">
     <div v-if="post">
       <h2 class="category-title">
         <span
@@ -136,5 +136,9 @@ export default {
 
 .thumb-icon.no {
   color: red;
+}
+
+.screen-post-id {
+  padding-top: 24px;
 }
 </style>

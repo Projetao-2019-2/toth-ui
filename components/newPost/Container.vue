@@ -1,10 +1,16 @@
 <template>
   <div class="newpost-container">
-    <PostThemes :themes="themes" @selectedTheme="updateSelectedTheme" />
-    <MediaSelection :theme="selectedTheme" @onFileSelected="imageSelected" />
-    <TextBox :theme="selectedTheme" @newMessage="updateInputMessage" />
-    <div class="button-wrapper">
-      <b-button variant="light" size="lg" @click="doPost()" :disabled="buttonNotActive">Postar</b-button>
+    <div v-if="!isPosting">
+      <PostThemes :themes="themes" @selectedTheme="updateSelectedTheme" />
+      <MediaSelection :theme="selectedTheme" @onFileSelected="imageSelected" />
+      <TextBox :theme="selectedTheme" @newMessage="updateInputMessage" />
+      <div class="button-wrapper">
+        <b-button variant="light" size="lg" @click="doPost()" :disabled="buttonNotActive">Postar</b-button>
+      </div>
+    </div>
+    <div v-else class="box-spinner">
+      <p>Postando ...</p>
+      <b-spinner variant="success" style="width: 5rem; height: 5rem;" label="Large Spinner"></b-spinner>
     </div>
   </div>
 </template>
@@ -23,6 +29,7 @@ export default {
   },
   data() {
     return {
+      isPosting: false,
       buttonNotActive: true,
       selectedTheme: null,
       image: null,
@@ -67,9 +74,6 @@ export default {
   },
   methods: {
     imageSelected(file) {
-      // const fd = new FormData();
-      // fd.append('image', file, file.name);
-      // console.log(fd);
       this.image = file;
     },
 
@@ -97,7 +101,15 @@ export default {
       this.checkInputMessage(msg);
     },
 
+    resetData() {
+      this.isPosting = false;
+      this.buttonNotActive = true;
+      this.image = null;
+      this.$emit("postDone");
+    },
+
     async doPost() {
+      this.isPosting = true;
       console.log("O tema da postagem é: " + this.selectedTheme.name);
       console.log("O texto da postagem é: " + this.inputMessage);
       console.log(this.image);
@@ -114,7 +126,7 @@ export default {
 
       try {
         const newPost = await this.$store.dispatch("posts/send", body);
-        debugger;
+        this.resetData();
         this.$router.push(`/posts/${newPost.id}`);
       } catch (e) {
         console.log("Ocorreu um erro! " + e);
@@ -135,7 +147,6 @@ export default {
 <style>
 .newpost-container {
   background: #011932;
-  /* border: 1px solid black; */
   width: 800px;
 }
 .button-wrapper {
@@ -143,5 +154,17 @@ export default {
   justify-content: flex-end;
   width: 100%;
   margin-top: 30px;
+}
+.box-spinner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 500px;
+}
+.box-spinner p {
+  color: whitesmoke;
+  font-size: 2em;
 }
 </style>

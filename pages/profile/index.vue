@@ -42,7 +42,7 @@
       </div>
     </div>
     <div class="list-posts-user grid">
-      <Post v-for="item in listPosts" :key="item.id" :post="item" />
+      <Post v-for="item in posts" :key="item.id" :post="item" />
     </div>
   </div>
 </template>
@@ -52,11 +52,6 @@ import Post from "./post";
 
 export default {
   name: "ProfileScreen",
-  data() {
-    return {
-      listPosts: []
-    };
-  },
   middleware: "auth",
   components: {
     Post
@@ -95,21 +90,20 @@ export default {
     animate() {
       window.requestAnimationFrame(this.animate);
       this.resizeAllGridItems();
-    },
-    async getPosts() {
-      try {
-        const response = await this.$axios.$get("posts");
-        this.listPosts = response.posts;
-        console.log(response);
-      } catch (e) {
-        console.log("Ocorreu um erro! " + e);
-      }
     }
+  },
+  computed: {
+    posts() {
+      return this.$store.getters["posts/getAllPosts"];
+    }
+  },
+  async fetch({ store }) {
+    await store.dispatch("posts/getAll");
   },
   mounted() {
     // window.onload = this.resizeAllGridItems();
     // window.addEventListener("resize", this.resizeAllGridItems);
-    this.getPosts();
+    // this.getPosts();
     this.resizeInstance();
     this.animate();
   }

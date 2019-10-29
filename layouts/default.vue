@@ -17,14 +17,16 @@
           </b-nav-item>
 
           <b-nav-item v-if="$auth.$state.loggedIn" href="#">
-            <font-awesome-icon :icon="['fas', 'pencil-alt']" @click="showNewPost()"></font-awesome-icon>
+            <b-button variant="primary" class="btn-newpost" @click="showNewPost()">
+              <font-awesome-icon :icon="['fas', 'pencil-alt']"></font-awesome-icon>
+            </b-button>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
     <transition name="showNewPost">
       <div class="new-post-screen" v-if="newPostActive">
-        <NewPostContainer />
+        <NewPostContainer @postDone="newPostActive = false" />
       </div>
     </transition>
     <nuxt class="route-info" />
@@ -55,15 +57,14 @@ export default {
 <style scoped>
 .main {
   background-color: #eeeeee;
-  height: 100vh;
+  height: 100%;
 }
 
 nav {
   background-color: #011932;
 }
 .route-info {
-  margin-top: 24px;
-  min-height: calc(100vh - 24px);
+  min-height: calc(100vh - 70px);
 }
 
 .new-post-screen {
@@ -83,6 +84,10 @@ nav {
 
 .showNewPost-leave-active {
   animation: show-newpost 0.5s reverse;
+}
+
+.btn-newpost {
+  width: 80px;
 }
 
 @keyframes show-newpost {
