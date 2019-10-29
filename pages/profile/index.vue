@@ -53,7 +53,10 @@
             class="icon-uni">
           </font-awesome-icon>
           <p> Veterano Engajador </p>
-          <b-button variant="success" @click="goToRank"> Ranking </b-button>
+          <nuxt-link to="/ranking">
+            <b-button variant="success"> Ranking </b-button>
+          </nuxt-link>
+          
         </div>
       </div>
     </div>
