@@ -20,55 +20,21 @@ export const mutations = {
     } else {
       state.list = [newPost];
     }
+  },
+  vote(state, { wasUseful, post }) {
+    if (wasUseful) {
+      post.util += 1;
+    } else {
+      post.n_util += 1;
+    }
   }
 };
 
 export const actions = {
   async getAll({ commit }) {
     const data = await this.$axios.$get("posts");
-    // const data = [
-    //   {
-    //     id: "1",
-    //     texto:
-    //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consequat sed arcu et malesuada. In feugiat quis tellus at interdum. Maecenas eu sapien at eros porttitor sollicitudin at sed eros. Donec nec augue fringilla ante pharetra porta vel non purus. Aenean at cursus nisi. Duis ac commodo quam. Praesent maximus quis velit non viverra. Mauris porttitor nisl eu arcu interdum, ac commodo massa commodo. Nullam nulla purus, molestie at elementum vitae, tincidunt eget sem. Donec gravida mi sit amet rutrum pharetra. Aenean cursus malesuada vestibulum. In interdum arcu at sem viverra aliquam.",
-    //     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTtMKMnYUGqhDXd1AzttMejKimEmFR-DMBTVb7T-5Btv2EK7ogr",
-    //     comments: [
-    //       {
-    //         texto: "Isso aí é bom demais",
-    //         user: {
-    //           nome: "Joao Coutinho",
-    //           email: "jvsc@cin.ufpe.br"
-    //         },
-    //         replys: [{
-    //           texto: "Concordo Bro!",
-    //           user: {
-    //             nome: "Rosinaldo Guedes",
-    //             email: "rglj2@cin.ufpe.br"
-    //           }
-    //         }]
-    //       },
-    //       {
-    //         texto: "O que significa CCEN?",
-    //         user: {
-    //           nome: "Thiago ",
-    //           email: "titi@cin.ufpe.br"
-    //         }
-    //       }
-    //     ],
-    //     categoria: {
-    //       nome: "Infraestrutura",
-    //       cor: "#1dbdff"
-    //     }
-    //   }
-    // ];
     commit("setList", data.posts);
   },
-  async send({ commit }, data) {
-    const response = await this.$axios.$post("posts", data);
-    commit("add", response.post);
-    return response.post;
-  },
-
   async getDetails({ commit }, id) {
     const data = await this.$axios.$get(`/posts/${id}`);
 
@@ -77,14 +43,34 @@ export const actions = {
     } else {
       console.log("could not get post " + id + " details");
     }
+  },
+  async send({ commit }, data) {
+    const response = await this.$axios.$post("posts", data);
+    commit("add", response.post);
+    return response.post;
+  },
+  async update({ commit }, post) {
+    const response = await this.$axios.$put(`posts/${post.id}`, post);
+    commit("setById", { id, post: response.post });
+    return response.post;
+  },
+
+  async vote({ commit, getters, dispatch }, { wasUseful, id }) {
+    const post = getters.getById(id);
+    if (Object.keys(post).length !== 0) {
+      commit("vote", { wasUseful, post });
+      dispatch("update", post);
+    } else {
+      alert("could not find post");
+    }
   }
 };
 
 export const getters = {
   getById: state => id => {
     let output = {};
-    if (state.list && state.list.length > 0) {
-      output = state.list.find(post => post.id.toString() === id);
+    if (state.list && state.list.length > 0 && id) {
+      output = state.list.find(post => post.id.toString() === id.toString());
     }
     return output;
   },
