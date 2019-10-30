@@ -35,14 +35,10 @@
           <p>Engenharia da Computação - UFPE</p>
         </div>
         <div class="ranking-user">
-          <font-awesome-icon 
-            :icon="['fas', 'medal']" 
-            size="2x" 
-            class="icon-uni">
-          </font-awesome-icon>
-          <p> Veterano Engajador </p>
+          <font-awesome-icon :icon="['fas', 'medal']" size="2x" class="icon-uni"></font-awesome-icon>
+          <p>Veterano Engajador</p>
           <nuxt-link to="/ranking">
-            <b-button variant="success"> Ranking </b-button>
+            <b-button variant="success">Ranking</b-button>
           </nuxt-link>
         </div>
       </div>
@@ -99,7 +95,7 @@ export default {
     }
   },
   computed: {
-    posts() {
+    posts: function() {
       return this.$store.getters["posts/getAllPosts"];
     }
   },

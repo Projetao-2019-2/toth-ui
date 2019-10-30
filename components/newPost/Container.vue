@@ -27,6 +27,7 @@ export default {
     MediaSelection,
     TextBox
   },
+  props: ["categories"],
   data() {
     return {
       isPosting: false,
@@ -129,6 +130,7 @@ export default {
         this.resetData();
         this.$router.push(`/posts/${newPost.id}`);
       } catch (e) {
+        this.resetData();
         console.log("Ocorreu um erro! " + e);
         alert("Ocorreu um erro!");
       }

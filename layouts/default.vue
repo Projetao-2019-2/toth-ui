@@ -26,7 +26,7 @@
     </b-navbar>
     <transition name="showNewPost">
       <div class="new-post-screen" v-if="newPostActive">
-        <NewPostContainer @postDone="newPostActive = false" />
+        <NewPostContainer @postDone="newPostActive = false" :categories="categories" />
       </div>
     </transition>
     <nuxt class="route-info" />
@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import NewPostContainer from "../components/newPost/Container";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -50,6 +50,12 @@ export default {
     showNewPost() {
       this.newPostActive = !this.newPostActive;
     }
+  },
+  computed: mapState({
+    categories: state => state.categories.listofCategories
+  }),
+  async fetch({ store }) {
+    await store.categories.dispatch("categories/getAll");
   }
 };
 </script>
