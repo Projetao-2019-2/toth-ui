@@ -101,6 +101,7 @@ export default {
   },
   async fetch({ store }) {
     await store.dispatch("posts/getAll");
+    await store.dispatch("categories/getAll");
   },
   mounted() {
     // window.onload = this.resizeAllGridItems();

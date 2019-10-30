@@ -19,6 +19,7 @@
 import PostThemes from "./PostThemes/main";
 import MediaSelection from "./MediaSelection/main";
 import TextBox from "./TextBox/main";
+import { mapState } from "vuex";
 
 export default {
   name: "NewPost",
@@ -27,7 +28,6 @@ export default {
     MediaSelection,
     TextBox
   },
-  props: ["categories"],
   data() {
     return {
       isPosting: false,
@@ -136,6 +136,12 @@ export default {
       }
     }
   },
+  // computed: mapState({
+  //   categories: state => state.categories.listofCategories
+  // }),
+  // async fetch({ store }) {
+  //   await store.dispatch("categories/getAll");
+  // },
   created() {
     this.themes.forEach(theme => {
       if (theme.selected === true) {
