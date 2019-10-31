@@ -1,23 +1,32 @@
 <template>
-  <div class="post-themes-container">
+  <div class="post-categories-container">
     <b-button
-      v-for="theme in themes"
-      :key="theme.name"
-      :style="{ background: theme.selected ? theme.color : '#6D767F'}"
-      @click="$emit('selectedTheme', theme)"
-    >{{theme.name}}</b-button>
+      v-for="categorie in categories"
+      :key="categorie.name"
+      :style="{ background: backgColor(categorie)}"
+      @click="$emit('selectedCategorie', categorie)"
+    >{{categorie.name}}</b-button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "PostThemes",
-  props: ["themes"]
+  name: "PostCategories",
+  props: ["categories", "selectedCategorie"],
+  methods: {
+    backgColor(tm) {
+      if (tm.id === this.selectedCategorie.id) {
+        return tm.color;
+      } else {
+        return "#6D767F";
+      }
+    }
+  }
 };
 </script>
 
 <style>
-.post-themes-container {
+.post-categories-container {
   display: flex;
   align-items: center;
   justify-content: space-evenly;

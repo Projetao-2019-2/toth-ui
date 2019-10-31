@@ -1,9 +1,13 @@
 <template>
   <div class="newpost-container">
     <div v-if="!isPosting">
-      <PostThemes :themes="themes" @selectedTheme="updateSelectedTheme" />
-      <MediaSelection :theme="selectedTheme" @onFileSelected="imageSelected" />
-      <TextBox :theme="selectedTheme" @newMessage="updateInputMessage" />
+      <PostThemes
+        :categories="categories"
+        @selectedCategorie="updateSelectedCategorie"
+        :selectedCategorie="selectedCategorie"
+      />
+      <MediaSelection :categorie="selectedCategorie" @onFileSelected="imageSelected" />
+      <TextBox :categorie="selectedCategorie" @newMessage="updateInputMessage" />
       <div class="button-wrapper">
         <b-button variant="light" size="lg" @click="doPost()" :disabled="buttonNotActive">Postar</b-button>
       </div>
@@ -19,10 +23,10 @@
 import PostThemes from "./PostThemes/main";
 import MediaSelection from "./MediaSelection/main";
 import TextBox from "./TextBox/main";
-import { mapState } from "vuex";
 
 export default {
   name: "NewPost",
+  props: ["categories"],
   components: {
     PostThemes,
     MediaSelection,
@@ -32,45 +36,9 @@ export default {
     return {
       isPosting: false,
       buttonNotActive: true,
-      selectedTheme: null,
+      selectedCategorie: null,
       image: null,
-      inputMessage: "",
-      themes: [
-        {
-          name: "INFRAESTRUTURA",
-          selected: false,
-          description:
-            "Como é o ambiente físico onde as atividades do curso são feitas? " +
-            "Há algo depredado? Como é a coordenação? Existe uma sensação de organização? " +
-            "Fique livre para compartilhar suas impressões.",
-          color: "#1DBDFF"
-        },
-        {
-          name: "EXPERIÊNCIA EM DISCIPLINAS",
-          selected: true,
-          description:
-            "As disciplinas são bem estruturadas? São muito difíceis? " +
-            "São engajadoras? Como são os projetos e exercícios realizados na disciplina? " +
-            "Se quiser, fale sobre alguma disciplina específica do curso.",
-          color: "#16D64C"
-        },
-        {
-          name: "ATIVIDADES EXTRACURRICULARES",
-          selected: false,
-          description:
-            "O curso oferece possibilidades de pesquisa, projetos de extensão,empresas juniores...? " +
-            "Conte suas experiências nesse aspecto!",
-          color: "#FF8E20"
-        },
-        {
-          name: "ARREDORES",
-          selected: false,
-          description:
-            "É possível se divertir na faculdade ou em seus arredores? " +
-            "Como é o ambiente externo? Conte as suas experiências!",
-          color: "#FF6DD5"
-        }
-      ]
+      inputMessage: ""
     };
   },
   methods: {
@@ -86,15 +54,8 @@ export default {
       }
     },
 
-    updateSelectedTheme(theme) {
-      this.themes.forEach(item => {
-        if (item.name === theme.name) {
-          item.selected = true;
-          this.selectedTheme = item;
-        } else {
-          item.selected = false;
-        }
-      });
+    updateSelectedCategorie(categorie) {
+      this.selectedCategorie = categorie;
     },
 
     updateInputMessage(msg) {
@@ -111,7 +72,7 @@ export default {
 
     async doPost() {
       this.isPosting = true;
-      console.log("O tema da postagem é: " + this.selectedTheme.name);
+      console.log("O tema da postagem é: " + this.selectedCategorie.name);
       console.log("O texto da postagem é: " + this.inputMessage);
       console.log(this.image);
 
@@ -122,7 +83,7 @@ export default {
 
       var body = new FormData();
       body.append("texto", this.inputMessage);
-      body.append("categoryid", 1);
+      body.append("categoryid", this.selectedCategorie.id);
       body.append("file", this.image || []);
 
       try {
@@ -136,16 +97,10 @@ export default {
       }
     }
   },
-  // computed: mapState({
-  //   categories: state => state.categories.listofCategories
-  // }),
-  // async fetch({ store }) {
-  //   await store.dispatch("categories/getAll");
-  // },
   created() {
-    this.themes.forEach(theme => {
-      if (theme.selected === true) {
-        this.selectedTheme = theme;
+    this.categories.forEach((item, index) => {
+      if (index === 1) {
+        this.selectedCategorie = item;
       }
     });
   }

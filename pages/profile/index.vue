@@ -101,12 +101,10 @@ export default {
   },
   async fetch({ store }) {
     await store.dispatch("posts/getAll");
-    await store.dispatch("categories/getAll");
   },
   mounted() {
     // window.onload = this.resizeAllGridItems();
     // window.addEventListener("resize", this.resizeAllGridItems);
-    // this.getPosts();
     this.resizeInstance();
     this.animate();
   }

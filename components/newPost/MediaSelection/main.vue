@@ -1,7 +1,7 @@
 <template>
   <div
     class="media-selection-container"
-    :style="{ background: imageIsSelected ? '#FFFFFB' : theme.color }"
+    :style="{ background: imageIsSelected ? '#FFFFFB' : categorie.color }"
   >
     <InputFile @onFileSelected="imageSelected" v-if="!imageIsSelected" />
     <div class="img-selected-container" v-if="imageIsSelected">
@@ -34,7 +34,7 @@ import InputFile from "./InputFile";
 
 export default {
   name: "MediaSelection",
-  props: ["theme"],
+  props: ["categorie"],
   data() {
     return {
       imageIsSelected: false,

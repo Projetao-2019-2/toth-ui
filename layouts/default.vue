@@ -26,7 +26,7 @@
     </b-navbar>
     <transition name="showNewPost">
       <div class="new-post-screen" v-if="newPostActive">
-        <NewPostContainer @postDone="newPostActive = false" />
+        <NewPostContainer @postDone="newPostActive = false" :categories="categories" />
       </div>
     </transition>
     <nuxt class="route-info" />
@@ -37,6 +37,7 @@
 import NewPostContainer from "../components/newPost/Container";
 
 export default {
+  middleware: "categories",
   components: {
     NewPostContainer
   },
@@ -48,6 +49,11 @@ export default {
   methods: {
     showNewPost() {
       this.newPostActive = !this.newPostActive;
+    }
+  },
+  computed: {
+    categories: function() {
+      return this.$store.getters["categories/getAll"];
     }
   }
 };

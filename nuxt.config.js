@@ -39,7 +39,7 @@ export default {
     // Doc: https://bootstrap-vue.js.org
     "bootstrap-vue/nuxt",
     "@nuxtjs/axios",
-    '@nuxtjs/auth',
+    "@nuxtjs/auth",
     "@nuxtjs/proxy",
     [
       "nuxt-fontawesome",
@@ -62,11 +62,11 @@ export default {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/auth', method: 'post', propertyName: 'token' },
+          login: { url: "/auth", method: "post", propertyName: "token" },
           user: null
         },
         tokenRequired: true,
-        tokenType: 'Bearer'
+        tokenType: "Bearer"
       }
     }
   },
@@ -91,6 +91,10 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) { }
+    extend(config, ctx) {}
+  },
+
+  router: {
+    middleware: "categories"
   }
 };
