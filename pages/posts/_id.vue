@@ -40,10 +40,11 @@
           <b-col>
             <h3>Comentários</h3>
             <b-form-input
-              :v-model="this.newComment"
+              v-model="newComment"
               type="text"
               required
               placeholder="Dê sua opinião"
+              v-on:keyup.enter="addComment"
             ></b-form-input>
           </b-col>
         </b-row>
@@ -90,6 +91,15 @@ export default {
     ...mapActions({
       vote: "posts/vote"
     }),
+    addComment() {
+      if (this.newComment.length > 0) {
+        this.$store.dispatch("posts/addComment", {
+          text: this.newComment,
+          postId: this.post.id
+        });
+      }
+      this.newComment = "";
+    },
     click(string) {
       alert(string);
     }
