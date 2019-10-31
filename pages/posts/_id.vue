@@ -18,15 +18,17 @@
         <b-row>
           <b-col class="rate-section">
             <div class="d-flex">Esse post foi relevante?</div>
+            <div class="d-flex ml-3">{{post.util}}</div>
             <font-awesome-icon
               :icon="['fas', 'thumbs-up']"
-              v-on:click="click('voce achou o post útil')"
+              v-on:click="vote({wasUseful: true, id: post.id})"
               class="thumb-icon yes"
             />
 
+            <div class="d-flex ml-3">{{post.n_util}}</div>
             <font-awesome-icon
               :icon="['fas', 'thumbs-down']"
-              v-on:click="click('voce achou o post inútil')"
+              v-on:click="vote({wasUseful: false, id: post.id})"
               class="thumb-icon no"
             />
           </b-col>
@@ -62,6 +64,7 @@
 
 <script>
 import CommentDetails from "../../components/posts/CommentDetails";
+import { mapActions } from "vuex";
 export default {
   components: { CommentDetails },
   computed: {
@@ -72,6 +75,7 @@ export default {
       return this.$store.getters["posts/getById"](this.postId);
     }
   },
+
   data() {
     return {
       newComment: "",
@@ -83,6 +87,9 @@ export default {
     await store.dispatch("posts/getDetails", params.id);
   },
   methods: {
+    ...mapActions({
+      vote: "posts/vote"
+    }),
     click(string) {
       alert(string);
     }
