@@ -1,6 +1,10 @@
 <template>
     <div class="dashboard">
-        <PostBox v-for="n in 10" :key="n"/>    
+        <b-card-group columns>
+            <b-card img-src="https://placekitten.com/500/350" img-alt="Image" overlay v-for="n in 3" :key="n"></b-card>
+            <b-card img-src="https://picsum.photos/400/400/?image=41" img-alt="Image" overlay></b-card>
+            <b-card img-src="https://placekitten.com/g/400/450" img-alt="Image" overlay v-for="y in 3" :key="y"></b-card>
+        </b-card-group>
     </div>
 </template>
 
@@ -23,6 +27,11 @@ export default {
     width: match-parent;
     height: match-parent;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
+ }
+
+ .card {
+     border: 2px solid green;
+     max-width: 375px;
  }
 </style>

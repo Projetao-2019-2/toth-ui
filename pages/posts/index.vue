@@ -22,6 +22,7 @@ export default {
   align-items: center;
   min-height: 100vh;
   width: 80%;
+  padding:25px;
   margin: 0 10%;
 }
 </style>
