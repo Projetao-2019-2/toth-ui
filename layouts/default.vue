@@ -8,15 +8,15 @@
       <b-collapse id="nav-collapse" is-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item>
+          <b-nav-item v-if="!$auth.$state.loggedIn">
             <nuxt-link to="register">Cadastrar</nuxt-link>
           </b-nav-item>
 
-          <b-nav-item>
+          <b-nav-item v-if="!$auth.$state.loggedIn">
             <nuxt-link to="/login">Login</nuxt-link>
           </b-nav-item>
 
-          <b-nav-item href="#">
+          <b-nav-item v-if="$auth.$state.loggedIn" href="#">
             <font-awesome-icon :icon="['fas', 'pencil-alt']" @click="showNewPost()"></font-awesome-icon>
           </b-nav-item>
         </b-navbar-nav>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import NewPostContainer from "../components/newPost/Container";
 
 export default {
