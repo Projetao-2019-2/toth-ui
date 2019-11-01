@@ -59,9 +59,6 @@ export default {
     Post
   },
   methods: {
-    goToRank() {
-      alert("Deveria ir para a página rank!");
-    },
     resizeGridItem(item) {
       let grid = document.getElementsByClassName("grid")[0];
       let rowHeight = parseInt(
@@ -115,6 +112,13 @@ export default {
 .profile-container {
   min-height: 100vh;
   width: 100%;
+}
+.profile-loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
 }
 .profile-information-container {
   display: flex;
