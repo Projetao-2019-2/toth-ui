@@ -2,45 +2,11 @@
   <div class="profile-container">
     <div class="profile-information-container">
       <div class="photo-networks-wrapper">
-        <div class="photo-wrapper"></div>
-        <div class="networks-wrapper">
-          <a href="https://www.facebook.com" target="_blank">
-            <font-awesome-icon
-              :icon="['fab', 'facebook-square']"
-              size="2x"
-              class="icon-social-network"
-            ></font-awesome-icon>
-          </a>
-          <a href="https://www.instagram.com" target="_blank">
-            <font-awesome-icon :icon="['fab', 'instagram']" size="2x" class="icon-social-network"></font-awesome-icon>
-          </a>
-          <a href="https://www.twitter.com" target="_blank">
-            <font-awesome-icon
-              :icon="['fab', 'twitter-square']"
-              size="2x"
-              class="icon-social-network"
-            ></font-awesome-icon>
-          </a>
-          <a href="mailto:#" target="_blank">
-            <font-awesome-icon :icon="['fas', 'envelope']" size="2x" class="icon-social-network"></font-awesome-icon>
-          </a>
-        </div>
+        <UserPhoto />
+        <SocialNetworks />
       </div>
       <div class="name-course-rank-wrapper">
-        <div>
-          <span class="name-user">Rosinaldo Guedes</span>
-        </div>
-        <div class="university-user">
-          <font-awesome-icon :icon="['fas', 'graduation-cap']" size="2x" class="icon-uni"></font-awesome-icon>
-          <p>Engenharia da Computação - UFPE</p>
-        </div>
-        <div class="ranking-user">
-          <font-awesome-icon :icon="['fas', 'medal']" size="2x" class="icon-uni"></font-awesome-icon>
-          <p>Veterano Engajador</p>
-          <nuxt-link to="/ranking">
-            <b-button variant="success">Ranking</b-button>
-          </nuxt-link>
-        </div>
+        <UserData />
       </div>
     </div>
     <div class="list-posts-user grid">
@@ -50,12 +16,18 @@
 </template>
 
 <script>
+import UserPhoto from "../../components/profile/UserPhoto/main";
+import SocialNetworks from "../../components/profile/SocialNetworks/main";
+import UserData from "../../components/profile/UserData/main";
 import Post from "./post";
 
 export default {
   name: "ProfileScreen",
   middleware: "auth",
   components: {
+    UserPhoto,
+    SocialNetworks,
+    UserData,
     Post
   },
   methods: {
@@ -113,18 +85,11 @@ export default {
   min-height: 100vh;
   width: 100%;
 }
-.profile-loading-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 100vh;
-}
 .profile-information-container {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 .photo-networks-wrapper {
   display: flex;
@@ -133,51 +98,12 @@ export default {
   align-items: center;
   margin-top: 50px;
 }
-.photo-wrapper {
-  width: 150px;
-  height: 150px;
-  border: 1px solid black;
-  margin-bottom: 20px;
-}
-.networks-wrapper {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 100%;
-}
-.icon-social-network:hover {
-  cursor: pointer;
-}
-.input-link-social-network {
-  margin-top: 10px;
-}
 .name-course-rank-wrapper {
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
   margin-top: 50px;
   margin-left: 50px;
-}
-.university-user,
-.ranking-user {
-  display: flex;
-}
-.ranking-user {
-  align-items: center;
-}
-.name-user {
-  font-size: 2.5em;
-  font-weight: bold;
-}
-.university-user p,
-.ranking-user p {
-  font-size: 1.5em;
-}
-.university-user p {
-  margin: 0 0 0 20px;
-}
-.ranking-user p {
-  margin: 0 28px;
 }
 .list-posts-user {
   width: 100%;
@@ -196,7 +122,10 @@ export default {
     align-items: center;
   }
   .name-course-rank-wrapper {
+    display: flex;
+    justify-content: center;
     align-items: center;
+    margin-left: 0px;
   }
   .university-user,
   .ranking-user {

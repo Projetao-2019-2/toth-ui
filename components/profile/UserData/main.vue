@@ -1,0 +1,49 @@
+<template>
+  <div class="user-datas-container">
+    <div>
+      <span class="name-user">Mateus Valgueiro</span>
+    </div>
+    <div class="university-user">
+      <font-awesome-icon :icon="['fas', 'graduation-cap']" size="2x" class="icon-uni"></font-awesome-icon>
+      <p>Engenharia da Computação - UFPE</p>
+    </div>
+    <div class="ranking-user">
+      <font-awesome-icon :icon="['fas', 'medal']" size="2x" class="icon-uni"></font-awesome-icon>
+      <p>Veterano Engajador</p>
+      <nuxt-link to="/ranking">
+        <b-button variant="success">Ranking</b-button>
+      </nuxt-link>
+    </div>
+  </div>
+</template>
+
+<style>
+.user-datas-container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  margin-top: 50px;
+  margin-left: 50px;
+}
+.university-user,
+.ranking-user {
+  display: flex;
+}
+.ranking-user {
+  align-items: center;
+}
+.name-user {
+  font-size: 2.5em;
+  font-weight: bold;
+}
+.university-user p,
+.ranking-user p {
+  font-size: 1.5em;
+}
+.university-user p {
+  margin: 0 0 0 20px;
+}
+.ranking-user p {
+  margin: 0 28px;
+}
+</style>
