@@ -20,18 +20,19 @@
             <b-card img-src="https://picsum.photos/400/400/?image=41" img-alt="Image" overlay></b-card>
         </b-card-group>
     </div>
+
 </template>
 
 <script>
 import axios from "axios";
-import PostBox from '../../components/posts/PostBox';
+import PostBox from "../../components/posts/PostBox";
 
 export default {
-    name: 'Dashboard',
-    components: {
-        PostBox
-    }
-}
+  name: "Dashboard",
+  components: {
+    PostBox
+  }
+};
 </script>
 
 <style>
@@ -50,4 +51,5 @@ export default {
      margin: 0;
 
  }
+
 </style>

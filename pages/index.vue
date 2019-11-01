@@ -1,8 +1,8 @@
 <template>
   <div class="search-container">
     <div class="logo-wrapper">
-      <img src="~/assets/compass1.png" alt="nortuni" width="200px" height="200px"/>
-      <span class="name-logo"> Nortuni </span>
+      <img src="~/assets/compass1.png" alt="nortuni" width="200px" height="200px" />
+      <span class="name-logo">Nortuni</span>
     </div>
     <div class="input-search-wrapper">
       <b-input-group>
@@ -19,42 +19,43 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      searchText: ''
-    }
+      searchText: ""
+    };
   },
   methods: {
-    doSearch (text) {
-      console.log('O texto da pesquisa foi: ' + text);
+    doSearch(text) {
+      console.log("O texto da pesquisa foi: " + text);
     }
   }
-}
+};
 </script>
 
 <style>
-  .search-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    width: 100%;
-  }
-  .logo-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  .name-logo {
-    font-size: 6em;
-  }
-  .input-search-wrapper {
-    width: 500px;
-  }
-  .btn-search {
-    width: 80px;
-  }
+.search-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  padding-bottom: 100px;
+}
+.logo-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.name-logo {
+  font-size: 6em;
+}
+.input-search-wrapper {
+  width: 500px;
+}
+.btn-search {
+  width: 80px;
+}
 </style>

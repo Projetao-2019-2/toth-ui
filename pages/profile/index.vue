@@ -37,12 +37,14 @@
         <div class="ranking-user">
           <font-awesome-icon :icon="['fas', 'medal']" size="2x" class="icon-uni"></font-awesome-icon>
           <p>Veterano Engajador</p>
-          <b-button variant="success" @click="goToRank">Ranking</b-button>
+          <nuxt-link to="/ranking">
+            <b-button variant="success">Ranking</b-button>
+          </nuxt-link>
         </div>
       </div>
     </div>
     <div class="list-posts-user grid">
-      <Post v-for="item in [1,2,3,4,5,6,7,8,9,10,11]" :key="item" :num="item" />
+      <Post v-for="item in posts" :key="item.id" :post="item" />
     </div>
   </div>
 </template>
@@ -57,9 +59,6 @@ export default {
     Post
   },
   methods: {
-    goToRank() {
-      alert("Deveria ir para a página rank!");
-    },
     resizeGridItem(item) {
       let grid = document.getElementsByClassName("grid")[0];
       let rowHeight = parseInt(
@@ -92,6 +91,14 @@ export default {
       this.resizeAllGridItems();
     }
   },
+  computed: {
+    posts: function() {
+      return this.$store.getters["posts/getAllPosts"];
+    }
+  },
+  async fetch({ store }) {
+    await store.dispatch("posts/getAll");
+  },
   mounted() {
     // window.onload = this.resizeAllGridItems();
     // window.addEventListener("resize", this.resizeAllGridItems);
@@ -105,6 +112,13 @@ export default {
 .profile-container {
   min-height: 100vh;
   width: 100%;
+}
+.profile-loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
 }
 .profile-information-container {
   display: flex;
