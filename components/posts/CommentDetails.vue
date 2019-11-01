@@ -1,10 +1,11 @@
 <template>
   <div>
+    {{comment}}
     <b-card
       class="comment-details-card"
-      :sub-title="comment.user.nome + ' | ' + comment.user.email"
+      :sub-title="comment.user ? comment.user.nome + ' | ' + comment.user.email : ''"
     >
-      <b-card-text>{{comment.texto}}</b-card-text>
+      <b-card-text>{{comment.text}}</b-card-text>
 
       <div v-on:click="click('voce clicou no reply')" class="reply-button">
         Responder
@@ -47,11 +48,11 @@ export default {
   text-align: right;
 }
 
-.reply-section{
+.reply-section {
   margin-left: 24px;
 }
 
-p.card-text{
+p.card-text {
   margin-bottom: 2px;
 }
 </style>

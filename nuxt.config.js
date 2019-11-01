@@ -38,7 +38,9 @@ export default {
   modules: [
     // Doc: https://bootstrap-vue.js.org
     "bootstrap-vue/nuxt",
-
+    "@nuxtjs/axios",
+    "@nuxtjs/auth",
+    "@nuxtjs/proxy",
     [
       "nuxt-fontawesome",
       {
@@ -55,6 +57,33 @@ export default {
       }
     ]
   ],
+
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: "/auth", method: "post", propertyName: "token" },
+          user: null
+        },
+        tokenRequired: true,
+        tokenType: "Bearer"
+      }
+    }
+  },
+
+  axios: {
+    proxy: true,
+    prefix: "/api",
+    https: true
+  },
+
+  proxy: {
+    "/api/": {
+      target: "https://project-toth.herokuapp.com/v1/",
+      pathRewrite: { "^/api/": "" },
+      changeOrigin: true
+    }
+  },
   /*
    ** Build configuration
    */
@@ -63,5 +92,9 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+
+  router: {
+    middleware: "categories"
   }
 };

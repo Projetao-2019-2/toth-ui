@@ -1,74 +1,115 @@
-// import axios from "axios";
 export const state = () => ({
   list: []
 });
 
 export const mutations = {
-  add(state, text) {
-    state.list.push({
-      name: text
-    });
+  add(state, post) {
+    state.list.push(post);
   },
   remove(state, { post }) {
     state.list.splice(state.list.indexOf(post), 1);
   },
   setList(state, data) {
     state.list = data;
+  },
+  setById(state, { id, post: newPost }) {
+    if (state.list && state.list.length > 0) {
+      let post = state.list.find(post => post.id.toString() === id);
+      const index = state.list.indexOf(post);
+      state.list[index] = newPost;
+    } else {
+      state.list = [newPost];
+    }
+  },
+  vote(state, { wasUseful, post }) {
+    if (wasUseful) {
+      post.util += 1;
+    } else {
+      post.n_util += 1;
+    }
+  },
+
+  addComment(state, { comment, post }) {
+    if (post.comments && post.comments.length > 0) {
+      post.comments.push(comment);
+    } else {
+      post.comments = [comment];
+    }
   }
 };
 
 export const actions = {
-  async getPosts({ commit }) {
-    // const { data } = await axios.get("http://localhost:3030/courses");
-    const data = [
-      {
-        id: "1",
-        texto:
-          "Aqui é Body Builder Ipsum PORRA! É 13 porra! Sabe o que é isso daí? Trapézio descendente é o nome disso aí. " +
-          "É esse que a gente quer, é ele que nóis vamo buscar. AHHHHHHHHHHHHHHHHHHHHHH..., porra! É nóis caraio é trapezera" +
-          " buscando caraio! Sai de casa comi pra caralho porra. AHHHHHHHHHHHHHHHHHHHHHH..., porra! Negativa Bambam negativa." +
-          "Sai de casa comi pra caralho porra. Sai de casa comi pra caralho porra.Vai subir árvore é o caralho porra! É 13 porra!" +
-          "Sai de casa comi pra caralho porra. Sabe o que é isso daí? Trapézio descendente é o nome disso aí.É esse que a gente quer, é ele que nóis vamo buscar.",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTtMKMnYUGqhDXd1AzttMejKimEmFR-DMBTVb7T-5Btv2EK7ogr",
-        comments: [
-          {
-            texto: "Isso aí é bom demais",
-            user: {
-              nome: "Joao Coutinho",
-              email: "jvsc@cin.ufpe.br"
-            },
-            replys:[{
-              texto: "Concordo Bro!",
-              user: {
-                nome: "Rosinaldo Guedes",
-                email: "rglj2@cin.ufpe.br"
-              }
-            }]
-          },
-          {
-            texto: "O que significa CCEN?",
-            user: {
-              nome: "Thiago ",
-              email: "titi@cin.ufpe.br"
-            }
-          }
-        ],
-        categoria: {
-          nome: "Infraestrutura",
-          cor: "#1dbdff"
-        }
-      }
-    ];
-    commit("setList", data);
+  async getAll({ commit }) {
+    const data = await this.$axios.$get("posts");
+    commit("setList", data.posts);
   },
-  async sendPosts({ commit }, data) {
-    // await axios.post("http://localhost:3030/courses", data);
-    commit("setList", data);
+  async getDetails({ commit }, id) {
+    const data = await this.$axios.$get(`/posts/${id}`);
+
+    if (data && data.post) {
+      commit("setById", { id, post: data.post });
+    } else {
+      console.log("could not get post " + id + " details");
+    }
+  },
+
+  async send({ commit }, { data }) {
+    const response = await this.$axios.$post("posts", data);
+    commit("add", response.post);
+    return response.post;
+  },
+
+  async update({ commit }, { formData, id }) {
+    const response = await this.$axios.$put(`posts/${id}`, formData);
+    return response.post;
+  },
+
+  async postComment({ commit }, comment) {
+    const response = await this.$axios.$post(`comments/`, comment);
+  },
+
+  async vote({ commit, getters, dispatch }, { wasUseful, id }) {
+    const post = getters.getById(id);
+    if (Object.keys(post).length !== 0) {
+      commit("vote", { wasUseful, post });
+
+      const formData = new FormData();
+      formData.append("util", post.util);
+      formData.append("n_util", post.n_util);
+      formData.append("texto", post.texto);
+      dispatch("update", { formData, id });
+    } else {
+      alert("could not find post");
+    }
+  },
+
+  async addComment({ commit, getters, dispatch }, { text, postId }) {
+    const post = getters.getById(postId);
+
+    if (Object.keys(post).length !== 0) {
+      const comment = {
+        postid: post.id,
+        userid: 16,
+        text: text
+      };
+      commit("addComment", { comment, post });
+      dispatch("postComment", comment);
+    } else {
+      alert("could not find post");
+    }
   }
 };
 
 export const getters = {
-  getPostById: state => id => {
-    return state.list.find(post => post.id === id);
+  getById: state => id => {
+    let output = {};
+    if (state.list && state.list.length > 0 && id) {
+      output = state.list.find(post => post.id.toString() === id.toString());
+    }
+    return output;
+  },
+
+  getAllPosts: state => {
+    return state.list;
   }
 };

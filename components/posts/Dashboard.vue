@@ -6,18 +6,19 @@
             <b-card img-src="https://placekitten.com/g/400/450" img-alt="Image" overlay v-for="y in 3" :key="y"></b-card>
         </b-card-group>
     </div>
+
 </template>
 
 <script>
 import axios from "axios";
-import PostBox from '../../components/posts/PostBox';
+import PostBox from "../../components/posts/PostBox";
 
 export default {
-    name: 'Dashboard',
-    components: {
-        PostBox
-    }
-}
+  name: "Dashboard",
+  components: {
+    PostBox
+  }
+};
 </script>
 
 <style>
@@ -28,10 +29,17 @@ export default {
     height: match-parent;
     flex-wrap: wrap;
     justify-content: center;
- }
 
  .card {
      border: 2px solid green;
      max-width: 375px;
  }
+
+ .card {
+     border: 2px solid green;
+     max-width: 375px;
+     margin: 0;
+
+ }
+
 </style>
