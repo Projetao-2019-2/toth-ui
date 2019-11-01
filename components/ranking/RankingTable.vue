@@ -1,7 +1,7 @@
 <template>
     <div class="board">
-        <b-list-group v-for="n in 4" :key="n">
-            <b-list-group-item> {{ n }}
+        <b-list-group >
+            <b-list-group-item v-for="n in 4" :key="n" > {{ n }}
             </b-list-group-item>
         </b-list-group>
         <div class="space"></div>
@@ -23,15 +23,15 @@ export default {
         async getUsers() {
             try{
                 const response = await this.$axios.$get("users");
-                //this.users = response;
-                console.log(response);
+                //users = response.users;
+                console.log(response.users);
             } catch (err) { 
                 console.log(err);
             }
         }
     },
     mounted() {
-        this.getUsers();
+        this.users = this.getUsers();
     }
 }
 </script>
