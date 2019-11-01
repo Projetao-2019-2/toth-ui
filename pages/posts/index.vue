@@ -21,7 +21,9 @@ export default {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  width: 90%;
-  margin: 0 5%;
+  width: 80%;
+  padding:25px;
+  margin: 0 10%;
+
 }
 </style>
