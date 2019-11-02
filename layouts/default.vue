@@ -55,7 +55,7 @@ export default {
 <style scoped>
 .main {
   background-color: #eeeeee;
-  height: 100vh;
+  height: max-content;
 }
 
 nav {
