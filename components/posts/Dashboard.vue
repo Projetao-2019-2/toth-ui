@@ -29,10 +29,7 @@ export default {
     height: match-parent;
     flex-wrap: wrap;
     justify-content: center;
-
- .card {
-     border: 2px solid green;
-     max-width: 375px;
+    margin-top: 50px;
  }
 
  .card {
