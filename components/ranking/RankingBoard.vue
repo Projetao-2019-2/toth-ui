@@ -19,6 +19,7 @@ export default {
 
 .rankingb {
     width: 420px;
+    height: max-content;
     display: flex;
     flex-direction: row;
     align-content: center;
