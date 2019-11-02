@@ -28,6 +28,7 @@ export default {
     height: match-parent;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 50px;
  }
 
  .card {
