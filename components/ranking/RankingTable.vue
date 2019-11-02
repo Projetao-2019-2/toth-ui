@@ -4,7 +4,7 @@
             <b-list-group-item v-for="user in users" :key="user.id" >
                 <div class="index" id="first">
                 </div>
-                <div class="name">{{ user.nome }}</div>
+                <div class="name"><p>{{ user.nome }}</p></div>
             </b-list-group-item>
         </b-list-group>
         <div class="space"></div>
@@ -93,11 +93,17 @@ body {
 }
 
 .name {
+    width: 370px;
     height:match-parent;
     padding: 10px;
     margin-left: 10px;
+    align-items: center;
+}
+
+p {
     text-align: center;
 }
+
 .space {
     width: 100%;
     height: 50px;

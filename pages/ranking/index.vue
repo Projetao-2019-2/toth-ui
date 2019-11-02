@@ -44,4 +44,5 @@ export default {
     justify-content: space-around;
     margin-top: 30px;
 }
+
 </style>
