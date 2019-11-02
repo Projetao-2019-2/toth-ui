@@ -1,15 +1,18 @@
 <template>
   <div class="global">
+    <FilterBar />
     <Dashboard />
   </div>
 </template>
 
 <script>
+import FilterBar from "../../components/posts/FilterBar"
 import Dashboard from "../../components/posts/Dashboard"
 
 export default {
   components: {
-    Dashboard
+    Dashboard,
+    FilterBar
   }
 }
 </script>
@@ -22,8 +25,6 @@ export default {
   align-items: center;
   min-height: 100vh;
   width: 80%;
-  padding:25px;
   margin: 0 10%;
-
 }
 </style>
