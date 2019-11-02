@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <b-navbar toggleable="lg" type="dark">
+    <b-navbar type="dark">
       <nuxt-link to="/">
         <b-navbar-brand>Nortuni</b-navbar-brand>
       </nuxt-link>
@@ -17,14 +17,27 @@
           </b-nav-item>
 
           <b-nav-item v-if="$auth.$state.loggedIn" href="#">
-            <font-awesome-icon :icon="['fas', 'pencil-alt']" @click="showNewPost()"></font-awesome-icon>
+            <nuxt-link to="/profile">
+              <b-button variant="warning" class="btn-header-default">
+                <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
+              </b-button>
+            </nuxt-link>
+            <b-button variant="danger" class="btn-header-default" @click="showNotifications()">
+              <font-awesome-icon :icon="['fa', 'bell']"></font-awesome-icon>
+            </b-button>
+            <b-button variant="primary" class="btn-header-default" @click="showNewPost()">
+              <font-awesome-icon :icon="['fas', 'pencil-alt']"></font-awesome-icon>
+            </b-button>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
     <transition name="showNewPost">
-      <div class="new-post-screen" v-if="newPostActive">
-        <NewPostContainer />
+      <div class="newpost-notifications-screen" v-if="newPostActive">
+        <NewPost @postDone="newPostActive = false" :categories="categories" />
+      </div>
+      <div class="newpost-notifications-screen" v-if="notificationsActive">
+        <Notifications />
       </div>
     </transition>
     <nuxt class="route-info" />
@@ -32,21 +45,34 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import NewPostContainer from "../components/newPost/Container";
+import NewPost from "../components/newPost/Container";
+import Notifications from "../components/notifications/Container";
 
 export default {
+  middleware: "categories",
   components: {
-    NewPostContainer
+    NewPost,
+    Notifications
   },
   data() {
     return {
-      newPostActive: false
+      newPostActive: false,
+      notificationsActive: false
     };
   },
   methods: {
     showNewPost() {
       this.newPostActive = !this.newPostActive;
+      this.notificationsActive = false;
+    },
+    showNotifications() {
+      this.notificationsActive = !this.notificationsActive;
+      this.newPostActive = false;
+    }
+  },
+  computed: {
+    categories: function() {
+      return this.$store.getters["categories/getAll"];
     }
   }
 };
@@ -62,19 +88,19 @@ nav {
   background-color: #011932;
 }
 .route-info {
-  margin-top: 24px;
-  min-height: calc(100vh - 24px);
+  min-height: calc(100vh - 70px);
 }
 
-.new-post-screen {
+.newpost-notifications-screen {
   position: absolute;
   display: flex;
   justify-content: center;
   right: 0;
-  height: 100vh;
+  height: calc(100vh - 70px);
   width: 900px;
   background: #011932;
   z-index: 5;
+  overflow-y: auto;
 }
 
 .showNewPost-enter-active {
@@ -83,6 +109,10 @@ nav {
 
 .showNewPost-leave-active {
   animation: show-newpost 0.5s reverse;
+}
+
+.btn-header-default {
+  width: 80px;
 }
 
 @keyframes show-newpost {

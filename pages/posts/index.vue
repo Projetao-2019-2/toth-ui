@@ -1,14 +1,17 @@
 <template>
   <div class="global">
+    <FilterBar />
     <Dashboard />
   </div>
 </template>
 
 <script>
+import FilterBar from "../../components/posts/FilterBar"
 import Dashboard from "../../components/posts/Dashboard"
 
 export default {
   components: {
+    FilterBar,
     Dashboard
   }
 }

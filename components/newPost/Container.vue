@@ -1,10 +1,20 @@
 <template>
   <div class="newpost-container">
-    <PostThemes :themes="themes" @selectedTheme="updateSelectedTheme" />
-    <MediaSelection :theme="selectedTheme" @onFileSelected="imageSelected" />
-    <TextBox :theme="selectedTheme" @newMessage="updateInputMessage" />
-    <div class="button-wrapper">
-      <b-button variant="light" size="lg" @click="doPost()" :disabled="buttonNotActive">Postar</b-button>
+    <div v-if="!isPosting">
+      <PostThemes
+        :categories="categories"
+        @selectedCategorie="updateSelectedCategorie"
+        :selectedCategorie="selectedCategorie"
+      />
+      <MediaSelection :categorie="selectedCategorie" @onFileSelected="imageSelected" />
+      <TextBox :categorie="selectedCategorie" @newMessage="updateInputMessage" />
+      <div class="button-wrapper">
+        <b-button variant="light" size="lg" @click="doPost()" :disabled="buttonNotActive">Postar</b-button>
+      </div>
+    </div>
+    <div v-else class="box-spinner">
+      <p>Postando ...</p>
+      <b-spinner variant="success" style="width: 5rem; height: 5rem;" label="Large Spinner"></b-spinner>
     </div>
   </div>
 </template>
@@ -16,6 +26,7 @@ import TextBox from "./TextBox/main";
 
 export default {
   name: "NewPost",
+  props: ["categories"],
   components: {
     PostThemes,
     MediaSelection,
@@ -23,53 +34,15 @@ export default {
   },
   data() {
     return {
+      isPosting: false,
       buttonNotActive: true,
-      selectedTheme: null,
+      selectedCategorie: null,
       image: null,
-      inputMessage: "",
-      themes: [
-        {
-          name: "INFRAESTRUTURA",
-          selected: false,
-          description:
-            "Como é o ambiente físico onde as atividades do curso são feitas? " +
-            "Há algo depredado? Como é a coordenação? Existe uma sensação de organização? " +
-            "Fique livre para compartilhar suas impressões.",
-          color: "#1DBDFF"
-        },
-        {
-          name: "EXPERIÊNCIA EM DISCIPLINAS",
-          selected: true,
-          description:
-            "As disciplinas são bem estruturadas? São muito difíceis? " +
-            "São engajadoras? Como são os projetos e exercícios realizados na disciplina? " +
-            "Se quiser, fale sobre alguma disciplina específica do curso.",
-          color: "#16D64C"
-        },
-        {
-          name: "ATIVIDADES EXTRACURRICULARES",
-          selected: false,
-          description:
-            "O curso oferece possibilidades de pesquisa, projetos de extensão,empresas juniores...? " +
-            "Conte suas experiências nesse aspecto!",
-          color: "#FF8E20"
-        },
-        {
-          name: "ARREDORES",
-          selected: false,
-          description:
-            "É possível se divertir na faculdade ou em seus arredores? " +
-            "Como é o ambiente externo? Conte as suas experiências!",
-          color: "#FF6DD5"
-        }
-      ]
+      inputMessage: ""
     };
   },
   methods: {
     imageSelected(file) {
-      // const fd = new FormData();
-      // fd.append('image', file, file.name);
-      // console.log(fd);
       this.image = file;
     },
 
@@ -81,15 +54,8 @@ export default {
       }
     },
 
-    updateSelectedTheme(theme) {
-      this.themes.forEach(item => {
-        if (item.name === theme.name) {
-          item.selected = true;
-          this.selectedTheme = item;
-        } else {
-          item.selected = false;
-        }
-      });
+    updateSelectedCategorie(categorie) {
+      this.selectedCategorie = categorie;
     },
 
     updateInputMessage(msg) {
@@ -97,8 +63,16 @@ export default {
       this.checkInputMessage(msg);
     },
 
+    resetData() {
+      this.isPosting = false;
+      this.buttonNotActive = true;
+      this.image = null;
+      this.$emit("postDone");
+    },
+
     async doPost() {
-      console.log("O tema da postagem é: " + this.selectedTheme.name);
+      this.isPosting = true;
+      console.log("O tema da postagem é: " + this.selectedCategorie.name);
       console.log("O texto da postagem é: " + this.inputMessage);
       console.log(this.image);
 
@@ -109,23 +83,24 @@ export default {
 
       var body = new FormData();
       body.append("texto", this.inputMessage);
-      body.append("categoryid", 1);
-      body.append("file", fd || []);
+      body.append("categoryid", this.selectedCategorie.id);
+      body.append("file", this.image || []);
 
       try {
         const newPost = await this.$store.dispatch("posts/send", body);
-        debugger;
+        this.resetData();
         this.$router.push(`/posts/${newPost.id}`);
       } catch (e) {
+        this.resetData();
         console.log("Ocorreu um erro! " + e);
         alert("Ocorreu um erro!");
       }
     }
   },
   created() {
-    this.themes.forEach(theme => {
-      if (theme.selected === true) {
-        this.selectedTheme = theme;
+    this.categories.forEach((item, index) => {
+      if (index === 1) {
+        this.selectedCategorie = item;
       }
     });
   }
@@ -135,7 +110,6 @@ export default {
 <style>
 .newpost-container {
   background: #011932;
-  /* border: 1px solid black; */
   width: 800px;
 }
 .button-wrapper {
@@ -143,5 +117,17 @@ export default {
   justify-content: flex-end;
   width: 100%;
   margin-top: 30px;
+}
+.box-spinner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 500px;
+}
+.box-spinner p {
+  color: whitesmoke;
+  font-size: 2em;
 }
 </style>

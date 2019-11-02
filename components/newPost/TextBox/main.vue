@@ -1,31 +1,29 @@
 <template>
   <div class="text-box-container">
-    <InputText 
-      :themeDescription="theme.description"
-      @newMessage="updateMessage"/>
+    <InputText :categorieDescription="categorie.description" @newMessage="updateMessage" />
   </div>
 </template>
 
 <script>
-import InputText from "./InputText"
+import InputText from "./InputText";
 
 export default {
-  name: 'TextBoxContainer',
-  props: ['theme'],
+  name: "TextBoxContainer",
+  props: ["categorie"],
   components: {
     InputText
   },
   methods: {
     updateMessage(msg) {
-      this.$emit('newMessage', msg);
+      this.$emit("newMessage", msg);
     }
   }
-}
+};
 </script>
 
 <style>
-  .text-box-container {
-    height: 150px;
-    width: 100%;
-  }
+.text-box-container {
+  height: 150px;
+  width: 100%;
+}
 </style>
