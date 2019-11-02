@@ -37,13 +37,13 @@ export default {
     width: match-parent;
     height: match-parent;
     justify-content: center;
+    margin-top: 30px;
  }
 
  .card {
      border: 2px solid green;
      max-width: 375px;
      margin: 0;
-
  }
 
 </style>

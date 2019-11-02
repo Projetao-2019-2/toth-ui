@@ -11,8 +11,8 @@ import Dashboard from "../../components/posts/Dashboard"
 
 export default {
   components: {
-    Dashboard,
-    FilterBar
+    FilterBar,
+    Dashboard
   }
 }
 </script>
