@@ -1,63 +1,71 @@
 <template>
-  <b-container class="bv-example-row">
-    <h2 class="category-title" v-if="post.categoria">
-      <span
-        class="inline-border"
-        :style="{borderColor: post.categoria.cor}"
-      >{{post.categoria ? post.categoria.nome : 'Geral'}}</span>
-    </h2>
-    <div class="white-bg">
-      <b-row class="post-details">
-        <b-col>
-          <b-img v-if="post.img" fluid-grow :src="post.img" class="post-img" />
-          <p class="post-text">{{post.texto}}</p>
-        </b-col>
-      </b-row>
+  <b-container class="bv-example-row screen-post-id">
+    <div v-if="post">
+      <h2 class="category-title">
+        <span
+          class="inline-border"
+          :style="{borderColor: post.category.color}"
+        >{{post.category ? post.category.name : 'Geral'}}</span>
+      </h2>
+      <div class="white-bg">
+        <b-row class="post-details">
+          <b-col>
+            <b-img v-if="post.img" fluid-grow :src="post.img" class="post-img" />
+            <p class="post-text">{{post.texto}}</p>
+          </b-col>
+        </b-row>
 
-      <b-row>
-        <b-col class="rate-section">
-          <div class="d-flex">Esse post foi relevante?</div>
-          <font-awesome-icon
-            :icon="['fas', 'thumbs-up']"
-            v-on:click="click('voce achou o post útil')"
-            class="thumb-icon yes"
-          />
+        <b-row>
+          <b-col class="rate-section">
+            <div class="d-flex">Esse post foi relevante?</div>
+            <div class="d-flex ml-3">{{post.util}}</div>
+            <font-awesome-icon
+              :icon="['fas', 'thumbs-up']"
+              v-on:click="vote({wasUseful: true, id: post.id})"
+              class="thumb-icon yes"
+            />
 
-          <font-awesome-icon
-            :icon="['fas', 'thumbs-down']"
-            v-on:click="click('voce achou o post inútil')"
-            class="thumb-icon no"
-          />
-        </b-col>
-      </b-row>
+            <div class="d-flex ml-3">{{post.n_util}}</div>
+            <font-awesome-icon
+              :icon="['fas', 'thumbs-down']"
+              v-on:click="vote({wasUseful: false, id: post.id})"
+              class="thumb-icon no"
+            />
+          </b-col>
+        </b-row>
 
-      <hr />
+        <hr />
 
-      <b-row>
-        <b-col>
-          <h3>Comentários</h3>
-          <b-form-input
-            :v-model="this.newComment"
-            type="text"
-            required
-            placeholder="Dê sua opinião"
-          ></b-form-input>
-        </b-col>
-      </b-row>
+        <b-row>
+          <b-col>
+            <h3>Comentários</h3>
+            <b-form-input
+              v-model="newComment"
+              type="text"
+              required
+              placeholder="Dê sua opinião"
+              v-on:keyup.enter="addComment"
+            ></b-form-input>
+          </b-col>
+        </b-row>
 
-      <b-row>
-        <b-col>
-          <div v-for="(comment, index) in post.comments" :key="index">
-            <CommentDetails :comment="comment" />
-          </div>
-        </b-col>
-      </b-row>
+        <b-row>
+          <b-col>
+            <div v-for="(comment, index) in post.comments" :key="index">
+              <CommentDetails :comment="comment" />
+            </div>
+          </b-col>
+        </b-row>
+      </div>
     </div>
+
+    <div v-else>Nao tem post com esse id</div>
   </b-container>
 </template>
 
 <script>
 import CommentDetails from "../../components/posts/CommentDetails";
+import { mapActions } from "vuex";
 export default {
   components: { CommentDetails },
   computed: {
@@ -65,19 +73,33 @@ export default {
       return this.$route.params.id;
     },
     post: function() {
-      return this.$store.getters["posts/getPostById"](this.postId) || {};
+      return this.$store.getters["posts/getById"](this.postId);
     }
   },
+
   data() {
     return {
       newComment: "",
       selected: null
     };
   },
-  async mounted() {
-    await this.$store.dispatch("posts/getPosts");
+
+  async fetch({ store, params }) {
+    await store.dispatch("posts/getDetails", params.id);
   },
   methods: {
+    ...mapActions({
+      vote: "posts/vote"
+    }),
+    addComment() {
+      if (this.newComment.length > 0) {
+        this.$store.dispatch("posts/addComment", {
+          text: this.newComment,
+          postId: this.post.id
+        });
+      }
+      this.newComment = "";
+    },
     click(string) {
       alert(string);
     }
@@ -131,5 +153,9 @@ export default {
 
 .thumb-icon.no {
   color: red;
+}
+
+.screen-post-id {
+  padding-top: 24px;
 }
 </style>

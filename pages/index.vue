@@ -1,72 +1,61 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        toth-ui
-      </h1>
-      <h2 class="subtitle">
-        Toth front end app
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+  <div class="search-container">
+    <div class="logo-wrapper">
+      <img src="~/assets/compass1.png" alt="nortuni" width="200px" height="200px" />
+      <span class="name-logo">Nortuni</span>
+    </div>
+    <div class="input-search-wrapper">
+      <b-input-group>
+        <b-form-input v-model="searchText" placeholder="Curso - Universidade"></b-form-input>
+        <b-input-group-append>
+          <b-button variant="primary" class="btn-search" @click="doSearch(searchText)">
+            <font-awesome-icon :icon="['fas', 'search']"></font-awesome-icon>
+          </b-button>
+        </b-input-group-append>
+      </b-input-group>
     </div>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
 export default {
-  components: {
-    Logo
+  data() {
+    return {
+      searchText: ""
+    };
+  },
+  methods: {
+    doSearch(text) {
+      console.log("O texto da pesquisa foi: " + text);
+    }
   }
-}
+};
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
+.search-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  min-height: 100vh;
+  width: 100%;
+  padding-bottom: 100px;
 }
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+.logo-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
+.name-logo {
+  font-size: 6em;
 }
-
-.links {
-  padding-top: 15px;
+.input-search-wrapper {
+  width: 500px;
+}
+.btn-search {
+  width: 80px;
 }
 </style>
