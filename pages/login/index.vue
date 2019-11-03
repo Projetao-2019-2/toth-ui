@@ -2,9 +2,10 @@
   <div id="container">
     <div id="login">
       <h1>Login</h1>
-      <input type="text" name="username" v-model="email" placeholder="Email" />
-      <input type="password" name="password" v-model="password" placeholder="Password" />
-      <button type="button" v-on:click="login()">Login</button>
+      <b-form-input class="mb-1 form-control" type="email" v-model="email" placeholder="Email"></b-form-input>
+      <b-form-input class="form-control" type="password" v-model="password" placeholder="Password" ></b-form-input>
+      <br />
+      <b-button class="form-control" variant="success" v-on:click="login()">Entrar</b-button>
     </div>
   </div>
 </template>
@@ -21,18 +22,25 @@ export default {
   },
   methods: {
     async login() {
-      try {
-        await this.$auth.loginWith("local", {
-          data: {
-            email: this.email,
-            password: this.password
-          }
-        });
-        this.$router.push("/");
-      } catch (e) {
-        console.log(e);
+    if(this.validEmail(this.email)){
+        try {
+          await this.$auth.loginWith("local", {
+            data: {
+              email: this.email,
+              password: this.password
+            }
+          });
+          this.$router.push("/");
+        } catch (e) {
+          console.log(e);
+        }
       }
+    },
+    validEmail: function(email){
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
     }
+
   }
 };
 </script>
@@ -53,5 +61,8 @@ export default {
   margin-bottom: 200px;
 
   padding: 20px;
+}
+h1{
+  text-align : center
 }
 </style>
