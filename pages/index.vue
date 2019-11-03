@@ -1,7 +1,7 @@
 <template>
   <div class="search-container">
     <div class="logo-wrapper">
-      <img src="~/assets/compass1.png" alt="nortuni" width="200px" height="200px" />
+      <img src="~/assets/compass1.png" alt="nortuni" />
       <span class="name-logo">Nortuni</span>
     </div>
     <div class="input-search-wrapper">
@@ -48,6 +48,11 @@ export default {
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+}
+
+.logo-wrapper img{
+  width: 200px;
+  height: 200px;
 }
 .name-logo {
   font-size: 6em;
