@@ -1,6 +1,9 @@
 <template>
-  <div class="list-posts grid">
+  <div v-if="posts && posts.length > 0" class="list-posts grid">
     <PostBox v-for="item in posts" :key="item.id" :post="item" />
+  </div>
+  <div v-else class="empty-results">
+    <p>Não encontrei nada.</p>
   </div>
 </template>
 
@@ -66,5 +69,13 @@ export default {
   grid-auto-rows: 20px;
   justify-items: center;
   margin-top: 10px;
+}
+
+.empty-results {
+  display: flex;
+  width: 100%;
+  height: 500px;
+  align-items: center;
+  justify-content: center;
 }
 </style>
