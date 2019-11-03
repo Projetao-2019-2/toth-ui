@@ -1,6 +1,7 @@
 export const state = () => ({
   list: [],
-  searchResults: []
+  searchResults: [],
+  lastSearchedTerm: '',
 });
 
 export const mutations = {
@@ -10,8 +11,9 @@ export const mutations = {
   setList(state, data) {
     state.list = data;
   },
-  setSearchResults(state, results) {
+  setSearchResults(state, {results, searchString}) {
     state.searchResults = results;
+    state.lastSearchedTerm = searchString;
   },
   setById(state, newPost) {
     const id = newPost.id;
@@ -60,7 +62,7 @@ export const actions = {
         search: searchString
       }
     });
-    commit("setSearchResults", data.posts);
+    commit("setSearchResults", {results: data.posts, searchString});
     return data.posts;
   },
 
@@ -138,5 +140,9 @@ export const getters = {
 
   getAllPosts: state => {
     return state.list;
-  }
+  },
+
+  getLastSearchTerm: state => {
+    return state.lastSearchedTerm;
+  },
 };

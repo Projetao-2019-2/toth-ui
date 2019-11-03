@@ -5,6 +5,20 @@
         <b-navbar-brand>Nortuni</b-navbar-brand>
       </nuxt-link>
 
+      <b-input-group v-if="!isIndexPageActive" class="input">
+        <b-form-input
+          size="sm"
+          v-model="searchText"
+          placeholder="Curso - Universidade"
+          v-on:keyup.enter="doSearch(newSearchText)"
+        ></b-form-input>
+        <b-input-group-append>
+          <b-button variant="primary" size="sm" class="btn-search" @click="doSearch(newSearchText)">
+            <font-awesome-icon :icon="['fas', 'search']"></font-awesome-icon>
+          </b-button>
+        </b-input-group-append>
+      </b-input-group>
+
       <b-collapse id="nav-collapse" is-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
@@ -47,6 +61,7 @@
 <script>
 import NewPost from "../components/newPost/Container";
 import Notifications from "../components/notifications/Container";
+import { mapState } from "vuex";
 
 export default {
   middleware: "categories",
@@ -57,7 +72,8 @@ export default {
   data() {
     return {
       newPostActive: false,
-      notificationsActive: false
+      notificationsActive: false,
+      newSearchText: ""
     };
   },
   methods: {
@@ -68,11 +84,27 @@ export default {
     showNotifications() {
       this.notificationsActive = !this.notificationsActive;
       this.newPostActive = false;
+    },
+    doSearch(text) {
+      this.$router.push({ path: "posts", query: { search: text } });
+      this.$forceUpdate();
     }
   },
   computed: {
     categories: function() {
       return this.$store.getters["categories/getAll"];
+    },
+    searchText: {
+      get: function() {
+        this.newSearchText = this.$store.getters["posts/getLastSearchTerm"];
+        return this.newSearchText;
+      },
+      set: function(text) {
+        this.newSearchText = text;
+      }
+    },
+    isIndexPageActive: function() {
+      return this.$nuxt.$route.path === "/";
     }
   }
 };
@@ -127,5 +159,9 @@ nav {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+.input {
+  width: 20em;
 }
 </style>
