@@ -10,7 +10,7 @@
       <div class="white-bg">
         <b-row class="post-details">
           <b-col>
-            <b-img v-if="post.img" fluid-grow :src="post.img" class="post-img" />
+            <b-img v-if="post.files[0]" fluid-grow :src="post.files[0].path" class="post-img" />
             <p class="post-text">{{post.texto}}</p>
           </b-col>
         </b-row>
