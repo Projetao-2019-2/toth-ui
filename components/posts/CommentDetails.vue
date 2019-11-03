@@ -1,9 +1,8 @@
 <template>
   <div>
-    {{comment}}
     <b-card
       class="comment-details-card"
-      :sub-title="comment.user ? comment.user.nome + ' | ' + comment.user.email : ''"
+      :sub-title="comment.author ? comment.author.nome + ' | ' + comment.author.email : ''"
     >
       <b-card-text>{{comment.text}}</b-card-text>
 
@@ -18,7 +17,7 @@
         class="comment-details-card"
         v-for="(reply, index) in comment.replys"
         :key="index"
-        :sub-title="reply.user.nome + ' | ' + reply.user.email"
+        :sub-title="reply.author.nome + ' | ' + reply.author.email"
       >
         <b-card-text>{{reply.texto}}</b-card-text>
       </b-card>
