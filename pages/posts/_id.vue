@@ -110,8 +110,7 @@ export default {
       this.newComment = "";
     },
     backToSearch(){
-      const searchText = this.$store.getters['posts/getLastSearchTerm'];
-      this.$router.push({ path: 'posts', query: {search: searchText} })
+      this.$router.go(-1);
     }
   }
 };
