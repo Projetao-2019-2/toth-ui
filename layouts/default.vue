@@ -88,7 +88,7 @@ export default {
       this.newPostActive = false;
     },
     doSearch(text) {
-      this.$router.push({ query: { search: text } });
+      this.$router.push({ path: '/posts', query: { search: text } });
     }
   },
   computed: {
