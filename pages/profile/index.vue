@@ -44,19 +44,19 @@
       </div>
     </div>
     <div class="list-posts-user grid">
-      <Post v-for="item in posts" :key="item.id" :post="item" />
+      <PostBox v-for="item in posts" :key="item.id" :post="item" />
     </div>
   </div>
 </template>
 
 <script>
-import Post from "./post";
+import PostBox from "~/components/posts/PostBox";
 
 export default {
   name: "ProfileScreen",
   middleware: "auth",
   components: {
-    Post
+    PostBox
   },
   methods: {
     resizeGridItem(item) {
