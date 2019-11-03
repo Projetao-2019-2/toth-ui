@@ -145,4 +145,11 @@ export const getters = {
   getLastSearchTerm: state => {
     return state.lastSearchedTerm;
   },
+  getPostsByUserId: state => id => {
+    let output = [];
+    state.list.forEach(post => {
+      if (post.userid === id) output.push(post);
+    });
+    return output;
+  }
 };

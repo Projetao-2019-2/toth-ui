@@ -124,7 +124,7 @@ nav {
 }
 
 .newpost-notifications-screen {
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: center;
   right: 0;
