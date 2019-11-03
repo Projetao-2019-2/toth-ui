@@ -32,14 +32,17 @@ export default {
 }
 
 .arrow {
-    width: 25px;
-    height: 25px;
-    margin-left: 25px;
+    width: 35px;
+    height: 35px;
+    margin-top: 65px;
 }
 
 .total {
-    width: 100%;
+    width: 80%;
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 30px;
 }
+
 </style>
