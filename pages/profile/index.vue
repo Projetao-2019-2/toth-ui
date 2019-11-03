@@ -14,12 +14,18 @@
 </template>
 
 <script>
+import UserPhoto from "~/components/profile/UserPhoto/main";
+import SocialNetworks from "~/components/profile/SocialNetworks/main";
+import UserData from "~/components/profile/UserData/main";
 import Results from "~/components/posts/Results";
 
 export default {
   name: "ProfileScreen",
   middleware: "auth",
   components: {
+    UserPhoto,
+    SocialNetworks,
+    UserData,
     Results
   },
   computed: {
