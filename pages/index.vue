@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     doSearch(text) {
-      console.log("O texto da pesquisa foi: " + text);
+      this.$router.push({ path: 'posts', query: {search: text} });
     }
   }
 };
@@ -50,7 +50,7 @@ export default {
   margin-bottom: 20px;
 }
 
-.logo-wrapper img{
+.logo-wrapper img {
   width: 200px;
   height: 200px;
 }
