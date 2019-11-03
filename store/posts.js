@@ -146,10 +146,6 @@ export const getters = {
     return state.lastSearchedTerm;
   },
   getPostsByUserId: state => id => {
-    let output = [];
-    state.list.forEach(post => {
-      if (post.userid === id) output.push(post);
-    });
-    return output;
+    return state.list.filter(post => post.userid.toString() === id.toString());
   }
 };
