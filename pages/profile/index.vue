@@ -3,10 +3,10 @@
     <div class="profile-information-container">
       <div class="photo-networks-wrapper">
         <UserPhoto />
-        <SocialNetworks />
+        <SocialNetworks :user="user" />
       </div>
       <div class="name-course-rank-wrapper">
-        <UserData />
+        <UserData :user="user" />
       </div>
     </div>
     <div class="list-posts-user grid">
@@ -66,6 +66,9 @@ export default {
   computed: {
     posts: function() {
       return this.$store.getters["posts/getAllPosts"];
+    },
+    user: function() {
+      return this.$auth.$state.user;
     }
   },
   async fetch({ store }) {

@@ -1,11 +1,11 @@
 <template>
   <div class="user-datas-container">
     <div>
-      <span class="name-user">Mateus Valgueiro</span>
+      <span class="name-user">{{user.nome}}</span>
     </div>
     <div class="university-user">
       <font-awesome-icon :icon="['fas', 'graduation-cap']" size="2x" class="icon-uni"></font-awesome-icon>
-      <p>Engenharia da Computação - UFPE</p>
+      <p>{{user.curso}} - {{user.ies}}</p>
     </div>
     <div class="ranking-user">
       <font-awesome-icon :icon="['fas', 'medal']" size="2x" class="icon-uni"></font-awesome-icon>
@@ -16,6 +16,13 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "UserInformation",
+  props: ["user"]
+};
+</script>
 
 <style>
 .user-datas-container {

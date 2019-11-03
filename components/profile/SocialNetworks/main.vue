@@ -16,21 +16,22 @@
       <transition name="showNewPost">
         <FormLinkSocialNetworks
           v-if="showFormEditLinks"
+          :user="user"
           @CloseFormLinks="showFormEditLinks = false"
         />
       </transition>
     </div>
     <div v-else>
-      <a href="https://www.facebook.com" target="_blank">
+      <a :href="user.facebook_link" target="_blank">
         <font-awesome-icon :icon="['fab', 'facebook-square']" size="2x" class="icon-social-network"></font-awesome-icon>
       </a>
-      <a href="https://www.instagram.com" target="_blank">
+      <a :href="user.instagram_link" target="_blank">
         <font-awesome-icon :icon="['fab', 'instagram']" size="2x" class="icon-social-network"></font-awesome-icon>
       </a>
-      <a href="https://www.twitter.com" target="_blank">
+      <a :href="user.twitter_link" target="_blank">
         <font-awesome-icon :icon="['fab', 'twitter-square']" size="2x" class="icon-social-network"></font-awesome-icon>
       </a>
-      <a href="mailto:#" target="_blank">
+      <a :href="'mailto:'+user.email" target="_blank">
         <font-awesome-icon :icon="['fas', 'envelope']" size="2x" class="icon-social-network"></font-awesome-icon>
       </a>
     </div>
@@ -42,6 +43,7 @@ import FormLinkSocialNetworks from "./FormLinks";
 
 export default {
   name: "SocialNetworks",
+  props: ["user"],
   components: {
     FormLinkSocialNetworks
   },
