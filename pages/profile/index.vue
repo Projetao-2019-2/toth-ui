@@ -30,7 +30,9 @@ export default {
   },
   computed: {
     posts: function() {
-      return this.$store.getters["posts/getAllPosts"];
+      return this.$store.getters["posts/getPostsByUserId"](
+        this.$auth.$state.user.id
+      );
     },
     user: function() {
       return this.$auth.$state.user;

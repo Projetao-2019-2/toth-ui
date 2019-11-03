@@ -138,5 +138,13 @@ export const getters = {
 
   getAllPosts: state => {
     return state.list;
+  },
+
+  getPostsByUserId: state => id => {
+    let output = [];
+    state.list.forEach(post => {
+      if (post.userid === id) output.push(post);
+    });
+    return output;
   }
 };

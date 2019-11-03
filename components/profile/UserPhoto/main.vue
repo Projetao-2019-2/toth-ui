@@ -3,7 +3,7 @@
     <div v-if="ownerProfile">
       <div class="input-file-container">
         <label for="file">
-          <img v-if="havePhoto" src="./valgueiro.jpg" />
+          <img v-if="havePhoto" src="./joao.jpg" />
           <font-awesome-icon v-else :icon="['fas', 'user']" size="4x"></font-awesome-icon>
         </label>
         <input
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div v-else>
-      <img v-if="havePhoto" src="./valgueiro.jpg" />
+      <img v-if="havePhoto" src="./joao.jpg" />
       <font-awesome-icon v-else :icon="['fas', 'user']" size="4x"></font-awesome-icon>
     </div>
   </div>
@@ -28,7 +28,7 @@ export default {
   name: "ProfileUserPhoto",
   data() {
     return {
-      ownerProfile: true,
+      ownerProfile: false,
       havePhoto: true
     };
   },
