@@ -10,12 +10,12 @@
       <b-input-group v-if="!isIndexPageActive" class="input">
         <b-form-input
           size="sm"
-          v-model="searchText"
+          v-model="newSearchText"
           placeholder="Curso - Universidade"
-          v-on:keyup.enter="doSearch(newSearchText)"
+          v-on:keyup.enter="doSearch(searchString)"
         ></b-form-input>
         <b-input-group-append>
-          <b-button variant="primary" size="sm" class="btn-search" @click="doSearch(newSearchText)">
+          <b-button variant="primary" size="sm" class="btn-search" @click="doSearch(searchString)">
             <font-awesome-icon :icon="['fas', 'search']"></font-awesome-icon>
           </b-button>
         </b-input-group-append>
@@ -75,7 +75,7 @@ export default {
     return {
       newPostActive: false,
       notificationsActive: false,
-      newSearchText: ""
+      searchString: ""
     };
   },
   methods: {
@@ -88,25 +88,23 @@ export default {
       this.newPostActive = false;
     },
     doSearch(text) {
-      this.$router.push({ path: "posts", query: { search: text } });
-      this.$forceUpdate();
+      this.$router.push({ query: { search: text } });
     }
   },
   computed: {
     categories: function() {
       return this.$store.getters["categories/getAll"];
     },
-    searchText: {
-      get: function() {
-        this.newSearchText = this.$store.getters["posts/getLastSearchTerm"];
-        return this.newSearchText;
-      },
-      set: function(text) {
-        this.newSearchText = text;
-      }
-    },
     isIndexPageActive: function() {
       return this.$nuxt.$route.path === "/";
+    },
+    newSearchText: {
+      get() {
+        return this.$store.state.posts.lastSearchedTerm;
+      },
+      set(text) {
+        this.searchString = text;
+      }
     }
   }
 };

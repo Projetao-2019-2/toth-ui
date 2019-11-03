@@ -138,13 +138,6 @@ export const getters = {
     return output;
   },
 
-  getAllPosts: state => {
-    return state.list;
-  },
-
-  getLastSearchTerm: state => {
-    return state.lastSearchedTerm;
-  },
   getPostsByUserId: state => id => {
     return state.list.filter(post => post.userid.toString() === id.toString());
   }

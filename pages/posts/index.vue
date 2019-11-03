@@ -28,10 +28,22 @@ export default {
       loading: false
     };
   },
+  methods:{
+    async search(){
+      this.loading = true;
+      await this.$store.dispatch("posts/search", this.$route.query.search);
+      this.loading = false;
+    }
+  },
   async mounted() {
-    this.loading = true;
-    await this.$store.dispatch("posts/search", this.$route.query.search);
-    this.loading = false;
+    this.search();
+  },
+  watch: {
+    $route(to, from) {
+      if(to.name === 'posts' && to.query.search !== from.query.search){
+        this.search();
+      }
+    }
   }
 };
 </script>
@@ -49,7 +61,7 @@ export default {
   margin-top: 24px;
 }
 
-.global .box-spinner p{
+.global .box-spinner p {
   color: black;
 }
 </style>
