@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="list-posts-user grid">
-      <Post v-for="item in posts" :key="item.id" :post="item" />
+      <PostBox v-for="item in posts" :key="item.id" :post="item" />
     </div>
   </div>
 </template>
@@ -20,6 +20,7 @@ import UserPhoto from "../../components/profile/UserPhoto/main";
 import SocialNetworks from "../../components/profile/SocialNetworks/main";
 import UserData from "../../components/profile/UserData/main";
 import Post from "./post";
+import PostBox from "~/components/posts/PostBox";
 
 export default {
   name: "ProfileScreen",
@@ -28,7 +29,8 @@ export default {
     UserPhoto,
     SocialNetworks,
     UserData,
-    Post
+    Post,
+    PostBox
   },
   methods: {
     resizeGridItem(item) {
