@@ -6,7 +6,7 @@
     </div>
     <div class="input-search-wrapper">
       <b-input-group>
-        <b-form-input v-model="searchText" placeholder="Curso - Universidade"></b-form-input>
+        <b-form-input v-model="searchText" placeholder="Curso - Universidade" v-on:keyup.enter="doSearch(searchText)"></b-form-input>
         <b-input-group-append>
           <b-button variant="primary" class="btn-search" @click="doSearch(searchText)">
             <font-awesome-icon :icon="['fas', 'search']"></font-awesome-icon>

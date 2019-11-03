@@ -23,8 +23,8 @@ export default {
     flex-direction: row;
     width: match-parent;
     height: match-parent;
-    justify-content: center;  
-    margin-top: 20px;  
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .botao {
