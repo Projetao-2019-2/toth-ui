@@ -2,7 +2,9 @@
   <div class="main">
     <b-navbar type="dark">
       <nuxt-link to="/">
-        <b-navbar-brand>Nortuni</b-navbar-brand>
+        <b-navbar-brand>
+          <img class="logo" src="~/static/logo2.png" />
+        </b-navbar-brand>
       </nuxt-link>
 
       <b-input-group v-if="!isIndexPageActive" class="input">
@@ -163,5 +165,11 @@ a {
 
 .input {
   width: 20em;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  margin-left: 16px;
 }
 </style>

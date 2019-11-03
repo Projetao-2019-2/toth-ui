@@ -1,66 +1,75 @@
 <template>
-  <b-container class="bv-example-row screen-post-id">
-    <div v-if="post">
-      <h2 class="category-title">
-        <span
-          class="inline-border"
-          :style="{borderColor: post.category.color}"
-        >{{post.category ? post.category.name : 'Geral'}}</span>
-      </h2>
-      <div class="white-bg">
-        <b-row class="post-details">
-          <b-col>
-            <b-img v-if="post.files[0]" fluid-grow :src="post.files[0].path" class="post-img" />
-            <p class="post-text">{{post.texto}}</p>
-          </b-col>
-        </b-row>
+  <div>
+    <b-img
+      left
+      src="~/assets/left-arrow.png"
+      alt="Medal icon"
+      v-on:click="backToSearch()"
+      class="arrow"
+    ></b-img>
+    <b-container class="bv-example-row screen-post-id">
+      <div v-if="post">
+        <h2 class="category-title">
+          <span
+            class="inline-border"
+            :style="{borderColor: post.category.color}"
+          >{{post.category ? post.category.name : 'Geral'}}</span>
+        </h2>
+        <div class="white-bg">
+          <b-row class="post-details">
+            <b-col>
+              <b-img v-if="post.files[0]" fluid-grow :src="post.files[0].path" class="post-img" />
+              <p class="post-text">{{post.texto}}</p>
+            </b-col>
+          </b-row>
 
-        <b-row>
-          <b-col class="rate-section">
-            <div class="d-flex">Esse post foi relevante?</div>
-            <div class="d-flex ml-3">{{post.util}}</div>
-            <font-awesome-icon
-              :icon="['fas', 'thumbs-up']"
-              v-on:click="vote({wasUseful: true, id: post.id})"
-              class="thumb-icon yes"
-            />
+          <b-row>
+            <b-col class="rate-section">
+              <div class="d-flex">Esse post foi relevante?</div>
+              <div class="d-flex ml-3">{{post.util}}</div>
+              <font-awesome-icon
+                :icon="['fas', 'thumbs-up']"
+                v-on:click="vote({wasUseful: true, id: post.id})"
+                class="thumb-icon yes"
+              />
 
-            <div class="d-flex ml-3">{{post.n_util}}</div>
-            <font-awesome-icon
-              :icon="['fas', 'thumbs-down']"
-              v-on:click="vote({wasUseful: false, id: post.id})"
-              class="thumb-icon no"
-            />
-          </b-col>
-        </b-row>
+              <div class="d-flex ml-3">{{post.n_util}}</div>
+              <font-awesome-icon
+                :icon="['fas', 'thumbs-down']"
+                v-on:click="vote({wasUseful: false, id: post.id})"
+                class="thumb-icon no"
+              />
+            </b-col>
+          </b-row>
 
-        <hr />
+          <hr />
 
-        <b-row>
-          <b-col>
-            <h3>Comentários</h3>
-            <b-form-input
-              v-model="newComment"
-              type="text"
-              required
-              placeholder="Dê sua opinião"
-              v-on:keyup.enter="addComment"
-            ></b-form-input>
-          </b-col>
-        </b-row>
+          <b-row>
+            <b-col>
+              <h3>Comentários</h3>
+              <b-form-input
+                v-model="newComment"
+                type="text"
+                required
+                placeholder="Dê sua opinião"
+                v-on:keyup.enter="addComment"
+              ></b-form-input>
+            </b-col>
+          </b-row>
 
-        <b-row>
-          <b-col>
-            <div v-for="(comment, index) in post.comments" :key="index">
-              <CommentDetails :comment="comment" />
-            </div>
-          </b-col>
-        </b-row>
+          <b-row>
+            <b-col>
+              <div v-for="(comment, index) in post.comments" :key="index">
+                <CommentDetails :comment="comment" />
+              </div>
+            </b-col>
+          </b-row>
+        </div>
       </div>
-    </div>
 
-    <div v-else>Nao tem post com esse id</div>
-  </b-container>
+      <div v-else>Nao tem post com esse id</div>
+    </b-container>
+  </div>
 </template>
 
 <script>
@@ -100,8 +109,9 @@ export default {
       }
       this.newComment = "";
     },
-    click(string) {
-      alert(string);
+    backToSearch(){
+      const searchText = this.$store.getters['posts/getLastSearchTerm'];
+      this.$router.push({ path: 'posts', query: {search: searchText} })
     }
   }
 };
@@ -157,5 +167,11 @@ export default {
 
 .screen-post-id {
   padding-top: 24px;
+}
+
+.arrow {
+  width: 35px;
+  height: 35px;
+  margin: 1.5rem 3rem;
 }
 </style>
