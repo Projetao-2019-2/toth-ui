@@ -43,53 +43,18 @@
         </div>
       </div>
     </div>
-    <div class="list-posts-user grid">
-      <PostBox v-for="item in posts" :key="item.id" :post="item" />
-    </div>
+    <Results :posts="posts" />
   </div>
 </template>
 
 <script>
-import PostBox from "~/components/posts/PostBox";
+import Results from "~/components/posts/Results";
 
 export default {
   name: "ProfileScreen",
   middleware: "auth",
   components: {
-    PostBox
-  },
-  methods: {
-    resizeGridItem(item) {
-      let grid = document.getElementsByClassName("grid")[0];
-      let rowHeight = parseInt(
-        window.getComputedStyle(grid).getPropertyValue("grid-auto-rows")
-      );
-      let rowGap = parseInt(
-        window.getComputedStyle(grid).getPropertyValue("grid-row-gap")
-      );
-      let rowSpan = Math.ceil(
-        (item.querySelector(".content").getBoundingClientRect().height +
-          rowGap) /
-          (rowHeight + rowGap)
-      );
-      item.style.gridRowEnd = "span " + rowSpan;
-    },
-    resizeAllGridItems() {
-      var allItems = document.getElementsByClassName("item");
-      for (let x = 0; x < allItems.length; x++) {
-        this.resizeGridItem(allItems[x]);
-      }
-    },
-    resizeInstance() {
-      var allItems = document.getElementsByClassName("item");
-      for (let x = 0; x < allItems.length; x++) {
-        this.resizeGridItem(allItems[x]);
-      }
-    },
-    animate() {
-      window.requestAnimationFrame(this.animate);
-      this.resizeAllGridItems();
-    }
+    Results
   },
   computed: {
     posts: function() {
@@ -99,12 +64,6 @@ export default {
   async fetch({ store }) {
     await store.dispatch("posts/getAll");
   },
-  mounted() {
-    // window.onload = this.resizeAllGridItems();
-    // window.addEventListener("resize", this.resizeAllGridItems);
-    this.resizeInstance();
-    this.animate();
-  }
 };
 </script>
 
@@ -179,17 +138,7 @@ export default {
 .ranking-user p {
   margin: 0 28px;
 }
-.list-posts-user {
-  width: 100%;
-}
-.grid {
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-auto-rows: 20px;
-  justify-items: center;
-  margin-top: 10px;
-}
+
 @media (max-width: 655px) {
   .profile-information-container {
     flex-direction: column;

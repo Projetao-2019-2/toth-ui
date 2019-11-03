@@ -1,10 +1,6 @@
 <template>
-  <div class="total">
-    <div class="dashboard">
-      <div class="list-posts-user grid">
-        <Post v-for="item in posts" :key="item.id" :post="item" />
-      </div>
-    </div>
+  <div class="list-posts grid">
+    <PostBox v-for="item in posts" :key="item.id" :post="item" />
   </div>
 </template>
 
@@ -13,32 +9,62 @@ import PostBox from "../../components/posts/PostBox";
 
 export default {
   name: "Dashboard",
+  props: ["posts"],
   components: {
     PostBox
+  },
+  methods: {
+    resizeGridItem(item) {
+      let grid = document.getElementsByClassName("grid")[0];
+      let rowHeight = parseInt(
+        window.getComputedStyle(grid).getPropertyValue("grid-auto-rows")
+      );
+      let rowGap = parseInt(
+        window.getComputedStyle(grid).getPropertyValue("grid-row-gap")
+      );
+      let rowSpan = Math.ceil(
+        (item.querySelector(".content").getBoundingClientRect().height +
+          rowGap) /
+          (rowHeight + rowGap)
+      );
+      item.style.gridRowEnd = "span " + rowSpan;
+    },
+    resizeAllGridItems() {
+      var allItems = document.getElementsByClassName("item");
+      for (let x = 0; x < allItems.length; x++) {
+        this.resizeGridItem(allItems[x]);
+      }
+    },
+    resizeInstance() {
+      var allItems = document.getElementsByClassName("item");
+      for (let x = 0; x < allItems.length; x++) {
+        this.resizeGridItem(allItems[x]);
+      }
+    },
+    animate() {
+      window.requestAnimationFrame(this.animate);
+      this.resizeAllGridItems();
+    }
+  },
+  async mounted() {
+    await this.$store.dispatch("posts/search", this.$route.query.search);
+    this.resizeInstance();
+    this.animate();
   }
 };
 </script>
 
 <style>
-.total {
-  display: flex;
-  flex-direction: column;
-  width: match-parent;
-  height: match-parent;
-  margin-top: 50px;
-}
-.dashboard {
-  display: flex;
-  flex-direction: row;
-  width: match-parent;
-  height: match-parent;
-  justify-content: center;
-  margin-top: 30px;
+.list-posts {
+  width: 100%;
 }
 
-.card {
-  border: 2px solid green;
-  max-width: 375px;
-  margin: 0;
+.grid {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-rows: 20px;
+  justify-items: center;
+  margin-top: 10px;
 }
 </style>

@@ -1,5 +1,6 @@
 export const state = () => ({
-  list: []
+  list: [],
+  searchResults: []
 });
 
 export const mutations = {
@@ -8,6 +9,9 @@ export const mutations = {
   },
   setList(state, data) {
     state.list = data;
+  },
+  setSearchResults(state, results) {
+    state.searchResults = results;
   },
   setById(state, newPost) {
     const id = newPost.id;
@@ -32,7 +36,6 @@ export const mutations = {
   },
 
   addComment(state, comment) {
-    debugger;
     const post = state.list.find(
       post => post.id.toString() === comment.PostId.toString()
     );
@@ -48,6 +51,16 @@ export const actions = {
   async getAll({ commit }) {
     const data = await this.$axios.$get("posts");
     commit("setList", data.posts);
+    return data.posts;
+  },
+
+  async search({ commit }, searchString) {
+    const data = await this.$axios.$get("posts", {
+      params: {
+        search: searchString
+      }
+    });
+    commit("setSearchResults", data.posts);
     return data.posts;
   },
 
