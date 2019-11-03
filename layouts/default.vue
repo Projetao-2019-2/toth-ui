@@ -25,11 +25,11 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item v-if="!$auth.$state.loggedIn">
-            <nuxt-link to="register">Cadastrar</nuxt-link>
+            <nuxt-link to="register" class="names-cadastrar-login">Cadastrar</nuxt-link>
           </b-nav-item>
 
           <b-nav-item v-if="!$auth.$state.loggedIn">
-            <nuxt-link to="/login">Login</nuxt-link>
+            <nuxt-link to="/login" class="names-cadastrar-login">Login</nuxt-link>
           </b-nav-item>
 
           <b-nav-item v-if="$auth.$state.loggedIn" href="#">
@@ -147,6 +147,11 @@ nav {
 
 .btn-header-default {
   width: 80px;
+}
+
+.names-cadastrar-login {
+  color: white;
+  font-weight: bold;
 }
 
 @keyframes show-newpost {
