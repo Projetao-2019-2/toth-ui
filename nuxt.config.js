@@ -4,7 +4,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: process.env.npm_package_name || "",
+    title: "Nortuni",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -14,7 +14,7 @@ export default {
         content: process.env.npm_package_description || ""
       }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/logo2.png" }]
   },
   /*
    ** Customize the progress-bar color
@@ -63,7 +63,7 @@ export default {
       local: {
         endpoints: {
           login: { url: "/auth", method: "post", propertyName: "token" },
-          user: null
+          user: { url: "/users/me", method: "get", propertyName: "user" }
         },
         tokenRequired: true,
         tokenType: "Bearer"

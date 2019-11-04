@@ -2,108 +2,44 @@
   <div class="profile-container">
     <div class="profile-information-container">
       <div class="photo-networks-wrapper">
-        <div class="photo-wrapper"></div>
-        <div class="networks-wrapper">
-          <a href="https://www.facebook.com" target="_blank">
-            <font-awesome-icon
-              :icon="['fab', 'facebook-square']"
-              size="2x"
-              class="icon-social-network"
-            ></font-awesome-icon>
-          </a>
-          <a href="https://www.instagram.com" target="_blank">
-            <font-awesome-icon :icon="['fab', 'instagram']" size="2x" class="icon-social-network"></font-awesome-icon>
-          </a>
-          <a href="https://www.twitter.com" target="_blank">
-            <font-awesome-icon
-              :icon="['fab', 'twitter-square']"
-              size="2x"
-              class="icon-social-network"
-            ></font-awesome-icon>
-          </a>
-          <a href="mailto:#" target="_blank">
-            <font-awesome-icon :icon="['fas', 'envelope']" size="2x" class="icon-social-network"></font-awesome-icon>
-          </a>
-        </div>
+        <UserPhoto />
+        <SocialNetworks :user="user" />
       </div>
       <div class="name-course-rank-wrapper">
-        <div>
-          <span class="name-user">Rosinaldo Guedes</span>
-        </div>
-        <div class="university-user">
-          <font-awesome-icon :icon="['fas', 'graduation-cap']" size="2x" class="icon-uni"></font-awesome-icon>
-          <p>Engenharia da Computação - UFPE</p>
-        </div>
-        <div class="ranking-user">
-          <font-awesome-icon :icon="['fas', 'medal']" size="2x" class="icon-uni"></font-awesome-icon>
-          <p>Veterano Engajador</p>
-          <nuxt-link to="/ranking">
-            <b-button variant="success">Ranking</b-button>
-          </nuxt-link>
-        </div>
+        <UserData :user="user" />
       </div>
     </div>
-    <div class="list-posts-user grid">
-      <Post v-for="item in posts" :key="item.id" :post="item" />
-    </div>
+    <Results :posts="posts" />
   </div>
 </template>
 
 <script>
-import Post from "./post";
+import UserPhoto from "~/components/profile/UserPhoto/main";
+import SocialNetworks from "~/components/profile/SocialNetworks/main";
+import UserData from "~/components/profile/UserData/main";
+import Results from "~/components/posts/Results";
 
 export default {
   name: "ProfileScreen",
   middleware: "auth",
   components: {
-    Post
-  },
-  methods: {
-    resizeGridItem(item) {
-      let grid = document.getElementsByClassName("grid")[0];
-      let rowHeight = parseInt(
-        window.getComputedStyle(grid).getPropertyValue("grid-auto-rows")
-      );
-      let rowGap = parseInt(
-        window.getComputedStyle(grid).getPropertyValue("grid-row-gap")
-      );
-      let rowSpan = Math.ceil(
-        (item.querySelector(".content").getBoundingClientRect().height +
-          rowGap) /
-          (rowHeight + rowGap)
-      );
-      item.style.gridRowEnd = "span " + rowSpan;
-    },
-    resizeAllGridItems() {
-      var allItems = document.getElementsByClassName("item");
-      for (let x = 0; x < allItems.length; x++) {
-        this.resizeGridItem(allItems[x]);
-      }
-    },
-    resizeInstance() {
-      var allItems = document.getElementsByClassName("item");
-      for (let x = 0; x < allItems.length; x++) {
-        this.resizeGridItem(allItems[x]);
-      }
-    },
-    animate() {
-      window.requestAnimationFrame(this.animate);
-      this.resizeAllGridItems();
-    }
+    UserPhoto,
+    SocialNetworks,
+    UserData,
+    Results
   },
   computed: {
     posts: function() {
-      return this.$store.getters["posts/getAllPosts"];
+      return this.$store.getters["posts/getPostsByUserId"](
+        this.$auth.$state.user.id
+      );
+    },
+    user: function() {
+      return this.$auth.$state.user;
     }
   },
   async fetch({ store }) {
     await store.dispatch("posts/getAll");
-  },
-  mounted() {
-    // window.onload = this.resizeAllGridItems();
-    // window.addEventListener("resize", this.resizeAllGridItems);
-    this.resizeInstance();
-    this.animate();
   }
 };
 </script>
@@ -113,18 +49,11 @@ export default {
   min-height: 100vh;
   width: 100%;
 }
-.profile-loading-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 100vh;
-}
 .profile-information-container {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 .photo-networks-wrapper {
   display: flex;
@@ -132,24 +61,6 @@ export default {
   justify-content: center;
   align-items: center;
   margin-top: 50px;
-}
-.photo-wrapper {
-  width: 150px;
-  height: 150px;
-  border: 1px solid black;
-  margin-bottom: 20px;
-}
-.networks-wrapper {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 100%;
-}
-.icon-social-network:hover {
-  cursor: pointer;
-}
-.input-link-social-network {
-  margin-top: 10px;
 }
 .name-course-rank-wrapper {
   display: flex;
@@ -179,24 +90,17 @@ export default {
 .ranking-user p {
   margin: 0 28px;
 }
-.list-posts-user {
-  width: 100%;
-}
-.grid {
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-auto-rows: 20px;
-  justify-items: center;
-  margin-top: 10px;
-}
+
 @media (max-width: 655px) {
   .profile-information-container {
     flex-direction: column;
     align-items: center;
   }
   .name-course-rank-wrapper {
+    display: flex;
+    justify-content: center;
     align-items: center;
+    margin-left: 0px;
   }
   .university-user,
   .ranking-user {

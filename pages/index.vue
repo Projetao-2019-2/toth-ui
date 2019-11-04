@@ -1,12 +1,12 @@
 <template>
   <div class="search-container">
     <div class="logo-wrapper">
-      <img src="~/assets/compass1.png" alt="nortuni" width="200px" height="200px" />
+      <img src="~/assets/compass1.png" alt="nortuni" />
       <span class="name-logo">Nortuni</span>
     </div>
     <div class="input-search-wrapper">
       <b-input-group>
-        <b-form-input v-model="searchText" placeholder="Curso - Universidade"></b-form-input>
+        <b-form-input v-model="searchText" placeholder="Curso - Universidade" v-on:keyup.enter="doSearch(searchText)"></b-form-input>
         <b-input-group-append>
           <b-button variant="primary" class="btn-search" @click="doSearch(searchText)">
             <font-awesome-icon :icon="['fas', 'search']"></font-awesome-icon>
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     doSearch(text) {
-      console.log("O texto da pesquisa foi: " + text);
+      this.$router.push({ path: 'posts', query: {search: text} });
     }
   }
 };
@@ -48,6 +48,11 @@ export default {
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+}
+
+.logo-wrapper img {
+  width: 200px;
+  height: 200px;
 }
 .name-logo {
   font-size: 6em;

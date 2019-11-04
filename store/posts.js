@@ -1,22 +1,30 @@
 export const state = () => ({
-  list: []
+  list: [],
+  searchResults: [],
+  lastSearchedTerm: '',
 });
 
 export const mutations = {
   add(state, post) {
     state.list.push(post);
   },
-  remove(state, { post }) {
-    state.list.splice(state.list.indexOf(post), 1);
-  },
   setList(state, data) {
     state.list = data;
   },
-  setById(state, { id, post: newPost }) {
+  setSearchResults(state, {results, searchString}) {
+    state.searchResults = results;
+    state.lastSearchedTerm = searchString;
+  },
+  setById(state, newPost) {
+    const id = newPost.id;
     if (state.list && state.list.length > 0) {
-      let post = state.list.find(post => post.id.toString() === id);
-      const index = state.list.indexOf(post);
-      state.list[index] = newPost;
+      const post = state.list.find(post => post.id.toString() === id);
+      if (post) {
+        const index = state.list.indexOf(post);
+        state.list[index] = newPost;
+      } else {
+        state.list.push(newPost);
+      }
     } else {
       state.list = [newPost];
     }
@@ -29,7 +37,10 @@ export const mutations = {
     }
   },
 
-  addComment(state, { comment, post }) {
+  addComment(state, comment) {
+    const post = state.list.find(
+      post => post.id.toString() === comment.PostId.toString()
+    );
     if (post.comments && post.comments.length > 0) {
       post.comments.push(comment);
     } else {
@@ -42,30 +53,48 @@ export const actions = {
   async getAll({ commit }) {
     const data = await this.$axios.$get("posts");
     commit("setList", data.posts);
+    return data.posts;
   },
-  async getDetails({ commit }, id) {
-    const data = await this.$axios.$get(`/posts/${id}`);
 
-    if (data && data.post) {
-      commit("setById", { id, post: data.post });
+  async search({ commit }, searchString) {
+    const data = await this.$axios.$get("posts", {
+      params: {
+        search: searchString
+      }
+    });
+    commit("setSearchResults", {results: data.posts, searchString});
+    return data.posts;
+  },
+
+  async getDetails({ commit, rootGetters, dispatch }, id) {
+    const data = await this.$axios.$get(`/posts/${id}`);
+    const post = data.post;
+
+    if (post) {
+      if (post.comments && post.comments.length > 0) {
+        const commentsIds = post.comments.map(comment => comment.id);
+
+        await dispatch("comments/getDetailsFromList", commentsIds, {
+          root: true
+        });
+        post.comments = commentsIds.map(rootGetters["comments/getById"]);
+      }
+
+      commit("setById", post);
     } else {
       console.log("could not get post " + id + " details");
     }
   },
 
-  async send({ commit }, { data }) {
+  async send({ dispatch }, data) {
     const response = await this.$axios.$post("posts", data);
-    commit("add", response.post);
+    await dispatch("getDetails", response.post.id);
+
     return response.post;
   },
 
   async update({ commit }, { formData, id }) {
-    const response = await this.$axios.$put(`posts/${id}`, formData);
-    return response.post;
-  },
-
-  async postComment({ commit }, comment) {
-    const response = await this.$axios.$post(`comments/`, comment);
+    await this.$axios.$put(`posts/${id}`, formData);
   },
 
   async vote({ commit, getters, dispatch }, { wasUseful, id }) {
@@ -85,15 +114,15 @@ export const actions = {
 
   async addComment({ commit, getters, dispatch }, { text, postId }) {
     const post = getters.getById(postId);
+    const userid = this.$auth.$state.user.id;
 
     if (Object.keys(post).length !== 0) {
       const comment = {
         postid: post.id,
-        userid: 16,
-        text: text
+        userid,
+        text
       };
-      commit("addComment", { comment, post });
-      dispatch("postComment", comment);
+      dispatch("comments/post", comment, { root: true });
     } else {
       alert("could not find post");
     }
@@ -109,7 +138,7 @@ export const getters = {
     return output;
   },
 
-  getAllPosts: state => {
-    return state.list;
+  getPostsByUserId: state => id => {
+    return state.list.filter(post => post.userid.toString() === id.toString());
   }
 };
