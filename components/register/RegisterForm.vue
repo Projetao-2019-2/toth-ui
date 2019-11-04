@@ -2,7 +2,8 @@
   <div class="form-register-container">
     <form @submit.prevent="onSubmit()">
       <div class="register-btn-block item-form-reg">
-        <b-button v-for="item in studentType" :key="item.name" variant="primary" :pressed="item.selected" @click="updateStudentType(item)"> {{ item.name }} </b-button>
+        <b-button variant="primary" :pressed="isHighSchool" @click="isHighSchool = true"> Ensino Médio </b-button>
+        <b-button variant="primary" :pressed="!isHighSchool" @click="isHighSchool = false"> Ensino Superior </b-button>
       </div>
       <div class="register-input-block item-form-reg">
         <b-form-input 
@@ -20,16 +21,16 @@
       </div>
       <b-form-input 
         type="email" 
-        v-model="email" 
+        v-model="email"
         placeholder="E-mail" 
-        required 
+        required
         class="item-form-reg">
       </b-form-input>
       <b-form-input 
         type="text" 
         v-model="university" 
         placeholder="Universidade"
-        v-if="!studentType[0].selected" 
+        v-if="!isHighSchool" 
         required 
         class="item-form-reg">
       </b-form-input>
@@ -37,15 +38,15 @@
         type="text" 
         v-model="course" 
         placeholder="Curso"
-        v-if="!studentType[0].selected"  
+        v-if="!isHighSchool"  
         required 
         class="item-form-reg">
       </b-form-input>
       <b-form-input 
         type="text" 
-        v-model="course" 
+        v-model="school" 
         placeholder="Escola"
-        v-if="studentType[0].selected"  
+        v-if="isHighSchool"  
         required 
         class="item-form-reg">
       </b-form-input>
@@ -93,20 +94,12 @@ export default {
       email: '',
       university: '',
       course: '',
+      school: '',
       password: '',
       repeatPassword: '',
       passwordStatus: false,
       buttonNotActive: false,
-      studentType: [
-        {
-          name: "Ensino Médio",
-          selected: false
-        },
-        {
-          name: "Ensino Superior",
-          selected: true
-        }
-      ]
+      isHighSchool: false
     }
   },
   methods: {
@@ -115,22 +108,20 @@ export default {
       if (!this.passwordStatus) {
         alert('Senhas inválidas!')
       } else {
-        const dataFormRegister = {
+        let dataFormRegister = {
           nome: this.firstName + ' ' + this.lastName,
           email: this.email,
-          curso: this.course,
-          ies: this.university,
-          type: 'highschool',
           password: this.password
         }
-        this.$emit('submitFormRegister', dataFormRegister);
+        if (isHighSchool) {
+          dataFormRegister.school = this.school;
+          this.$emit('submitFormRegister', dataFormRegister);
+        } else {
+          dataFormRegister.university = this.university;
+          dataFormRegister.course = this.course;
+          this.$emit('submitFormRegister', dataFormRegister);
+        }
       }
-    },
-    updateStudentType (type) {
-      this.studentType.forEach(item => {
-        if (item.name === type.name) item.selected = true;
-        else item.selected = false;
-      })
     }
   }
 }

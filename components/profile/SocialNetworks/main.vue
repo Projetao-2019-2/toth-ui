@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       showFormEditLinks: false,
-      ownerProfile: false
+      ownerProfile: true
     };
   }
 };
