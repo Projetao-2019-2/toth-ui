@@ -1,6 +1,9 @@
 <template>
   <div class="form-register-container">
     <form @submit.prevent="onSubmit()">
+      <div class="register-btn-block item-form-reg">
+        <b-button v-for="item in studentType" :key="item.name" variant="primary" :pressed="item.selected" @click="updateStudentType(item)"> {{ item.name }} </b-button>
+      </div>
       <div class="register-input-block item-form-reg">
         <b-form-input 
           type="text" 
@@ -25,14 +28,24 @@
       <b-form-input 
         type="text" 
         v-model="university" 
-        placeholder="Universidade" 
+        placeholder="Universidade"
+        v-if="!studentType[0].selected" 
         required 
         class="item-form-reg">
       </b-form-input>
       <b-form-input 
         type="text" 
         v-model="course" 
-        placeholder="Curso" 
+        placeholder="Curso"
+        v-if="!studentType[0].selected"  
+        required 
+        class="item-form-reg">
+      </b-form-input>
+      <b-form-input 
+        type="text" 
+        v-model="course" 
+        placeholder="Escola"
+        v-if="studentType[0].selected"  
         required 
         class="item-form-reg">
       </b-form-input>
@@ -83,7 +96,17 @@ export default {
       password: '',
       repeatPassword: '',
       passwordStatus: false,
-      buttonNotActive: false
+      buttonNotActive: false,
+      studentType: [
+        {
+          name: "Ensino Médio",
+          selected: false
+        },
+        {
+          name: "Ensino Superior",
+          selected: true
+        }
+      ]
     }
   },
   methods: {
@@ -102,6 +125,12 @@ export default {
         }
         this.$emit('submitFormRegister', dataFormRegister);
       }
+    },
+    updateStudentType (type) {
+      this.studentType.forEach(item => {
+        if (item.name === type.name) item.selected = true;
+        else item.selected = false;
+      })
     }
   }
 }
@@ -123,6 +152,16 @@ export default {
   .button-form-reg {
     width: 100%;
     animation: moveSubmit 1.5s;
+  }
+
+  .register-btn-block {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 30px;
+  }
+
+  .register-btn-block button {
+    width: 49%;
   }
 
   .register-input-block {
