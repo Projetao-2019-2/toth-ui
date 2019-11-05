@@ -13,6 +13,9 @@
       <nuxt-link to="/ranking">
         <b-button variant="success">Ranking</b-button>
       </nuxt-link>
+      <nuxt-link to="/settings/profile">
+        <b-button variant="secondary" class="btn-edit-profile">Editar Perfil</b-button>
+      </nuxt-link>
     </div>
   </div>
 </template>
@@ -52,5 +55,8 @@ export default {
 }
 .ranking-user p {
   margin: 0 28px;
+}
+.btn-edit-profile {
+  margin-left: 5px;
 }
 </style>
