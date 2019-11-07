@@ -1,26 +1,49 @@
 <template>
   <div class="global">
     <FilterBar />
-    <Results :posts="results" />
+    <LoadingIcon v-if="loading" message="Buscando ..." />
+    <Results v-else :posts="results" />
   </div>
 </template>
 
 <script>
 import FilterBar from "../../components/posts/FilterBar";
+import LoadingIcon from "~/components/LoadingIcon";
 import Results from "../../components/posts/Results";
 import { mapState } from "vuex";
+
 export default {
   components: {
     FilterBar,
-    Results
+    Results,
+    LoadingIcon
   },
   computed: {
     ...mapState("posts", {
       results: "searchResults"
     })
   },
+  data() {
+    return {
+      loading: false
+    };
+  },
+  methods:{
+    async search(){
+      this.loading = true;
+      await this.$store.dispatch("posts/search", this.$route.query.search);
+      this.loading = false;
+    }
+  },
   async mounted() {
-    await this.$store.dispatch("posts/search", this.$route.query.search);
+    this.search();
+  },
+  watch: {
+    $route(to, from) {
+      if(to.name === 'posts' && to.query.search !== from.query.search){
+        this.search();
+      }
+    }
   }
 };
 </script>
@@ -36,5 +59,9 @@ export default {
 }
 .global .grid {
   margin-top: 24px;
+}
+
+.global .box-spinner p {
+  color: black;
 }
 </style>

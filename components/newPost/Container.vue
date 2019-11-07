@@ -12,10 +12,7 @@
         <b-button variant="light" size="lg" @click="doPost()" :disabled="buttonNotActive">Postar</b-button>
       </div>
     </div>
-    <div v-else class="box-spinner">
-      <p>Postando ...</p>
-      <b-spinner variant="success" style="width: 5rem; height: 5rem;" label="Large Spinner"></b-spinner>
-    </div>
+    <LoadingIcon v-else message="Postando ..." />
   </div>
 </template>
 
@@ -23,6 +20,7 @@
 import PostThemes from "./PostThemes/main";
 import MediaSelection from "./MediaSelection/main";
 import TextBox from "./TextBox/main";
+import LoadingIcon from "~/components/LoadingIcon";
 
 export default {
   name: "NewPost",
@@ -30,7 +28,8 @@ export default {
   components: {
     PostThemes,
     MediaSelection,
-    TextBox
+    TextBox,
+    LoadingIcon
   },
   data() {
     return {
@@ -117,17 +116,5 @@ export default {
   justify-content: flex-end;
   width: 100%;
   margin-top: 30px;
-}
-.box-spinner {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 500px;
-}
-.box-spinner p {
-  color: whitesmoke;
-  font-size: 2em;
 }
 </style>
