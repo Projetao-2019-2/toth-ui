@@ -115,10 +115,12 @@ export default {
         };
         if (isHighSchool) {
           dataFormRegister.school = this.school;
+          dataFormRegister.type = "highschool";
           this.$emit("submitFormRegister", dataFormRegister);
         } else {
           dataFormRegister.university = this.university;
           dataFormRegister.course = this.course;
+          dataFormRegister.type = "undergraduate";
           this.$emit("submitFormRegister", dataFormRegister);
         }
       }
