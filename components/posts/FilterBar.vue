@@ -1,18 +1,38 @@
 <template>
     <div class="filter-bar">
          <b-button-group size="lg" class="conj">
-            <b-button class="botao" id="geral">GERAL</b-button>
-            <b-button class="botao" id="infra">INFRAESTRUTURA</b-button>
-            <b-button class="botao" id="exp">EXPERIÊNCIA EM DISCIPLINAS</b-button>
-            <b-button class="botao" id="ativext">ATIVIDADES EXTRACURRICULARES</b-button>
-            <b-button class="botao" id="arredores">ARREDORES</b-button>
+             <b-button v-for="item in categorias" :key="item.id" class="botao" :id="item.name">{{ item.name }} </b-button>
         </b-button-group>
     </div>
 </template>
 
 <script>
 export default {
-    name: "FilterBar"
+    name: "FilterBar",
+    middleware: "categorias",
+    computed:{
+        categorias: function(){
+            console.log(this.$store.getters['categories/getAll']);
+            return this.$store.getters['categories/getAll'];
+        }
+    },
+    // data(){
+    //     hover: false
+    // },
+    async fetch({ store }){
+        await store.dispatch("categories/getAll");
+    },
+    methods:{
+        styleObject: function(id) {
+            console.log(id);
+            console.log(this.categorias);
+            return{
+                if(hover){
+                    background: id;
+                }
+            }
+        }
+    }
 };
 </script>
 
@@ -41,28 +61,28 @@ export default {
     background-color: gray;
 }
 
-#infra {
+#Infraestrutura {
     border-bottom: 6px solid #1DBDFF;
 }
-#infra:hover {
+#Infraestrutura:hover {
     background-color: #1DBDFF;
 }
-#exp {
+#Experiência\ em\ disciplinas {
     border-bottom: 6px solid #16D64C;
 }
-#exp:hover {
+#Experiência\ em\ disciplinas:hover {
     background-color: #16D64C;
 }
-#ativext {
+#Atividades\ extracurriculares {
     border-bottom: 6px solid #FF8E20;
 }
-#ativext:hover {
+#Atividades\ extracurriculares:hover {
     background-color:#FF8E20;
 }
-#arredores {
+#Arredores {
     border-bottom: 6px solid #FF6DD5;
 }
-#arredores:hover {
+#Arredores:hover {
     background-color:#FF6DD5;
 }
 
