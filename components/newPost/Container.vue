@@ -71,9 +71,6 @@ export default {
 
     async doPost() {
       this.isPosting = true;
-      console.log("O tema da postagem é: " + this.selectedCategorie.name);
-      console.log("O texto da postagem é: " + this.inputMessage);
-      console.log(this.image);
 
       if (this.image) {
         var fd = new FormData();

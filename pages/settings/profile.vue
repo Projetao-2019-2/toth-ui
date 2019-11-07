@@ -9,7 +9,7 @@
 
 <script>
 import SettingsList from "~/components/settings/SettingsList";
-import ProfileBox from "~/components/settings/ProfileBox/main";
+import ProfileBox from "~/components/settings/ProfileBox";
 
 export default {
   name: "SettingsProfile",
@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .settings-container {
   padding-top: 50px;
   display: flex;
