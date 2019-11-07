@@ -2,7 +2,7 @@
   <div class="settingslist-container">
     <div class="settinglist-header text-settinglist">Configurações</div>
     <div class="settingslist-item">
-      <div class="selection-bar" :style="{ background: profileSelected ? 'black' : '#fff' }"></div>
+      <div class="selection-bar"></div>
       <span class="text-settinglist">Perfil</span>
     </div>
   </div>
@@ -10,12 +10,7 @@
 
 <script>
 export default {
-  name: "SettingsList",
-  data() {
-    return {
-      profileSelected: true
-    };
-  }
+  name: "SettingsList"
 };
 </script>
 
