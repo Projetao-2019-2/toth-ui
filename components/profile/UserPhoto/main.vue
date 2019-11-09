@@ -1,6 +1,6 @@
 <template>
   <div class="user-photo-container">
-    <img v-if="havePhoto" src="./joao.jpg" />
+    <img :src="user.imagepath" v-if="user.imagepath" />
     <font-awesome-icon v-else :icon="['fas', 'user']" size="4x"></font-awesome-icon>
   </div>
 </template>
@@ -8,11 +8,7 @@
 <script>
 export default {
   name: "ProfileUserPhoto",
-  data() {
-    return {
-      havePhoto: true
-    };
-  }
+  props: ["user"]
 };
 </script>
 

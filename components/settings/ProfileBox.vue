@@ -3,8 +3,14 @@
     <div class="settings-user-photo">
       <div class="photo-wrapper">
         <label for="file">
-          <img v-if="havePhoto" :src="imageUrl" />
-          <font-awesome-icon v-else :icon="['fas', 'user']" size="4x"></font-awesome-icon>
+          <div v-if="havePhoto">
+            <img v-if="this.image" :src="imageUrl" />
+            <img v-else :src="user.imagepath" />
+          </div>
+          <div v-else>
+            <img v-if="this.image" :src="imageUrl" />
+            <font-awesome-icon v-else :icon="['fas', 'user']" size="4x"></font-awesome-icon>
+          </div>
         </label>
         <input
           type="file"
@@ -60,6 +66,12 @@
           style="width: 2rem; height: 2rem;"
           label="Large Spinner"
         ></b-spinner>
+        <font-awesome-icon
+          v-if="!disableButton"
+          :icon="['fas', 'check-circle']"
+          size="2x"
+          class="icon-social-network"
+        ></font-awesome-icon>
         <b-button variant="success" @click="updateData" :disabled="disableButton">Atualizar</b-button>
       </div>
     </div>
@@ -71,9 +83,9 @@ export default {
   name: "ProfileBox",
   data() {
     return {
-      havePhoto: true,
+      havePhoto: false,
       disableButton: false,
-      image: null,
+      image: "",
       imageUrl: null,
       name: "",
       university: "",
@@ -100,48 +112,68 @@ export default {
 
     buildnewData() {
       const oldData = this.$auth.$state.user;
-      const newData = {};
-      newData.image = this.image;
+      var body = new FormData();
 
-      if (oldData.nome !== this.name) {
-        newData.nome = this.name;
-      }
-      if (oldData.ies !== this.university) {
-        newData.ies = this.university;
-      }
-      if (oldData.curso !== this.course) {
-        newData.curso = this.course;
-      }
-      if (oldData.instagram_link !== this.link_instagram) {
-        newData.instagram_link = this.link_instagram;
-      }
-      if (oldData.facebook_link !== this.link_facebook) {
-        newData.facebook_link = this.link_facebook;
-      }
-      if (oldData.twitter_link !== this.link_twitter) {
-        newData.twitter_link = this.link_twitter;
+      if (this.image) {
+        body.append("file", this.image || []);
       }
 
-      return newData;
+      if (this.name.length !== 0 && oldData.nome !== this.name) {
+        body.append("nome", this.name);
+      }
+      if (this.university.length !== 0 && oldData.ies !== this.university) {
+        body.append("ies", this.university);
+      }
+      if (this.course.length !== 0 && oldData.curso !== this.course) {
+        body.append("curso", this.course);
+      }
+      if (
+        this.link_instagram.length !== 0 &&
+        oldData.instagram_link !== this.link_instagram
+      ) {
+        body.append("instagram_link", this.link_instagram);
+      }
+      if (
+        this.link_facebook.length !== 0 &&
+        oldData.facebook_link !== this.link_facebook
+      ) {
+        body.append("facebook_link", this.link_facebook);
+      }
+      if (
+        this.link_twitter.length !== 0 &&
+        oldData.twitter_link !== this.link_twitter
+      ) {
+        body.append("twitter_link", this.link_twitter);
+      }
+
+      return body;
     },
 
-    updateData() {
+    async updateData() {
       this.disableButton = true;
       const newData = this.buildnewData();
-      alert("Dados atualizados com sucesso!");
-
-      // try {
-      //   await this.$store.dispatch("users/dataUpdate", newData);
-      //   this.disableButton = false;
-      // } catch (e) {
-      //   console.log("Ocorreu um erro! " + e);
-      //   alert("Ocorreu um erro!");
-      // }
+      console.log(newData);
+      try {
+        const response = await this.$axios.$put(
+          "users/" + this.user.id,
+          newData
+        );
+        console.log(response);
+        this.disableButton = false;
+      } catch (e) {
+        console.log("Ocorreu um erro! " + e);
+        alert("Ocorreu um erro!");
+        this.disableButton = false;
+      }
     }
   },
   computed: {
     user: function() {
       const userData = this.$auth.$state.user;
+
+      if (userData.image) {
+        this.havePhoto = true;
+      }
       if (userData.imagepath === null) this.havePhoto = false;
       return userData;
     }

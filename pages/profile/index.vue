@@ -2,7 +2,7 @@
   <div class="profile-container">
     <div class="profile-information-container">
       <div class="photo-networks-wrapper">
-        <UserPhoto />
+        <UserPhoto :user="user" />
         <SocialNetworks :user="user" />
       </div>
       <div class="name-course-rank-wrapper">
