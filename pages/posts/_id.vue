@@ -24,6 +24,14 @@
           </b-row>
 
           <b-row>
+            <b-col class="author-section">
+              <p>{{post.author.nome}}, {{$moment(post.createdAt).fromNow()}}</p>
+            </b-col>
+          </b-row>
+
+          <hr />
+
+          <b-row>
             <b-col class="rate-section">
               <div class="d-flex">Esse post foi relevante?</div>
               <div class="d-flex ml-3">{{post.util}}</div>
@@ -41,8 +49,6 @@
               />
             </b-col>
           </b-row>
-
-          <hr />
 
           <b-row>
             <b-col>
@@ -109,7 +115,7 @@ export default {
       }
       this.newComment = "";
     },
-    backToSearch(){
+    backToSearch() {
       this.$router.go(-1);
     }
   }
@@ -143,10 +149,16 @@ export default {
   text-align: justify;
 }
 
+.author-section p{
+  color: rgb(0, 0, 0, 0.6);
+  margin-bottom: 0px;
+}
+
 .rate-section {
   flex-direction: row;
   display: flex;
   align-items: center;
+  margin-bottom: 12px;
 }
 
 .thumb-icon {

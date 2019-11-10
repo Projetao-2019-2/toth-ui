@@ -2,15 +2,36 @@
     <div class="ranking">
         <b-img center src="../../assets/medal.png" alt="Medal icon" class="imagem"></b-img>
         <h3>TOP AJUDANTES DO SEMESTRE</h3>
-        <h5 id="rankingd">Engenharia da Computação - UFPE</h5>
-        <h6 id="rankingd">Sua pontuação: total</h6>
+        <h5 id="rankingd">{{ curso }}</h5>
+        <h6 id="rankingd">Sua pontuação: {{ ranking }}</h6>
     </div>
 </template>
 
 <script>
 
 export default {
-    name: 'RankingHead'
+    name: 'RankingHead',
+    data() {
+        return {
+            ranking: 0,
+            curso: String
+        }
+    },
+    methods: {
+        async getRanking() {
+            try{
+                const response = await this.$axios.$get("ranking");
+                this.ranking = response.my_points;
+                this.curso = response.curso_ies;
+                //console.log(this.curso);
+            } catch (err) { 
+                console.log(err);
+            }
+        }
+    },
+    mounted() {
+        this.users = this.getRanking();   
+    }
 }
 </script>
 
