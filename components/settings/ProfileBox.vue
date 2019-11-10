@@ -154,11 +154,17 @@ export default {
     async updateData() {
       this.disableButton = true;
       const newData = this.buildnewData();
+      const payload = {
+        data: newData,
+        userId: this.user.id
+      };
+
       try {
-        const response = await this.$axios.$put(
-          "users/" + this.user.id,
-          newData
-        );
+        await this.$store.dispatch("users/update", payload);
+        // const response = await this.$axios.$put(
+        //   "users/" + this.user.id,
+        //   newData
+        // );
         this.disableButton = false;
       } catch (e) {
         console.log("Ocorreu um erro! " + e);
