@@ -113,13 +113,13 @@ export default {
           email: this.email,
           password: this.password
         };
-        if (isHighSchool) {
-          dataFormRegister.school = this.school;
+        if (this.isHighSchool) {
+          // dataFormRegister.school = this.school;
           dataFormRegister.type = "highschool";
           this.$emit("submitFormRegister", dataFormRegister);
         } else {
-          dataFormRegister.university = this.university;
-          dataFormRegister.course = this.course;
+          dataFormRegister.ies = this.university;
+          dataFormRegister.curso = this.course;
           dataFormRegister.type = "undergraduate";
           this.$emit("submitFormRegister", dataFormRegister);
         }

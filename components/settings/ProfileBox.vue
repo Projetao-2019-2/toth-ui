@@ -27,13 +27,15 @@
         <div class="label-input">Nome</div>
         <b-form-input :placeholder="user.nome" v-model="name" class="input-profile-box"></b-form-input>
       </div>
-      <div class="box-input">
-        <div class="label-input">Universidade</div>
-        <b-form-input :placeholder="user.ies" v-model="university" class="input-profile-box"></b-form-input>
-      </div>
-      <div class="box-input">
-        <div class="label-input">Curso</div>
-        <b-form-input :placeholder="user.curso" v-model="course" class="input-profile-box"></b-form-input>
+      <div v-if="user.type !== 'highschool'" class="inputs-wrapper">
+        <div class="box-input">
+          <div class="label-input">Universidade</div>
+          <b-form-input :placeholder="user.ies" v-model="university" class="input-profile-box"></b-form-input>
+        </div>
+        <div class="box-input">
+          <div class="label-input">Curso</div>
+          <b-form-input :placeholder="user.curso" v-model="course" class="input-profile-box"></b-form-input>
+        </div>
       </div>
       <div class="box-input">
         <div class="label-input">Instagram</div>
@@ -152,13 +154,11 @@ export default {
     async updateData() {
       this.disableButton = true;
       const newData = this.buildnewData();
-      console.log(newData);
       try {
         const response = await this.$axios.$put(
           "users/" + this.user.id,
           newData
         );
-        console.log(response);
         this.disableButton = false;
       } catch (e) {
         console.log("Ocorreu um erro! " + e);
@@ -170,7 +170,6 @@ export default {
   computed: {
     user: function() {
       const userData = this.$auth.$state.user;
-
       if (userData.image) {
         this.havePhoto = true;
       }
