@@ -1,7 +1,7 @@
 <template>
     <div class="filter-bar">
          <b-button-group size="lg" class="conj">
-             <b-button v-for="item in categorias" :key="item.id" class="botao" :id="item.name">{{ item.name }} </b-button>
+             <b-button v-for="item in categorias" @click="searchMethods(item.id)" :key="item.id" class="botao" :id="item.name">{{ item.name }} </b-button>
         </b-button-group>
     </div>
 </template>
@@ -31,6 +31,9 @@ export default {
                     background: id;
                 }
             }
+        },
+        searchMethods: function(category_id){
+            this.$router.push({ path: 'posts', query: {search: searchText, category: category_id} });
         }
     }
 };

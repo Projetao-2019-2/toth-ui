@@ -47,10 +47,17 @@ export default {
     animate() {
       window.requestAnimationFrame(this.animate);
       this.resizeAllGridItems();
+    },
+    filterCategorie(categories){
+      var allItems = document.getElementsByClassName("item");
+      for (let x = 0; x < allItems.length; x++) {
+        console.log(allItems[x]);
+      }
     }
   },
   async mounted() {
     await this.$store.dispatch("posts/search", this.$route.query.search);
+    this.filterCategorie(this.$route.query.categorie);
     this.resizeInstance();
     this.animate();
   }
