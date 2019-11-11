@@ -1,14 +1,14 @@
 <template>
   <div class="register-logo-container">
-    <img src="./logo.png" width="200px" height="200px"/>
-    <p class="register-logo"> Junte-se à Nortuni </p>
+    <img src="./logo.png" width="150px" height="150px" />
+    <p class="register-logo">Junte-se à Nortuni</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'RegisterLogo'
-}
+  name: "RegisterLogo"
+};
 </script>
 
 <style>
@@ -32,10 +32,10 @@ export default {
   from {
     opacity: 0;
     transform: translateY(-100%);
-  }to {
+  }
+  to {
     opacity: 1;
     transform: translateY(0%);
   }
 }
-
 </style>

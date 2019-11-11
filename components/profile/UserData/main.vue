@@ -3,17 +3,22 @@
     <div>
       <span class="name-user">{{user.nome}}</span>
     </div>
-    <div class="university-user">
-      <font-awesome-icon :icon="['fas', 'graduation-cap']" size="2x" class="icon-uni"></font-awesome-icon>
-      <p>{{user.curso}} - {{user.ies}}</p>
+    <div v-if="user.type !== 'highschool'">
+      <div class="university-user">
+        <font-awesome-icon :icon="['fas', 'graduation-cap']" size="2x" class="icon-uni"></font-awesome-icon>
+        <p>{{user.curso}} - {{user.ies}}</p>
+      </div>
+      <div class="ranking-user">
+        <font-awesome-icon :icon="['fas', 'medal']" size="2x" class="icon-uni"></font-awesome-icon>
+        <p>Veterano Engajador</p>
+        <nuxt-link to="/ranking">
+          <b-button variant="success">Ranking</b-button>
+        </nuxt-link>
+      </div>
     </div>
-    <div class="ranking-user">
-      <font-awesome-icon :icon="['fas', 'medal']" size="2x" class="icon-uni"></font-awesome-icon>
-      <p>Veterano Engajador</p>
-      <nuxt-link to="/ranking">
-        <b-button variant="success">Ranking</b-button>
-      </nuxt-link>
-    </div>
+    <nuxt-link to="/settings/profile">
+      <b-button variant="secondary" class="btn-edit-profile">Editar Perfil</b-button>
+    </nuxt-link>
   </div>
 </template>
 
@@ -52,5 +57,8 @@ export default {
 }
 .ranking-user p {
   margin: 0 28px;
+}
+.btn-edit-profile {
+  margin-top: 5px;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="board">
         <b-list-group >
-            <b-list-group-item v-for="user in users" :key="user.id" >
+            <b-list-group-item v-for="user in ranking" :key="user.id" >
                 <div class="index" id="first">
                 </div>
                 <div class="name"><p>{{ user.nome }}</p></div>
@@ -19,22 +19,22 @@ export default {
     name: 'RankingTable',
     data() {
         return {
-            users: []
+            ranking: []
         }
     },
     methods: {
-        async getUsers() {
+        async getRanking() {
             try{
-                const response = await this.$axios.$get("users");
-                this.users = response.users;
-                //console.log(response.users);
+                const response = await this.$axios.$get("ranking");
+                this.ranking = response.rankings;
+                //console.log(this.ranking);
             } catch (err) { 
                 console.log(err);
             }
         }
     },
     mounted() {
-        this.users = this.getUsers();   
+        this.users = this.getRanking();   
     }
 }
 //cores p o ranking:
