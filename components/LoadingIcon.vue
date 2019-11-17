@@ -1,14 +1,14 @@
 <template>
   <div class="box-spinner">
     <p>{{message ? message : 'Carregando ....'}}</p>
-    <b-spinner variant="success" style="width: 5rem; height: 5rem;" label="Large Spinner"></b-spinner>
+    <b-spinner variant="primary" style="width: 4rem; height: 4rem;" label="Large Spinner"></b-spinner>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'LoadingIcon',
-  props: ['message']
+  name: "LoadingIcon",
+  props: ["message"]
 };
 </script>
 
@@ -22,7 +22,7 @@ export default {
   height: 500px;
 }
 .box-spinner p {
-  color: whitesmoke;
+  color: rgb(201, 200, 200);
   font-size: 2em;
 }
 </style>

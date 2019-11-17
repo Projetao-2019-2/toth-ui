@@ -1,20 +1,27 @@
 <template>
   <div class="newpost-wrapper">
-    <div class="newpost-box">
+    <div class="newpost-box" v-if="!isPosting">
       <div class="top-box">
-        <Categories @categorie-selected="updateCategorie" />
+        <Categories @categorie-selected="updateCategorie" :categories="categories" />
       </div>
       <div class="bottom-box">
         <div class="photo-buttom-box">
           <div class="photo-box">
-            <Media />
+            <Media @onFileSelected="updateImage" />
           </div>
           <div class="buttom-box">
-            <button class="btn-post" :style="{ background: btnBackg}">Postar</button>
+            <button class="btn-post" :style="{ background: btnBackg}" @click="doPost()">Postar</button>
           </div>
         </div>
-        <div class="data-box"></div>
+        <div class="data-box">
+          <h5>Fala aí, {{user.nome}}</h5>
+          <InputText @newMessage="updateMessage" :categoryDescription="categoryDescription" />
+          <h6 v-if="showWarning">Você está esquecendo algo!</h6>
+        </div>
       </div>
+    </div>
+    <div class="spinner-box newpost-box" v-else>
+      <Spinner />
     </div>
   </div>
 </template>
@@ -22,41 +29,90 @@
 <script>
 import Categories from "../../components/newPost/Categories";
 import Media from "../../components/newPost/Media";
+import InputText from "../../components/newPost/TextBox/main";
+import Spinner from "../../components/LoadingIcon";
 
 export default {
   name: "NewPost",
+  middleware: ["auth", "categories"],
   components: {
     Categories,
-    Media
+    Media,
+    InputText,
+    Spinner
   },
   data() {
     return {
-      categorieSelected: ""
+      showWarning: false,
+      isPosting: false,
+      selectedCategoryId: "",
+      image: null,
+      message: ""
     };
   },
   methods: {
-    updateCategorie(categorie) {
-      this.categorieSelected = categorie;
+    updateCategorie(id) {
+      this.selectedCategoryId = id;
+    },
+    updateImage(file) {
+      this.image = file;
+    },
+    updateMessage(msg) {
+      this.message = msg;
+    },
+    geTselectedCategory: function() {
+      for (const cat of this.categories) {
+        if (cat.id === this.selectedCategoryId) {
+          return cat;
+        }
+      }
+      return null;
+    },
+    checkForm() {
+      if (this.selectedCategoryId && (this.message.length || this.image))
+        return true;
+      else return false;
+    },
+    async doPost() {
+      // console.log(this.selectedCategoryId);
+      // console.log(this.image);
+      // console.log(this.message);
+
+      let validForm = this.checkForm();
+      if (validForm) {
+        this.isPosting = true;
+        var body = new FormData();
+        body.append("texto", this.message);
+        body.append("categoryid", this.selectedCategoryId);
+        body.append("file", this.image || []);
+        try {
+          const newPost = await this.$store.dispatch("posts/send", body);
+          this.$router.push(`/posts/${newPost.id}`);
+        } catch (e) {
+          console.log("Ocorreu um erro! " + e);
+          alert("Ocorreu um erro!");
+        }
+      } else {
+        this.showWarning = true;
+      }
     }
   },
   computed: {
     btnBackg: function() {
-      switch (this.categorieSelected) {
-        case "Infr":
-          return "#1DBDFF";
-          break;
-        case "Expe":
-          return "#16D64C";
-          break;
-        case "Ativ":
-          return "#FF8E20";
-          break;
-        case "Arre":
-          return "#FF6DD5";
-          break;
-        default:
-          return "#D13B4C";
-      }
+      let cat = this.geTselectedCategory();
+      if (cat) return cat.color;
+      else return "#D13B4C";
+    },
+    user: function() {
+      return this.$auth.$state.user;
+    },
+    categories: function() {
+      return this.$store.getters["categories/getAll"];
+    },
+    categoryDescription: function() {
+      let cat = this.geTselectedCategory();
+      if (cat) return cat.description;
+      else return "Escolha uma categoria!";
     }
   }
 };
@@ -79,6 +135,10 @@ export default {
   display: flex;
   flex-direction: column;
 }
+.spinner-box {
+  justify-content: center;
+  align-items: center;
+}
 .top-box {
   height: 80px;
   display: flex;
@@ -88,7 +148,7 @@ export default {
 .bottom-box {
   flex-grow: 1;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 .photo-buttom-box {
@@ -98,6 +158,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-left: 40px;
 }
 .photo-box {
   height: 450px;
@@ -114,14 +175,23 @@ export default {
   width: 100%;
   height: 100%;
   border-radius: 8px;
-  background-color: #efefef;
   border: 0;
   color: rgb(49, 47, 47);
   font-weight: bold;
 }
+.btn-post:hover {
+  border: 2px solid black;
+}
 .data-box {
   width: 420px;
   height: 450px;
-  border: 1px solid grey;
+  margin-right: 40px;
+}
+.data-box h5 {
+  font-weight: bold;
+}
+.data-box h6 {
+  font-weight: bold;
+  color: red;
 }
 </style>

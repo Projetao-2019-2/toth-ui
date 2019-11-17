@@ -41,18 +41,15 @@
             <b-button variant="danger" class="btn-header-default" @click="showNotifications()">
               <font-awesome-icon :icon="['fa', 'bell']"></font-awesome-icon>
             </b-button>
-            <b-button variant="primary" class="btn-header-default" @click="showNewPost()">
+            <b-button variant="primary" class="btn-header-default" @click="goToNewPost()">
               <font-awesome-icon :icon="['fas', 'pencil-alt']"></font-awesome-icon>
             </b-button>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <transition name="showNewPost">
-      <div class="newpost-notifications-screen" v-if="newPostActive">
-        <NewPost @postDone="newPostActive = false" :categories="categories" />
-      </div>
-      <div class="newpost-notifications-screen" v-if="notificationsActive">
+    <transition name="showNotifications">
+      <div class="notifications-screen" v-if="notificationsActive">
         <Notifications />
       </div>
     </transition>
@@ -61,34 +58,29 @@
 </template>
 
 <script>
-import NewPost from "../components/newPost/Container";
 import Notifications from "../components/notifications/Container";
 import { mapState } from "vuex";
 
 export default {
   middleware: "categories",
   components: {
-    NewPost,
     Notifications
   },
   data() {
     return {
-      newPostActive: false,
       notificationsActive: false,
       searchString: ""
     };
   },
   methods: {
-    showNewPost() {
-      this.newPostActive = !this.newPostActive;
-      this.notificationsActive = false;
+    goToNewPost() {
+      this.$router.push("/newpost");
     },
     showNotifications() {
       this.notificationsActive = !this.notificationsActive;
-      this.newPostActive = false;
     },
     doSearch(text) {
-      this.$router.push({ path: '/posts', query: { search: text } });
+      this.$router.push({ path: "/posts", query: { search: text } });
     }
   },
   computed: {
@@ -123,7 +115,7 @@ nav {
   min-height: calc(100vh - 70px);
 }
 
-.newpost-notifications-screen {
+.notifications-screen {
   position: fixed;
   display: flex;
   justify-content: center;
@@ -135,11 +127,11 @@ nav {
   overflow-y: auto;
 }
 
-.showNewPost-enter-active {
+.showNotifications-enter-active {
   animation: show-newpost 0.5s;
 }
 
-.showNewPost-leave-active {
+.showNotifications-leave-active {
   animation: show-newpost 0.5s reverse;
 }
 

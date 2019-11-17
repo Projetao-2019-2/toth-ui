@@ -1,7 +1,7 @@
 <template>
   <div class="media-container">
     <div class="media-wrapper" v-if="!imageIsSelected">
-      <Input @onFileSelected="imageSelected" />
+      <InputFile @onFileSelected="imageSelected" />
       <p v-if="!imageIsSelected">Selecione uma imagem</p>
     </div>
     <div class="img-selected-container" v-if="imageIsSelected">
@@ -19,12 +19,12 @@
 </template>
 
 <script>
-import Input from "./MediaSelection/InputFile";
+import InputFile from "./MediaSelection/InputFile";
 
 export default {
   name: "Media",
   components: {
-    Input
+    InputFile
   },
   data() {
     return {
