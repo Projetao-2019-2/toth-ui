@@ -24,7 +24,7 @@ export default {
   methods: {
     doSearch() {
       this.$router.push({
-        path: "/posts",
+        path: "/",
         query: { search: this.searchString }
       });
     }

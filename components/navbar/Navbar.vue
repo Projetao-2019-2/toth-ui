@@ -6,7 +6,7 @@
           <img class="logo" src="~/static/logo2.png" />
         </b-navbar-brand>
       </nuxt-link>
-      <NavbarInput />
+      <NavbarInput class="input"/>
 
       <b-collapse is-nav>
         <!-- Right aligned nav items -->
@@ -151,7 +151,7 @@ nav a {
 }
 
 .input {
-  width: 20em;
+  width: 600px;
 }
 
 .logo {

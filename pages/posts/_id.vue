@@ -107,8 +107,8 @@ export default {
     };
   },
 
-  async fetch({ store, params }) {
-    await store.dispatch("posts/getDetails", params.id);
+  fetch({ store, params }) {
+    return store.dispatch("posts/getDetails", params.id);
   },
   methods: {
     ...mapActions({

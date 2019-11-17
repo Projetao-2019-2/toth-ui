@@ -1,66 +1,67 @@
 <template>
-  <div class="search-container">
-    <div class="logo-wrapper">
-      <img src="~/assets/compass1.png" alt="nortuni" />
-      <span class="name-logo">Nortuni</span>
-    </div>
-    <div class="input-search-wrapper">
-      <b-input-group>
-        <b-form-input v-model="searchText" placeholder="Curso - Universidade" v-on:keyup.enter="doSearch(searchText)"></b-form-input>
-        <b-input-group-append>
-          <b-button variant="primary" class="btn-search" @click="doSearch(searchText)">
-            <font-awesome-icon :icon="['fas', 'search']"></font-awesome-icon>
-          </b-button>
-        </b-input-group-append>
-      </b-input-group>
-    </div>
+  <div class="global">
+    <FilterBar />
+    <LoadingIcon v-if="loading" message="Buscando ..." />
+    <Results v-else :posts="results" />
   </div>
 </template>
 
 <script>
+import FilterBar from "~/components/posts/FilterBar";
+import LoadingIcon from "~/components/LoadingIcon";
+import Results from "~/components/posts/Results";
+import { mapState } from "vuex";
+
 export default {
+  components: {
+    FilterBar,
+    Results,
+    LoadingIcon
+  },
+  computed: {
+    ...mapState("posts", {
+      results: "searchResults"
+    })
+  },
   data() {
     return {
-      searchText: ""
+      loading: false
     };
   },
   methods: {
-    doSearch(text) {
-      this.$router.push({ path: 'posts', query: {search: text} });
+    async search() {
+      this.loading = true;
+      await this.$store.dispatch("posts/search", this.$route.query.search);
+      this.loading = false;
+    }
+  },
+  async mounted() {
+    this.search();
+  },
+  watch: {
+    $route(to, from) {
+      if (to.name === "index" && to.query.search !== from.query.search) {
+        this.search();
+      }
     }
   }
 };
 </script>
 
 <style>
-.search-container {
+.global {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   min-height: 100vh;
-  width: 100%;
-  padding-bottom: 100px;
+  width: 80%;
+  margin: 0 10%;
 }
-.logo-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
+.global .grid {
+  margin-top: 24px;
 }
 
-.logo-wrapper img {
-  width: 200px;
-  height: 200px;
-}
-.name-logo {
-  font-size: 6em;
-}
-.input-search-wrapper {
-  width: 500px;
-}
-.btn-search {
-  width: 80px;
+.global .box-spinner p {
+  color: black;
 }
 </style>
