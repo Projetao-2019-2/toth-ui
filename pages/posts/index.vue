@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import FilterBar from "../../components/posts/FilterBar";
+import FilterBar from "~/components/posts/FilterBar";
 import LoadingIcon from "~/components/LoadingIcon";
-import Results from "../../components/posts/Results";
+import Results from "~/components/posts/Results";
 import { mapState } from "vuex";
 
 export default {
@@ -28,8 +28,8 @@ export default {
       loading: false
     };
   },
-  methods:{
-    async search(){
+  methods: {
+    async search() {
       this.loading = true;
       await this.$store.dispatch("posts/search", this.$route.query.search);
       this.loading = false;
@@ -40,7 +40,7 @@ export default {
   },
   watch: {
     $route(to, from) {
-      if(to.name === 'posts' && to.query.search !== from.query.search){
+      if (to.name === "posts" && to.query.search !== from.query.search) {
         this.search();
       }
     }

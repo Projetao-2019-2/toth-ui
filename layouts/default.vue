@@ -3,11 +3,11 @@
     <Navbar />
     <hr class="nav-separator" />
     <nuxt class="route-info" />
+    <NewPostTrigger />
   </div>
 </template>
 
 <script>
-
 import Navbar from "~/components/navbar/Navbar";
 import NewPostTrigger from "~/components/newPost/Trigger";
 import { mapState } from "vuex";
@@ -17,7 +17,7 @@ export default {
   components: {
     Navbar,
     NewPostTrigger
-  },
+  }
 };
 </script>
 
