@@ -26,7 +26,7 @@
         </b-input-group-append>
       </b-input-group>
 
-      <b-collapse id="nav-collapse" is-nav>
+      <b-collapse is-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item v-if="!$auth.$state.loggedIn">
@@ -38,30 +38,21 @@
           </b-nav-item>
 
           <b-nav-item v-if="$auth.$state.loggedIn" href="#">
-            <nuxt-link to="/profile">
-              <b-button class="btn-header-default">
-                <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
-              </b-button>
-            </nuxt-link>
-            <b-button
-              variant="danger"
-              class="btn-header-default"
-              @click="showNotifications()"
-            >
-              <font-awesome-icon :icon="['fa', 'bell']"></font-awesome-icon>
-            </b-button>
+            <NavbarIcon
+              link="/profile"
+              :icon="['fas', 'user']"
+              :text="$auth.$state.user.nome"
+            />
 
-            <nuxt-link to="/newpost">
-              <b-button variant="primary" class="btn-header-default">
-                <font-awesome-icon
-                  :icon="['fas', 'pencil-alt']"
-                ></font-awesome-icon>
-              </b-button>
-            </nuxt-link>
+            <NavbarIcon
+              :onClick="showNotifications"
+              :icon="['fas', 'bell']"
+            />
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+    <hr class="nav-separator" />
     <transition name="showNotifications">
       <div class="notifications-screen" v-if="notificationsActive">
         <Notifications />
@@ -72,13 +63,15 @@
 </template>
 
 <script>
-import Notifications from "../components/notifications/Container";
+import Notifications from "~/components/notifications/Container";
+import NavbarIcon from "~/components/NavbarIcon";
 import { mapState } from "vuex";
 
 export default {
   middleware: "categories",
   components: {
-    Notifications
+    Notifications,
+    NavbarIcon
   },
   data() {
     return {
@@ -121,12 +114,14 @@ export default {
 
 nav {
   background: #fff;
+  padding: 0 1rem;
 }
 
-nav a {
+nav span {
   color: rgb(51, 51, 51);
   font-weight: bold;
 }
+
 .route-info {
   min-height: calc(100vh - 70px);
 }
@@ -151,8 +146,29 @@ nav a {
   animation: show-newpost 0.5s reverse;
 }
 
-.btn-header-default {
-  width: 80px;
+.notifications-button {
+  background: #fff;
+  border-radius: 999px;
+  border: none;
+  box-sizing: border-box;
+  padding: 0.25em;
+
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0.5em;
+}
+
+.notifications-button svg {
+  margin: 0 0.5em;
+}
+
+.notifications-button :hover {
+  background: rgb(0, 0, 0, 0.06);
+}
+
+.nav-separator {
+  border-top: 1px solid #efefef;
+  margin: 0;
 }
 
 @keyframes show-newpost {
@@ -162,11 +178,6 @@ nav a {
   100% {
     transform: translateX(0);
   }
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
 }
 
 .input {
