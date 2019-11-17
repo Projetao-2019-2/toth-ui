@@ -15,7 +15,12 @@
           v-on:keyup.enter="doSearch(searchString)"
         ></b-form-input>
         <b-input-group-append>
-          <b-button variant="primary" size="sm" class="btn-search" @click="doSearch(searchString)">
+          <b-button
+            variant="primary"
+            size="sm"
+            class="btn-search"
+            @click="doSearch(searchString)"
+          >
             <font-awesome-icon :icon="['fas', 'search']"></font-awesome-icon>
           </b-button>
         </b-input-group-append>
@@ -25,25 +30,34 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item v-if="!$auth.$state.loggedIn">
-            <nuxt-link to="register" class="names-cadastrar-login">Cadastrar</nuxt-link>
+            <nuxt-link to="register">Cadastrar</nuxt-link>
           </b-nav-item>
 
           <b-nav-item v-if="!$auth.$state.loggedIn">
-            <nuxt-link to="/login" class="names-cadastrar-login">Login</nuxt-link>
+            <nuxt-link to="/login">Login</nuxt-link>
           </b-nav-item>
 
           <b-nav-item v-if="$auth.$state.loggedIn" href="#">
             <nuxt-link to="/profile">
-              <b-button variant="warning" class="btn-header-default">
+              <b-button class="btn-header-default">
                 <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
               </b-button>
             </nuxt-link>
-            <b-button variant="danger" class="btn-header-default" @click="showNotifications()">
+            <b-button
+              variant="danger"
+              class="btn-header-default"
+              @click="showNotifications()"
+            >
               <font-awesome-icon :icon="['fa', 'bell']"></font-awesome-icon>
             </b-button>
-            <b-button variant="primary" class="btn-header-default" @click="goToNewPost()">
-              <font-awesome-icon :icon="['fas', 'pencil-alt']"></font-awesome-icon>
-            </b-button>
+
+            <nuxt-link to="/newpost">
+              <b-button variant="primary" class="btn-header-default">
+                <font-awesome-icon
+                  :icon="['fas', 'pencil-alt']"
+                ></font-awesome-icon>
+              </b-button>
+            </nuxt-link>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -73,9 +87,6 @@ export default {
     };
   },
   methods: {
-    goToNewPost() {
-      this.$router.push("/newpost");
-    },
     showNotifications() {
       this.notificationsActive = !this.notificationsActive;
     },
@@ -104,12 +115,17 @@ export default {
 
 <style scoped>
 .main {
-  background-color: #eeeeee;
+  background: #fff;
   height: max-content;
 }
 
 nav {
-  background-color: #011932;
+  background: #fff;
+}
+
+nav a {
+  color: rgb(51, 51, 51);
+  font-weight: bold;
 }
 .route-info {
   min-height: calc(100vh - 70px);
@@ -122,7 +138,7 @@ nav {
   right: 0;
   height: calc(100vh - 70px);
   width: 900px;
-  background: #011932;
+  background: #fff;
   z-index: 5;
   overflow-y: auto;
 }
@@ -137,11 +153,6 @@ nav {
 
 .btn-header-default {
   width: 80px;
-}
-
-.names-cadastrar-login {
-  color: white;
-  font-weight: bold;
 }
 
 @keyframes show-newpost {
