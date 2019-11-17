@@ -6,25 +6,7 @@
           <img class="logo" src="~/static/logo2.png" />
         </b-navbar-brand>
       </nuxt-link>
-
-      <b-input-group v-if="!isIndexPageActive" class="input">
-        <b-form-input
-          size="sm"
-          v-model="newSearchText"
-          placeholder="Curso - Universidade"
-          v-on:keyup.enter="doSearch(searchString)"
-        ></b-form-input>
-        <b-input-group-append>
-          <b-button
-            variant="primary"
-            size="sm"
-            class="btn-search"
-            @click="doSearch(searchString)"
-          >
-            <font-awesome-icon :icon="['fas', 'search']"></font-awesome-icon>
-          </b-button>
-        </b-input-group-append>
-      </b-input-group>
+      <NavbarInput />
 
       <b-collapse is-nav>
         <!-- Right aligned nav items -->
@@ -61,25 +43,23 @@
 <script>
 import Notifications from "~/components/notifications/Container";
 import NavbarIcon from "~/components/navbar/NavbarIcon";
+import NavbarInput from "~/components/navbar/Input";
 export default {
   name: "Navbar",
   components: {
     NavbarIcon,
-    Notifications
+    Notifications,
+    NavbarInput
   },
   data() {
     return {
       notificationsActive: false,
-      searchString: ""
     };
   },
   methods: {
     showNotifications() {
       this.notificationsActive = !this.notificationsActive;
     },
-    doSearch(text) {
-      this.$router.push({ path: "/posts", query: { search: text } });
-    }
   },
   computed: {
     categories: function() {
