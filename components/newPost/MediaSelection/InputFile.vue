@@ -1,7 +1,7 @@
 <template>
   <div class="input-file-container">
     <label for="file">
-      <font-awesome-icon :icon="['fas', 'file-upload']" size="6x"></font-awesome-icon>
+      <font-awesome-icon :icon="['fas', 'arrow-circle-up']" size="4x"></font-awesome-icon>
     </label>
     <input
       type="file"

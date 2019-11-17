@@ -1,25 +1,14 @@
 <template>
-  <div
-    class="media-selection-container"
-    :style="{ background: imageIsSelected ? '#FFFFFB' : categorie.color }"
-  >
-    <InputFile @onFileSelected="imageSelected" v-if="!imageIsSelected" />
+  <div class="media-container">
+    <div class="media-wrapper" v-if="!imageIsSelected">
+      <Input @onFileSelected="imageSelected" />
+      <p v-if="!imageIsSelected">Selecione uma imagem</p>
+    </div>
     <div class="img-selected-container" v-if="imageIsSelected">
       <img :src="imageUrl" class="img-upload" />
-      <div class="input-file-container">
-        <label for="file">
-          <font-awesome-icon :icon="['fas', 'file-upload']" size="2x" class="icon-img"></font-awesome-icon>
-        </label>
-        <input
-          type="file"
-          accept="image/*"
-          name="file"
-          id="file"
-          class="inputfile"
-          @change="onFileSelected"
-        />
+      <div class="input-file-container up-index">
         <font-awesome-icon
-          :icon="['fas', 'trash-alt']"
+          :icon="['fas', 'trash']"
           size="2x"
           class="icon-img icon-delete-img"
           @click="deleteImage"
@@ -30,19 +19,18 @@
 </template>
 
 <script>
-import InputFile from "./InputFile";
+import Input from "./MediaSelection/InputFile";
 
 export default {
-  name: "MediaSelection",
-  props: ["categorie"],
+  name: "Media",
+  components: {
+    Input
+  },
   data() {
     return {
       imageIsSelected: false,
       imageUrl: ""
     };
-  },
-  components: {
-    InputFile
   },
   methods: {
     deleteImage() {
@@ -72,31 +60,53 @@ export default {
 };
 </script>
 
-<style>
-.media-selection-container {
+<style scoped>
+.media-container {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  border: 2px solid grey;
-  border-radius: 5px;
-  padding: 10px 0;
+}
+.media-wrapper {
+  width: 94%;
+  height: 95%;
+  border: 2px dashed #cccccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.media-wrapper p {
+  margin-top: 10px;
 }
 .img-selected-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  width: 300px;
-  max-height: 600px;
+  width: 100%;
+  max-height: 100%;
 }
 .input-file-container {
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.up-index {
+  position: absolute;
+  padding: 10px;
+  border-radius: 50%;
+  background: white;
+  transform: translateY(378%);
 }
 .icon-delete-img:hover {
   cursor: pointer;
 }
 .img-upload {
   width: 100%;
-  max-height: 500px;
+  max-height: 450px;
+  border-radius: 8px;
 }
 </style>
