@@ -19,23 +19,26 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .icon {
   display: inline-flex;
   align-items: center;
   margin: 0 0.5em;
   padding: 0.25em;
   border-radius: 999px;
-  color: ;
+  color: rgb(51, 51, 51);
 }
 
 .icon-text {
   margin-right: 0.5em;
+  color: rgb(51, 51, 51);
 }
 
 .icon svg {
   margin: 0.5em;
+  color: rgb(51, 51, 51);
 }
+
 .icon:hover {
   background: rgb(0, 0, 0, 0.06);
 }
