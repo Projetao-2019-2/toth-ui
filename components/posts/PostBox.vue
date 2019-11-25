@@ -1,14 +1,20 @@
 <template>
   <div class="item">
-    <div class="content" :style="{ borderColor: post.category.color }">
+    <div class="content">
       <nuxt-link :to="'posts/' + post.id" class="link">
-        <img :src="post.files[0].path" class="img-post" v-if="post.files[0]" />
-        <div
-          v-if="!post.files[0]"
-          :style="{ background: post.category.color }"
-          class="div-post-texto"
-        >
+        <div v-if="post.files[0]" class="post-item">
+          <img :src="post.files[0].path" class="img-post" />
+          <div class="categorie-user-post">
+            <div class="category-circle" :style="{ backgroundColor: post.category.color }"></div>
+            <span class="post-user-name">{{post.author.nome}}</span>
+          </div>
+        </div>
+        <div v-else class="div-post-texto post-item">
           <p>{{post.texto}}</p>
+          <div class="categorie-user-post-text">
+            <div class="category-circle" :style="{ backgroundColor: post.category.color }"></div>
+            <span class="post-user-name">{{post.author.nome}}</span>
+          </div>
         </div>
       </nuxt-link>
     </div>
@@ -29,6 +35,48 @@ export default {
 .img-post {
   width: 100%;
   max-height: 500px;
+  border-radius: 15px;
+}
+.categorie-user-post {
+  width: 300px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.05);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  transform: translateY(-100%);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.post-item:hover .post-user-name {
+  display: block;
+}
+.post-item:hover .categorie-user-post {
+  background: rgba(97, 97, 97, 0.4);
+}
+.post-item:hover .categorie-user-post-text {
+  background: rgba(97, 97, 97, 0.4);
+}
+.categorie-user-post-text {
+  width: 300px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.post-user-name {
+  color: white;
+  font-weight: bold;
+  margin-left: 15px;
+  display: none;
+}
+.category-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 5px;
 }
 .only-text-post {
   width: 100%;
@@ -39,24 +87,23 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-style: solid;
-  border-width: 5px;
-  border-radius: 5px;
 }
 .content:hover {
   cursor: pointer;
 }
 .div-post-texto {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  font-weight: bold;
   font-size: 1em;
+  border-radius: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 .div-post-texto p {
   margin: 0;
-  padding: 0;
+  padding: 5px;
 }
 
 .link {

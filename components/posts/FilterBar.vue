@@ -1,93 +1,117 @@
 <template>
-    <div class="filter-bar">
-         <b-button-group size="lg" class="conj">
-             <b-button v-for="item in categorias" @click="searchMethods(item.id)" :key="item.id" class="botao" :id="item.name">{{ item.name }} </b-button>
-        </b-button-group>
+  <div class="filter-bar">
+    <span class="filter-name">Filtro</span>
+    <div
+      class="category-box"
+      v-for="item in categories"
+      :key="item.categorie.name"
+      @click="updateFilter(item.categorie.id)"
+    >
+      <div
+        class="filter-category-circle"
+        :style="{ backgroundColor: item.selected ? item.categorie.color : 'rgba(97, 97, 97, 0.4)' }"
+      ></div>
+      <span>{{item.categorie.name}}</span>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
-    name: "FilterBar",
-    middleware: "categorias",
-    computed:{
-        categorias: function(){
-            console.log(this.$store.getters['categories/getAll']);
-            return this.$store.getters['categories/getAll'];
-        }
-    },
-    // data(){
-    //     hover: false
-    // },
-    async fetch({ store }){
-        await store.dispatch("categories/getAll");
-    },
-    methods:{
-        styleObject: function(id) {
-            console.log(id);
-            console.log(this.categorias);
-            return{
-                if(hover){
-                    background: id;
-                }
-            }
-        },
-        searchMethods: function(category_id){
-            this.$router.push({ path: 'posts', query: {search: searchText, category: category_id} });
-        }
+  name: "FilterBar",
+  middleware: "categorias",
+  data() {
+    return {
+      categories: []
+    };
+  },
+  computed: {
+    categorias: function() {
+      console.log(this.$store.getters["categories/getAll"]);
+      return this.$store.getters["categories/getAll"];
     }
+  },
+  // data(){
+  //     hover: false
+  // },
+  async fetch({ store }) {
+    await store.dispatch("categories/getAll");
+  },
+  methods: {
+    styleObject: function(id) {
+      console.log(id);
+      console.log(this.categorias);
+      return {
+        if(hover) {
+          background: id;
+        }
+      };
+    },
+    searchMethods: function(category_id) {
+      this.$router.push({
+        path: "posts",
+        query: { search: searchText, category: category_id }
+      });
+    },
+    updateFilter(id) {
+      this.categories.forEach(item => {
+        if (item.categorie.id === id) {
+          item.selected = !item.selected;
+        }
+      });
+    }
+  },
+  created() {
+    this.categorias.forEach(cat => {
+      this.categories.push({
+        categorie: cat,
+        selected: true
+      });
+    });
+  }
 };
 </script>
 
 <style>
-
 .filter-bar {
-    display: flex;
-    flex-direction: row;
-    width: match-parent;
-    height: match-parent;
-    justify-content: center;
-    margin-top: 20px;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 60px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 59px;
+  background-color: white;
+  z-index: 10;
 }
 
-.botao {
-    background-color: #eeeeee;
-    color: black;
-    border-style: none;
-    size: 10px;
+.filter-name {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.category-box {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border: 1px solid grey;
+  border-radius: 15px;
 }
 
-#geral {
-    border-bottom: 6px solid gray;
-}
-#geral:hover {
-    background-color: gray;
+.category-box:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-#Infraestrutura {
-    border-bottom: 6px solid #1DBDFF;
-}
-#Infraestrutura:hover {
-    background-color: #1DBDFF;
-}
-#Experiência\ em\ disciplinas {
-    border-bottom: 6px solid #16D64C;
-}
-#Experiência\ em\ disciplinas:hover {
-    background-color: #16D64C;
-}
-#Atividades\ extracurriculares {
-    border-bottom: 6px solid #FF8E20;
-}
-#Atividades\ extracurriculares:hover {
-    background-color:#FF8E20;
-}
-#Arredores {
-    border-bottom: 6px solid #FF6DD5;
-}
-#Arredores:hover {
-    background-color:#FF6DD5;
+.category-box span {
+  margin: 0 10px 0 10px;
 }
 
-
+.filter-category-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-left: 5px;
+}
 </style>

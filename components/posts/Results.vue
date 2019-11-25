@@ -48,7 +48,7 @@ export default {
       window.requestAnimationFrame(this.animate);
       this.resizeAllGridItems();
     },
-    filterCategorie(categories){
+    filterCategorie(categories) {
       var allItems = document.getElementsByClassName("item");
       for (let x = 0; x < allItems.length; x++) {
         console.log(allItems[x]);
@@ -66,7 +66,8 @@ export default {
 
 <style>
 .list-posts {
-  width: 100%;
+  width: 90%;
+  padding-top: 105px;
 }
 
 .grid {
@@ -84,5 +85,6 @@ export default {
   height: 500px;
   align-items: center;
   justify-content: center;
+  padding-top: 105px;
 }
 </style>
