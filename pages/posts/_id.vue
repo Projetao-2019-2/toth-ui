@@ -12,20 +12,28 @@
         <h2 class="category-title">
           <span
             class="inline-border"
-            :style="{borderColor: post.category.color}"
-          >{{post.category ? post.category.name : 'Geral'}}</span>
+            :style="{ borderColor: post.category.color }"
+            >{{ post.category ? post.category.name : "Geral" }}</span
+          >
         </h2>
         <div class="white-bg">
           <b-row class="post-details">
             <b-col>
-              <b-img v-if="post.files[0]" fluid-grow :src="post.files[0].path" class="post-img" />
-              <p class="post-text">{{post.texto}}</p>
+              <b-img
+                v-if="post.files[0]"
+                fluid-grow
+                :src="post.files[0].path"
+                class="post-img"
+              />
+              <p class="post-text">{{ post.texto }}</p>
             </b-col>
           </b-row>
 
           <b-row>
             <b-col class="author-section">
-              <p>{{post.author.nome}}, {{$moment(post.createdAt).fromNow()}}</p>
+              <p>
+                {{ post.author.nome }}, {{ $moment(post.createdAt).fromNow() }}
+              </p>
             </b-col>
           </b-row>
 
@@ -34,17 +42,17 @@
           <b-row>
             <b-col class="rate-section">
               <div class="d-flex">Esse post foi relevante?</div>
-              <div class="d-flex ml-3">{{post.util}}</div>
+              <div class="d-flex ml-3">{{ post.util }}</div>
               <font-awesome-icon
                 :icon="['fas', 'thumbs-up']"
-                v-on:click="vote({wasUseful: true, id: post.id})"
+                v-on:click="vote({ wasUseful: true, id: post.id })"
                 class="thumb-icon yes"
               />
 
-              <div class="d-flex ml-3">{{post.n_util}}</div>
+              <div class="d-flex ml-3">{{ post.n_util }}</div>
               <font-awesome-icon
                 :icon="['fas', 'thumbs-down']"
-                v-on:click="vote({wasUseful: false, id: post.id})"
+                v-on:click="vote({ wasUseful: false, id: post.id })"
                 class="thumb-icon no"
               />
             </b-col>
@@ -79,7 +87,7 @@
 </template>
 
 <script>
-import CommentDetails from "../../components/posts/CommentDetails";
+import CommentDetails from "~/components/posts/CommentDetails";
 import { mapActions } from "vuex";
 export default {
   components: { CommentDetails },
@@ -99,8 +107,8 @@ export default {
     };
   },
 
-  async fetch({ store, params }) {
-    await store.dispatch("posts/getDetails", params.id);
+  fetch({ store, params }) {
+    return store.dispatch("posts/getDetails", params.id);
   },
   methods: {
     ...mapActions({
@@ -149,7 +157,7 @@ export default {
   text-align: justify;
 }
 
-.author-section p{
+.author-section p {
   color: rgb(0, 0, 0, 0.6);
   margin-bottom: 0px;
 }

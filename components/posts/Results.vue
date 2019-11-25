@@ -51,7 +51,7 @@ export default {
     filterCategorie(categories) {
       var allItems = document.getElementsByClassName("item");
       for (let x = 0; x < allItems.length; x++) {
-        console.log(allItems[x]);
+        // console.log(allItems[x]);
       }
     }
   },
