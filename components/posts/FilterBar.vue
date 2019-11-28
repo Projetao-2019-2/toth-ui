@@ -27,7 +27,6 @@ export default {
   },
   computed: {
     categorias: function() {
-      console.log(this.$store.getters["categories/getAll"]);
       return this.$store.getters["categories/getAll"];
     }
   },
@@ -59,6 +58,7 @@ export default {
           item.selected = !item.selected;
         }
       });
+      this.$emit("updateFilter", this.categories);
     }
   },
   created() {

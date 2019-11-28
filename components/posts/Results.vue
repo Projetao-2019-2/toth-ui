@@ -66,7 +66,6 @@ export default {
 
 <style>
 .list-posts {
-  width: 90%;
   padding-top: 105px;
 }
 
@@ -86,5 +85,35 @@ export default {
   align-items: center;
   justify-content: center;
   padding-top: 105px;
+}
+
+@media only screen and (max-width: 1920px) {
+  .list-posts {
+    width: 1600px;
+  }
+}
+
+@media only screen and (max-width: 1650px) {
+  .list-posts {
+    width: 1280px;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  .list-posts {
+    width: 960px;
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  .list-posts {
+    width: 660px;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .list-posts {
+    width: 340px;
+  }
 }
 </style>

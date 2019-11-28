@@ -1,7 +1,7 @@
 export const state = () => ({
   list: [],
   searchResults: [],
-  lastSearchedTerm: '',
+  lastSearchedTerm: ""
 });
 
 export const mutations = {
@@ -11,7 +11,7 @@ export const mutations = {
   setList(state, data) {
     state.list = data;
   },
-  setSearchResults(state, {results, searchString}) {
+  setSearchResults(state, { results, searchString }) {
     state.searchResults = results;
     state.lastSearchedTerm = searchString;
   },
@@ -62,7 +62,7 @@ export const actions = {
         search: searchString
       }
     });
-    commit("setSearchResults", {results: data.posts, searchString});
+    commit("setSearchResults", { results: data.posts, searchString });
     return data.posts;
   },
 

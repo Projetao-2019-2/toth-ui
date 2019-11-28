@@ -1,6 +1,6 @@
 <template>
   <div class="global">
-    <FilterBar />
+    <FilterBar @updateFilter="updateFilter" />
     <LoadingIcon v-if="loading" message="Buscando ..." />
     <Results v-else :posts="results" />
   </div>
@@ -33,6 +33,9 @@ export default {
       this.loading = true;
       await this.$store.dispatch("posts/search", this.$route.query.search);
       this.loading = false;
+    },
+    updateFilter(categories) {
+      console.log(categories);
     }
   },
   async mounted() {
@@ -54,8 +57,8 @@ export default {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  width: 80%;
-  margin: 0 10%;
+  width: 100%;
+  margin: 0 0;
 }
 .global .grid {
   margin-top: 24px;
