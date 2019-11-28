@@ -39,7 +39,17 @@ export default {
       this.loading = false;
     },
     updateFilter(categories) {
-      console.log(categories);
+      let posts = this.$store.getters["posts/getSearchResults"];
+      let output = [];
+      // Isso aqui ta uma merda, se tiver muitos posts, pode demorar demais
+      // Mas eu não queria auterar a ordem dos posts ...
+      posts.forEach(post => {
+        categories.forEach(cat => {
+          if (cat.selected && cat.categorie.id === post.category.id)
+            output.push(post);
+        });
+      });
+      console.log(output);
     }
   },
   async mounted() {
