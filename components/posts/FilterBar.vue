@@ -3,7 +3,7 @@
     <span class="filter-name">Filtro</span>
     <div
       class="category-box"
-      v-for="item in categories"
+      v-for="item in filterCategories"
       :key="item.categorie.name"
       @click="updateFilter(item.categorie.id)"
     >
@@ -19,51 +19,25 @@
 <script>
 export default {
   name: "FilterBar",
-  middleware: "categorias",
+  props: ["categories"],
   data() {
     return {
-      categories: []
+      filterCategories: []
     };
   },
-  computed: {
-    categorias: function() {
-      return this.$store.getters["categories/getAll"];
-    }
-  },
-  // data(){
-  //     hover: false
-  // },
-  async fetch({ store }) {
-    await store.dispatch("categories/getAll");
-  },
   methods: {
-    styleObject: function(id) {
-      console.log(id);
-      console.log(this.categorias);
-      return {
-        if(hover) {
-          background: id;
-        }
-      };
-    },
-    searchMethods: function(category_id) {
-      this.$router.push({
-        path: "posts",
-        query: { search: searchText, category: category_id }
-      });
-    },
     updateFilter(id) {
-      this.categories.forEach(item => {
+      this.filterCategories.forEach(item => {
         if (item.categorie.id === id) {
           item.selected = !item.selected;
         }
       });
-      this.$emit("updateFilter", this.categories);
+      this.$emit("updateFilter", this.filterCategories);
     }
   },
   created() {
-    this.categorias.forEach(cat => {
-      this.categories.push({
+    this.categories.forEach(cat => {
+      this.filterCategories.push({
         categorie: cat,
         selected: true
       });

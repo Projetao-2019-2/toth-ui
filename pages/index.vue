@@ -1,6 +1,6 @@
 <template>
   <div class="global">
-    <FilterBar @updateFilter="updateFilter" />
+    <FilterBar v-if="!loading" :categories="categories" @updateFilter="updateFilter" />
     <LoadingIcon v-if="loading" message="Buscando ..." />
     <Results v-else :posts="results" />
   </div>
@@ -13,6 +13,7 @@ import Results from "~/components/posts/Results";
 import { mapState } from "vuex";
 
 export default {
+  middleware: "categories",
   components: {
     FilterBar,
     Results,
@@ -21,7 +22,10 @@ export default {
   computed: {
     ...mapState("posts", {
       results: "searchResults"
-    })
+    }),
+    categories: function() {
+      return this.$store.getters["categories/getAll"];
+    }
   },
   data() {
     return {
