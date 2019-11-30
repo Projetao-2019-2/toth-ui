@@ -17,7 +17,7 @@
       </div>
     </div>
     <nuxt-link to="/settings/profile">
-      <b-button variant="secondary" class="btn-edit-profile">Editar Perfil</b-button>
+      <b-button v-if="!noUser" variant="secondary" class="btn-edit-profile">Editar Perfil</b-button>
     </nuxt-link>
   </div>
 </template>
@@ -25,7 +25,7 @@
 <script>
 export default {
   name: "UserInformation",
-  props: ["user"]
+  props: ["user", "noUser"]
 };
 </script>
 

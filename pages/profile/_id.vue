@@ -6,7 +6,7 @@
         <SocialNetworks :user="user" />
       </div>
       <div class="name-course-rank-wrapper">
-        <UserData :user="user" :noUser="false"/>
+        <UserData :user="users[0]" :noUser="true" />
       </div>
     </div>
     <Results :posts="posts" />
@@ -21,17 +21,38 @@ import Results from "~/components/posts/Results";
 
 export default {
   name: "ProfileScreen",
-  middleware: "auth",
+  data() {
+    return {
+        users: []
+    }
+  },
   components: {
     UserPhoto,
     SocialNetworks,
     UserData,
     Results
   },
+  methods: {
+        async getUsers() {
+            try{
+                const response = await this.$axios.$get("users");
+                this.users = response.users;
+                console.log(this.users);
+            } catch (err) { 
+                console.log(err);
+            }
+        }
+  },
+  mounted() {
+      this.users = this.getUsers();   
+  },
   computed: {
+    userId: function() {
+      return this.$route.params.id;
+    },
     posts: function() {
       return this.$store.getters["posts/getPostsByUserId"](
-        this.$auth.$state.user.id
+        this.userId
       );
     },
     user: function() {
