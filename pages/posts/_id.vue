@@ -52,19 +52,27 @@
           </div>
 
           <div class="rate-section">
-            <div class="ml-3">{{ post.util }}</div>
-            <font-awesome-icon
-              :icon="['fas', 'thumbs-up']"
+            <div
+              class="rate-box"
               v-on:click="vote({ wasUseful: true, id: post.id })"
-              class="thumb-icon yes"
-            />
+            >
+              <div class="ml-3">{{ post.util }}</div>
+              <font-awesome-icon
+                :icon="['fas', 'thumbs-up']"
+                class="thumb-icon yes"
+              />
+            </div>
 
-            <div class="ml-3">{{ post.n_util }}</div>
-            <font-awesome-icon
-              :icon="['fas', 'thumbs-down']"
+            <div
+              class="rate-box"
               v-on:click="vote({ wasUseful: false, id: post.id })"
-              class="thumb-icon no"
-            />
+            >
+              <div class="ml-3">{{ post.n_util }}</div>
+              <font-awesome-icon
+                :icon="['fas', 'thumbs-down']"
+                class="thumb-icon no"
+              />
+            </div>
           </div>
         </div>
 
@@ -206,6 +214,20 @@ export default {
   flex-direction: row;
   display: flex;
   align-items: center;
+}
+
+.rate-box {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  border: 1px solid #efefef;
+  border-radius: 15px;
+  margin-left: 0.5em;
+}
+
+.rate-box:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .thumb-icon {
