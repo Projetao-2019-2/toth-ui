@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-container">
+  <div class="profile-container" >
     <div class="profile-information-container">
       <div class="photo-networks-wrapper">
         <UserPhoto :user="user" />
