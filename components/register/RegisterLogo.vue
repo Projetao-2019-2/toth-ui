@@ -1,7 +1,7 @@
 <template>
   <div class="register-logo-container">
     <img src="./logo.png" width="150px" height="150px" />
-    <p class="register-logo">Junte-se à Nortuni</p>
+    <p class="register-logo">Junte-se à Journi</p>
   </div>
 </template>
 
