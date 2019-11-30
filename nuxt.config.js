@@ -14,7 +14,7 @@ export default {
         content: process.env.npm_package_description || ""
       }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/logo2.png" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/logo.svg" }]
   },
   /*
    ** Customize the progress-bar color
@@ -91,7 +91,7 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) { }
   },
 
   router: {

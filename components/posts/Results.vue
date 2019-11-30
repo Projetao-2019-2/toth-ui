@@ -87,6 +87,12 @@ export default {
   padding-top: 105px;
 }
 
+@media only screen and (min-width: 1921px) {
+  .list-posts {
+    width: 95%;
+  }
+}
+
 @media only screen and (max-width: 1920px) {
   .list-posts {
     width: 1600px;
