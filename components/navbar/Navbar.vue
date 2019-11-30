@@ -25,7 +25,7 @@
             href="#"
           >
             <NavbarIcon
-              link="/profile"
+              link="/profile/me"
               :icon="['fas', 'user']"
               :text="$auth.$state.user.nome"
             />
