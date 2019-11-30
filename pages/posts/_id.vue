@@ -20,13 +20,17 @@
       </div>
 
       <div class="content-box">
-        <h5 class="category-title">
+        <div class="category-title">
+          <div
+            class="category-circle"
+            :style="{ backgroundColor: post.category.color }"
+          ></div>
           <span
             class="inline-border"
             :style="{ borderColor: post.category.color }"
             >{{ post.category ? post.category.name : "Geral" }}</span
           >
-        </h5>
+        </div>
 
         <div class="post-details">
           <p class="post-text">{{ post.texto }}</p>
@@ -65,21 +69,20 @@
           </div>
         </div>
 
-        <div>
-          Comentários
-          <b-form-input
-            v-model="newComment"
-            type="text"
-            required
-            placeholder="Dê sua opinião"
-            v-on:keyup.enter="addComment"
-            :maxlength="1000"
-          ></b-form-input>
+        <h5>Comentários</h5>
+        <div class="comments-section">
+          <div v-for="(comment, index) in post.comments" :key="index">
+            <CommentDetails :comment="comment" />
+          </div>
         </div>
-
-        <div v-for="(comment, index) in post.comments" :key="index">
-          <CommentDetails :comment="comment" />
-        </div>
+        <b-form-input
+          v-model="newComment"
+          type="text"
+          required
+          placeholder="Dê sua opinião"
+          v-on:keyup.enter="addComment"
+          :maxlength="1000"
+        ></b-form-input>
       </div>
     </div>
     <div v-else>Nao tem post com esse id</div>
@@ -108,6 +111,7 @@ export default {
   },
 
   fetch({ store, params }) {
+    debugger;
     return store.dispatch("posts/getDetails", params.id);
   },
   methods: {
@@ -134,17 +138,21 @@ export default {
 .wrapper {
   width: 100vw;
   height: 100vh;
+
   display: flex;
   justify-content: center;
   position: relative;
 }
+
 .box {
   width: 75vw;
-  height: 75vh;
+  max-height: 75vh;
+
   margin-top: 60px;
-  margin: 60px 90px;
+  margin: 100px 90px;
 
   background-color: #ffffff;
+
   display: flex;
   flex-direction: row;
   flex: 1;
@@ -158,12 +166,37 @@ export default {
   border-bottom-left-radius: 0px !important;
 }
 
+.img-box {
+  flex-grow: 1;
+}
 .post-img {
   max-height: 100%;
 }
 
 .content-box {
-  padding: 0.5em 1.5em;
+  padding: 1.5em;
+  display: flex;
+  flex-flow: column;
+  flex-grow: 1;
+}
+
+.category-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.category-title span {
+  margin-left: 0.5em;
+  font-size: 0.9em;
+}
+
+.category-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 0px;
+  display: inline-block;
 }
 
 .post-secondary-info {
@@ -218,9 +251,16 @@ export default {
   font-size: 0.9em;
 }
 
-/* .post-details {
-  margin-bottom: 20px;
+.comments-section {
+  overflow: auto;
+  margin-bottom: 1em;
 }
+
+.post-details {
+  font-size: 1.25em;
+}
+
+/*
 
 .category-title {
   text-transform: uppercase;

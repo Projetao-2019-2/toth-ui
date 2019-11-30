@@ -6,10 +6,11 @@
     >
       <b-card-text>{{comment.text}}</b-card-text>
 
-      <div v-on:click="click('voce clicou no reply')" class="reply-button">
+      <!-- Keep it commented while not implemented.
+        <div v-on:click="click('voce clicou no reply')" class="reply-button">
         Responder
         <font-awesome-icon :icon="['fas', 'reply-all']"></font-awesome-icon>
-      </div>
+      </div> -->
     </b-card>
 
     <div v-if="comment.replys && comment.replys.length > 0" class="reply-section">
@@ -39,7 +40,11 @@ export default {
 
 <style>
 .comment-details-card {
-  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.comment-details-card .card-body{
+  padding: 1em;
 }
 
 .reply-button {
