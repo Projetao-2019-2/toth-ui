@@ -10,9 +10,8 @@
     </div>
 
     <div class="box rounded-border" v-if="post">
-      <div class="img-box">
+      <div class="img-box" v-if="post.files[0]">
         <b-img
-          v-if="post.files[0]"
           :src="post.files[0].path"
           class="post-img rounded-border"
           fluid-grow
@@ -93,6 +92,7 @@
 import CommentDetails from "~/components/posts/CommentDetails";
 import { mapActions } from "vuex";
 export default {
+  loading: true,
   components: { CommentDetails },
   computed: {
     postId: function() {
@@ -110,9 +110,8 @@ export default {
     };
   },
 
-  fetch({ store, params }) {
-    debugger;
-    return store.dispatch("posts/getDetails", params.id);
+  async fetch({ store, params }) {
+    await store.dispatch("posts/getDetails", params.id);
   },
   methods: {
     ...mapActions({
@@ -136,9 +135,6 @@ export default {
 
 <style scoped>
 .wrapper {
-  width: 100vw;
-  height: 100vh;
-
   display: flex;
   justify-content: center;
   position: relative;

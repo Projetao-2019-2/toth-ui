@@ -19,7 +19,7 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: "#fff" },
+  loading: { color: "red", continuous: true },
   /*
    ** Global CSS
    */
@@ -31,7 +31,7 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: ['@nuxtjs/moment'],
+  buildModules: ["@nuxtjs/moment"],
   /*
    ** Nuxt.js modules
    */
