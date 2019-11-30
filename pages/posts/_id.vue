@@ -67,6 +67,7 @@
                 required
                 placeholder="Dê sua opinião"
                 v-on:keyup.enter="addComment"
+                :maxlength="1000"
               ></b-form-input>
             </b-col>
           </b-row>
