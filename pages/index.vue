@@ -77,7 +77,6 @@ export default {
 .global .grid {
   margin-top: 24px;
 }
-
 .global .box-spinner p {
   color: black;
 }
