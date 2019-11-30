@@ -1,89 +1,88 @@
 <template>
-  <div>
-    <b-img
-      left
-      src="~/assets/left-arrow.png"
-      alt="Medal icon"
-      v-on:click="backToSearch()"
-      class="arrow"
-    ></b-img>
-    <b-container class="bv-example-row screen-post-id">
-      <div v-if="post">
-        <h2 class="category-title">
+  <div class="wrapper">
+    <div class="arrow-wrapper">
+      <b-img
+        src="~/assets/left-arrow.png"
+        alt="Medal icon"
+        v-on:click="backToSearch()"
+        class="arrow"
+      ></b-img>
+    </div>
+
+    <div class="box rounded-border" v-if="post">
+      <div class="img-box">
+        <b-img
+          v-if="post.files[0]"
+          :src="post.files[0].path"
+          class="post-img rounded-border"
+          fluid-grow
+        />
+      </div>
+
+      <div class="content-box">
+        <h5 class="category-title">
           <span
             class="inline-border"
             :style="{ borderColor: post.category.color }"
             >{{ post.category ? post.category.name : "Geral" }}</span
           >
-        </h2>
-        <div class="white-bg">
-          <b-row class="post-details">
-            <b-col>
-              <b-img
-                v-if="post.files[0]"
-                fluid-grow
-                :src="post.files[0].path"
-                class="post-img"
-              />
-              <p class="post-text">{{ post.texto }}</p>
-            </b-col>
-          </b-row>
+        </h5>
 
-          <b-row>
-            <b-col class="author-section">
-              <p>
-                {{ post.author.nome }}, {{ $moment(post.createdAt).fromNow() }}
-              </p>
-            </b-col>
-          </b-row>
+        <div class="post-details">
+          <p class="post-text">{{ post.texto }}</p>
+        </div>
 
-          <hr />
+        <div class="post-secondary-info">
+          <div class="author-section">
+            <b-img
+              v-if="post.author.imagepath"
+              :src="post.author.imagepath"
+              rounded="circle"
+              class="author-img"
+            />
+            <div v-else class="author-img no-photo">
+              <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
+            </div>
+            <p>
+              {{ post.author.nome }}
+            </p>
+          </div>
 
-          <b-row>
-            <b-col class="rate-section">
-              <div class="d-flex">Esse post foi relevante?</div>
-              <div class="d-flex ml-3">{{ post.util }}</div>
-              <font-awesome-icon
-                :icon="['fas', 'thumbs-up']"
-                v-on:click="vote({ wasUseful: true, id: post.id })"
-                class="thumb-icon yes"
-              />
+          <div class="rate-section">
+            <div class="ml-3">{{ post.util }}</div>
+            <font-awesome-icon
+              :icon="['fas', 'thumbs-up']"
+              v-on:click="vote({ wasUseful: true, id: post.id })"
+              class="thumb-icon yes"
+            />
 
-              <div class="d-flex ml-3">{{ post.n_util }}</div>
-              <font-awesome-icon
-                :icon="['fas', 'thumbs-down']"
-                v-on:click="vote({ wasUseful: false, id: post.id })"
-                class="thumb-icon no"
-              />
-            </b-col>
-          </b-row>
+            <div class="ml-3">{{ post.n_util }}</div>
+            <font-awesome-icon
+              :icon="['fas', 'thumbs-down']"
+              v-on:click="vote({ wasUseful: false, id: post.id })"
+              class="thumb-icon no"
+            />
+          </div>
+        </div>
 
-          <b-row>
-            <b-col>
-              <h3>Comentários</h3>
-              <b-form-input
-                v-model="newComment"
-                type="text"
-                required
-                placeholder="Dê sua opinião"
-                v-on:keyup.enter="addComment"
-                :maxlength="1000"
-              ></b-form-input>
-            </b-col>
-          </b-row>
+        <div>
+          Comentários
+          <b-form-input
+            v-model="newComment"
+            type="text"
+            required
+            placeholder="Dê sua opinião"
+            v-on:keyup.enter="addComment"
+            :maxlength="1000"
+          ></b-form-input>
+        </div>
 
-          <b-row>
-            <b-col>
-              <div v-for="(comment, index) in post.comments" :key="index">
-                <CommentDetails :comment="comment" />
-              </div>
-            </b-col>
-          </b-row>
+        <div v-for="(comment, index) in post.comments" :key="index">
+          <CommentDetails :comment="comment" />
         </div>
       </div>
-
-      <div v-else>Nao tem post com esse id</div>
-    </b-container>
+    </div>
+    <div v-else>Nao tem post com esse id</div>
   </div>
 </template>
 
@@ -132,7 +131,94 @@ export default {
 </script>
 
 <style scoped>
-.post-details {
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.box {
+  width: 75vw;
+  height: 75vh;
+  margin-top: 60px;
+  margin: 60px 90px;
+
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 20px 0px;
+  border-radius: 32px;
+}
+
+.rounded-border {
+  border-radius: 16px;
+  border-bottom-left-radius: 0px !important;
+}
+
+.post-img {
+  max-height: 100%;
+}
+
+.content-box {
+  padding: 0.5em 1.5em;
+}
+
+.post-secondary-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1em 0;
+}
+
+.rate-section {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+
+.thumb-icon {
+  font-size: 1em;
+  display: flex;
+  cursor: pointer;
+  margin: 0px 20px;
+}
+
+.thumb-icon.yes {
+  color: green;
+}
+
+.thumb-icon.no {
+  color: red;
+}
+
+.author-section {
+  display: flex;
+  align-items: center;
+}
+
+.author-section .author-img {
+  width: 40px;
+  height: 40px;
+}
+
+.author-section .author-img.no-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(226, 226, 226);
+  border-radius: 50%;
+}
+
+.author-section p {
+  margin-bottom: 0px;
+  margin-left: 0.5em;
+  font-size: 0.9em;
+}
+
+/* .post-details {
   margin-bottom: 20px;
 }
 
@@ -158,40 +244,30 @@ export default {
   text-align: justify;
 }
 
-.author-section p {
-  color: rgb(0, 0, 0, 0.6);
-  margin-bottom: 0px;
-}
 
-.rate-section {
-  flex-direction: row;
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.thumb-icon {
-  font-size: 30px;
-  display: flex;
-  cursor: pointer;
-  margin: 0px 20px;
-}
-
-.thumb-icon.yes {
-  color: green;
-}
-
-.thumb-icon.no {
-  color: red;
-}
 
 .screen-post-id {
   padding-top: 24px;
+}*/
+
+.arrow-wrapper {
+  position: fixed;
+  width: 44px;
+  height: 44px;
+  text-align: center;
+  left: 25px;
+  top: 100px;
+  cursor: pointer;
+}
+
+.arrow-wrapper:hover {
+  background: rgb(226, 226, 226);
+  border-radius: 50%;
 }
 
 .arrow {
-  width: 35px;
-  height: 35px;
-  margin: 1.5rem 3rem;
+  width: 20px;
+  height: 20px;
+  margin: 12px;
 }
 </style>
