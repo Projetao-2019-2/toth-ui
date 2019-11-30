@@ -54,9 +54,9 @@ export default {
   justify-content: space-evenly;
   width: 100%;
   height: 60px;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  margin-top: 59px;
+  border-top: 1px solid #efefef;
+  border-bottom: 1px solid #efefef;
+  margin-top: 58px;
   background-color: white;
   z-index: 10;
 }
@@ -69,7 +69,7 @@ export default {
   display: flex;
   align-items: center;
   height: 40px;
-  border: 1px solid grey;
+  border: 1px solid #efefef;
   border-radius: 15px;
 }
 
