@@ -133,5 +133,9 @@ export const getters = {
 
   getPostsByUserId: state => id => {
     return state.list.filter(post => post.userid.toString() === id.toString());
+  },
+
+  getSearchResults: state => {
+    return state.searchResults;
   }
 };

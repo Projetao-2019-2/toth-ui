@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="navb-container">
     <b-navbar type="dark">
       <nuxt-link to="/">
         <b-navbar-brand>
@@ -19,16 +19,8 @@
             <nuxt-link to="/login">Login</nuxt-link>
           </b-nav-item>
 
-          <b-nav-item
-            class="logged-links"
-            v-if="$auth.$state.loggedIn"
-            href="#"
-          >
-            <NavbarIcon
-              link="/profile/me"
-              :icon="['fas', 'user']"
-              :text="$auth.$state.user.nome"
-            />
+          <b-nav-item class="logged-links" v-if="$auth.$state.loggedIn" href="#">
+            <NavbarIcon link="/profile/me" :icon="['fas', 'user']" :text="$auth.$state.user.nome" />
 
             <NavbarIcon :onClick="showNotifications" :icon="['fas', 'bell']" />
           </b-nav-item>
@@ -85,6 +77,11 @@ export default {
 </script>
 
 <style>
+.navb-container {
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
 nav {
   background: #fff;
   padding: 0 1rem;
