@@ -1,7 +1,7 @@
 export const state = () => ({
   list: [],
   searchResults: [],
-  lastSearchedTerm: '',
+  lastSearchedTerm: ""
 });
 
 export const mutations = {
@@ -11,7 +11,7 @@ export const mutations = {
   setList(state, data) {
     state.list = data;
   },
-  setSearchResults(state, {results, searchString}) {
+  setSearchResults(state, { results, searchString }) {
     state.searchResults = results;
     state.lastSearchedTerm = searchString;
   },
@@ -31,9 +31,9 @@ export const mutations = {
   },
   vote(state, { wasUseful, post }) {
     if (wasUseful) {
-      post.util += 1;
+      post.util = parseInt(post.util) + 1;
     } else {
-      post.n_util += 1;
+      post.n_util = parseInt(post.n_util) + 1;
     }
   },
 
@@ -62,7 +62,7 @@ export const actions = {
         search: searchString
       }
     });
-    commit("setSearchResults", {results: data.posts, searchString});
+    commit("setSearchResults", { results: data.posts, searchString });
     return data.posts;
   },
 
@@ -99,17 +99,10 @@ export const actions = {
 
   async vote({ commit, getters, dispatch }, { wasUseful, id }) {
     const post = getters.getById(id);
-    if (Object.keys(post).length !== 0) {
-      commit("vote", { wasUseful, post });
+    const valueToIncrement = wasUseful ? "util" : "n_util";
 
-      const formData = new FormData();
-      formData.append("util", post.util);
-      formData.append("n_util", post.n_util);
-      formData.append("texto", post.texto);
-      dispatch("update", { formData, id });
-    } else {
-      alert("could not find post");
-    }
+    await this.$axios.$patch(`posts/${id}`, {'increments': valueToIncrement});
+    commit("vote", { wasUseful, post });
   },
 
   async addComment({ commit, getters, dispatch }, { text, postId }) {
