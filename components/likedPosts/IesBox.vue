@@ -9,13 +9,11 @@
 
 <script>
 import Results from "../../components/posts/Results";
-import PostBox from "../../components/posts/PostBox";
 export default {
   name: "IesBox",
   props: ["iesPosts"],
   components: {
-    Results,
-    PostBox
+    Results
   }
 };
 </script>
