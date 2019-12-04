@@ -1,26 +1,30 @@
 <template>
   <div class="wrapper">
-    <div class="arrow-wrapper">
+    <!-- <div class="arrow-wrapper">
       <b-img
         src="~/assets/left-arrow.png"
         alt="Medal icon"
         v-on:click="backToSearch()"
         class="arrow"
       ></b-img>
-    </div>
+    </div> -->
 
     <div class="box rounded-border" v-if="post">
       <div class="img-box" v-if="post.files[0]">
-        <b-img :src="post.files[0].path" class="post-img rounded-border" fluid-grow />
+        <img :src="post.files[0].path" class="post-img rounded-border" />
       </div>
 
       <div class="content-box">
         <div class="category-title">
-          <div class="category-circle" :style="{ backgroundColor: post.category.color }"></div>
+          <div
+            class="category-circle"
+            :style="{ backgroundColor: post.category.color }"
+          ></div>
           <span
             class="inline-border"
             :style="{ borderColor: post.category.color }"
-          >{{ post.category ? post.category.name : "Geral" }}</span>
+            >{{ post.category ? post.category.name : "Geral" }}</span
+          >
         </div>
 
         <div class="post-details">
@@ -42,14 +46,26 @@
           </div>
 
           <div class="rate-section">
-            <div class="rate-box" v-on:click="vote({ wasUseful: true, id: post.id })">
+            <div
+              class="rate-box"
+              v-on:click="vote({ wasUseful: true, id: post.id })"
+            >
               <div class="ml-3">{{ post.util }}</div>
-              <font-awesome-icon :icon="['fas', 'thumbs-up']" class="thumb-icon yes" />
+              <font-awesome-icon
+                :icon="['fas', 'thumbs-up']"
+                class="thumb-icon yes"
+              />
             </div>
 
-            <div class="rate-box" v-on:click="vote({ wasUseful: false, id: post.id })">
+            <div
+              class="rate-box"
+              v-on:click="vote({ wasUseful: false, id: post.id })"
+            >
               <div class="ml-3">{{ post.n_util }}</div>
-              <font-awesome-icon :icon="['fas', 'thumbs-down']" class="thumb-icon no" />
+              <font-awesome-icon
+                :icon="['fas', 'thumbs-down']"
+                class="thumb-icon no"
+              />
             </div>
           </div>
         </div>
@@ -137,21 +153,21 @@ export default {
 
   display: flex;
   flex-direction: row;
-  flex: 1;
+  flex-basis: auto;
 
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 20px 0px;
   border-radius: 32px;
 }
 
-.rounded-border {
-  border-radius: 16px;
-  border-bottom-left-radius: 0px !important;
+.img-box {
+  max-width: 75%;
+  flex: 1 1 0;
 }
 
-.img-box {
-  flex-grow: 1;
-}
 .post-img {
+  object-fit: contain;
+  display: block;
+  max-width: 100%;
   max-height: 100%;
 }
 
@@ -159,7 +175,7 @@ export default {
   padding: 1.5em;
   display: flex;
   flex-flow: column;
-  flex-grow: 1;
+  flex: 1 1 100px;
 }
 
 .category-title {
@@ -256,36 +272,6 @@ export default {
   font-size: 1.25em;
 }
 
-/*
-
-.category-title {
-  text-transform: uppercase;
-  margin-bottom: 20px;
-}
-
-.inline-border {
-  border-top: 8px solid black;
-}
-
-.white-bg {
-  padding: 16px;
-  background-color: white;
-}
-
-.post-img {
-  margin: 12px 0;
-}
-
-.post-text {
-  text-align: justify;
-}
-
-
-
-.screen-post-id {
-  padding-top: 24px;
-}*/
-
 .arrow-wrapper {
   position: fixed;
   width: 44px;
@@ -305,5 +291,10 @@ export default {
   width: 20px;
   height: 20px;
   margin: 12px;
+}
+
+.rounded-border {
+  border-radius: 16px;
+  border-bottom-left-radius: 0px !important;
 }
 </style>
