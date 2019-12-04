@@ -1,11 +1,10 @@
 <template>
   <div class="navb-container">
     <b-navbar type="dark">
-      <nuxt-link to="/">
-        <b-navbar-brand>
-          <img src="~/static/logo.svg" class="logo" />
-        </b-navbar-brand>
-      </nuxt-link>
+      <b-navbar-brand>
+        <img src="~/static/logo.svg" class="logo" @click="goToHome" />
+      </b-navbar-brand>
+
       <NavbarInput class="input" />
 
       <b-collapse is-nav>
@@ -55,6 +54,10 @@ export default {
   methods: {
     showNotifications() {
       this.notificationsActive = !this.notificationsActive;
+    },
+    goToHome() {
+      this.$root.$emit("cleanSearchInput");
+      this.$router.push({ path: "/" });
     }
   },
   computed: {
@@ -177,5 +180,9 @@ nav span,
   width: 32px;
   height: 32px;
   margin-left: 16px;
+}
+
+.logo:hover {
+  cursor: pointer;
 }
 </style>
