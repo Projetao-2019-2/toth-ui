@@ -11,24 +11,16 @@
 
     <div class="box rounded-border" v-if="post">
       <div class="img-box" v-if="post.files[0]">
-        <b-img
-          :src="post.files[0].path"
-          class="post-img rounded-border"
-          fluid-grow
-        />
+        <b-img :src="post.files[0].path" class="post-img rounded-border" fluid-grow />
       </div>
 
       <div class="content-box">
         <div class="category-title">
-          <div
-            class="category-circle"
-            :style="{ backgroundColor: post.category.color }"
-          ></div>
+          <div class="category-circle" :style="{ backgroundColor: post.category.color }"></div>
           <span
             class="inline-border"
             :style="{ borderColor: post.category.color }"
-            >{{ post.category ? post.category.name : "Geral" }}</span
-          >
+          >{{ post.category ? post.category.name : "Geral" }}</span>
         </div>
 
         <div class="post-details">
@@ -46,32 +38,18 @@
             <div v-else class="author-img no-photo">
               <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
             </div>
-            <p>
-              {{ post.author.nome }}
-            </p>
+            <p>{{ post.author.nome }}</p>
           </div>
 
           <div class="rate-section">
-            <div
-              class="rate-box"
-              v-on:click="vote({ wasUseful: true, id: post.id })"
-            >
+            <div class="rate-box" v-on:click="vote({ wasUseful: true, id: post.id })">
               <div class="ml-3">{{ post.util }}</div>
-              <font-awesome-icon
-                :icon="['fas', 'thumbs-up']"
-                class="thumb-icon yes"
-              />
+              <font-awesome-icon :icon="['fas', 'thumbs-up']" class="thumb-icon yes" />
             </div>
 
-            <div
-              class="rate-box"
-              v-on:click="vote({ wasUseful: false, id: post.id })"
-            >
+            <div class="rate-box" v-on:click="vote({ wasUseful: false, id: post.id })">
               <div class="ml-3">{{ post.n_util }}</div>
-              <font-awesome-icon
-                :icon="['fas', 'thumbs-down']"
-                class="thumb-icon no"
-              />
+              <font-awesome-icon :icon="['fas', 'thumbs-down']" class="thumb-icon no" />
             </div>
           </div>
         </div>

@@ -20,8 +20,8 @@
 
           <b-nav-item class="logged-links" v-if="$auth.$state.loggedIn" href="#">
             <NavbarIcon link="/profile/me" :icon="['fas', 'user']" :text="$auth.$state.user.nome" />
-
             <NavbarIcon :onClick="showNotifications" :icon="['fas', 'bell']" />
+            <NavbarIcon link="/likedPosts" :icon="['fas', 'thumbs-up']" />
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -84,6 +84,7 @@ export default {
   position: fixed;
   width: 100%;
   z-index: 10;
+  border-bottom: 1px solid #efefef;
 }
 nav {
   background: #fff;

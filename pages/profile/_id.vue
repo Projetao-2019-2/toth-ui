@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-container" >
+  <div class="profile-container">
     <div class="profile-information-container">
       <div class="photo-networks-wrapper">
         <UserPhoto :user="user" />
@@ -23,8 +23,8 @@ export default {
   name: "ProfileScreen",
   data() {
     return {
-        users: []
-    }
+      users: []
+    };
   },
   components: {
     UserPhoto,
@@ -33,27 +33,25 @@ export default {
     Results
   },
   methods: {
-        async getUsers() {
-            try{
-                const response = await this.$axios.$get("users");
-                this.users = response.users;
-                console.log(this.users);
-            } catch (err) { 
-                console.log(err);
-            }
-        }
+    async getUsers() {
+      try {
+        const response = await this.$axios.$get("users");
+        this.users = response.users;
+        console.log(this.users);
+      } catch (err) {
+        console.log(err);
+      }
+    }
   },
   mounted() {
-      this.users = this.getUsers();   
+    this.users = this.getUsers();
   },
   computed: {
     userId: function() {
       return this.$route.params.id;
     },
     posts: function() {
-      return this.$store.getters["posts/getPostsByUserId"](
-        this.userId
-      );
+      return this.$store.getters["posts/getPostsByUserId"](this.userId);
     },
     user: function() {
       return this.$auth.$state.user;
