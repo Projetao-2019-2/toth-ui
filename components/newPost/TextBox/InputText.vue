@@ -1,10 +1,11 @@
 <template>
   <div class="input-text-container">
     <b-form-textarea
+      class="textarea-input"
       id="textarea-rows"
       v-model="message"
       :placeholder="categorieDescription"
-      rows="5"
+      rows="8"
       no-resize
     ></b-form-textarea>
   </div>
@@ -32,5 +33,8 @@ export default {
   height: 100%;
   width: 100%;
   margin-top: 30px;
+}
+.textarea-input {
+  font-size: 1.2em;
 }
 </style>

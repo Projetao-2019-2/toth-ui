@@ -3,37 +3,57 @@ export const state = () => ({
 });
 
 export const mutations = {
-  add(state, text) {
-    state.list.push({
-      name: text
-    });
-  },
-  remove(state, { post }) {
-    state.list.splice(state.list.indexOf(post), 1);
+  add(state, comment) {
+    state.list.push(comment);
   },
   setList(state, data) {
     state.list = data;
+  },
+  setById(state, newComment) {
+    const id = newComment.id;
+    if (state.list && state.list.length > 0) {
+      const comment = state.list.find(comment => comment.id.toString() === id);
+      if (comment) {
+        const index = state.list.indexOf(comment);
+        state.list[index] = newComment;
+      } else {
+        state.list.push(newComment);
+      }
+    } else {
+      state.list = [newComment];
+    }
   }
 };
 
 export const actions = {
-  async getPosts({ commit }) {
-
-    commit("setList", data.posts);
+  async getAll({ commit }) {
+    const data = await this.$axios.$get("comments");
+    commit("setList", data.comments);
   },
-  async sendComment({ commit }, data) {
-    // await axios.post("http://localhost:3030/courses", data);
-    commit("setList", data);
+
+  async getDetails({ commit }, id) {
+    const response = await this.$axios.get(`comments/${id}`);
+    commit("setById", response.data.comment);
+  },
+  async getDetailsFromList({ dispatch }, ids = []) {
+    for(const id of ids) {
+      await dispatch("getDetails", id);
+    };
+  },
+  async post({ commit, getters, dispatch }, comment) {
+    const response = await this.$axios.$post(`comments/`, comment);
+    await dispatch("getDetails", response.comment.id);
+
+    const newComment = getters.getById(response.comment.id);
+    commit("posts/addComment", newComment, { root: true });
   }
 };
 
 export const getters = {
-  getPostById: state => id => {
+  getById: state => id => {
     let output = {};
     if (state.list && state.list.length > 0) {
-      const post = state.list.find(post => post.id.toString() === id);
-      //get post comments
-      output = post;
+      output = state.list.find(comment => comment.id.toString() === id.toString());
     }
     return output;
   }

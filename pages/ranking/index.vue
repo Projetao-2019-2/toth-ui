@@ -1,26 +1,25 @@
 <template>
-    <div class="total">
-        <nuxt-link to="/profile">
-            <b-img left src="../../assets/left-arrow.png" alt="Medal icon" class="arrow"></b-img>
-        </nuxt-link>
-        <div class="rankingPage">
-            <RankingHead />
-            <RankingBoard />
-        </div>
+  <div class="total">
+    <nuxt-link to="/profile">
+      <b-img left src="../../assets/left-arrow.png" alt="Medal icon" class="arrow"></b-img>
+    </nuxt-link>
+    <div class="rankingPage">
+      <RankingHead />
+      <RankingBoard />
     </div>
-    
+  </div>
 </template>
 
 <script>
-import RankingHead from '../../components/ranking/RankingHead'
-import RankingBoard from '../../components/ranking/RankingBoard'
+import RankingHead from "../../components/ranking/RankingHead";
+import RankingBoard from "../../components/ranking/RankingBoard";
 
 export default {
-    components: {
-        RankingHead,
-        RankingBoard
-    }
-}
+  components: {
+    RankingHead,
+    RankingBoard
+  }
+};
 </script>
 
 <style>
@@ -32,25 +31,16 @@ export default {
 }
 
 .arrow {
-    width: 35px;
-    height: 35px;
-    margin-top: 65px;
+  width: 35px;
+  height: 35px;
+  margin-top: 1.5rem;
 }
 
 .total {
-<<<<<<< Updated upstream
-    width: 80%;
-    display:flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin-top: 30px;
-=======
   width: 80%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   margin-top: 80px;
->>>>>>> Stashed changes
 }
-
 </style>

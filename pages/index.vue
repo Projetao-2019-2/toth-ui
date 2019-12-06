@@ -1,61 +1,85 @@
 <template>
-  <div class="search-container">
-    <div class="logo-wrapper">
-      <img src="~/assets/compass1.png" alt="nortuni" width="200px" height="200px" />
-      <span class="name-logo">Nortuni</span>
-    </div>
-    <div class="input-search-wrapper">
-      <b-input-group>
-        <b-form-input v-model="searchText" placeholder="Curso - Universidade"></b-form-input>
-        <b-input-group-append>
-          <b-button variant="primary" class="btn-search" @click="doSearch(searchText)">
-            <font-awesome-icon :icon="['fas', 'search']"></font-awesome-icon>
-          </b-button>
-        </b-input-group-append>
-      </b-input-group>
-    </div>
+  <div class="global">
+    <FilterBar v-if="!loading" :categories="categories" @updateFilter="updateFilter" />
+    <LoadingIcon v-if="loading" message="Buscando ..." />
+    <Results v-else :posts="posts" />
   </div>
 </template>
 
 <script>
+import FilterBar from "~/components/posts/FilterBar";
+import LoadingIcon from "~/components/LoadingIcon";
+import Results from "~/components/posts/Results";
+import { mapState } from "vuex";
+
 export default {
+  middleware: "categories",
+  components: {
+    FilterBar,
+    Results,
+    LoadingIcon
+  },
+  computed: {
+    categories: function() {
+      return this.$store.getters["categories/getAll"];
+    },
+    posts: function() {
+      if (this.activeFilter) {
+        let categoriesId = [];
+        this.categoriesFilter.forEach(cat => {
+          if (cat.selected) categoriesId.push(cat.categorie.id);
+        });
+        return this.$store.getters["posts/getSearchResultsByCategories"](
+          categoriesId
+        );
+      }
+      return this.$store.getters["posts/getAllSearchResults"];
+    }
+  },
   data() {
     return {
-      searchText: ""
+      loading: false,
+      activeFilter: false,
+      categoriesFilter: []
     };
   },
   methods: {
-    doSearch(text) {
-      console.log("O texto da pesquisa foi: " + text);
+    async search() {
+      this.loading = true;
+      await this.$store.dispatch("posts/search", this.$route.query.search);
+      this.loading = false;
+    },
+    updateFilter(categories) {
+      this.categoriesFilter = categories;
+      this.activeFilter = true;
+    }
+  },
+  async mounted() {
+    this.search();
+  },
+  watch: {
+    $route(to, from) {
+      if (to.name === "index" && to.query.search !== from.query.search) {
+        this.search();
+      }
     }
   }
 };
 </script>
 
 <style>
-.search-container {
+.global {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   min-height: 100vh;
   width: 100%;
-  padding-bottom: 100px;
+  margin: 0 0;
 }
-.logo-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
+.global .grid {
+  margin-top: 24px;
 }
-.name-logo {
-  font-size: 6em;
-}
-.input-search-wrapper {
-  width: 500px;
-}
-.btn-search {
-  width: 80px;
+.global .box-spinner p {
+  color: black;
 }
 </style>

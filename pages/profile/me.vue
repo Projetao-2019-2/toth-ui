@@ -6,7 +6,7 @@
         <SocialNetworks :user="user" />
       </div>
       <div class="name-course-rank-wrapper">
-        <UserData :user="user" />
+        <UserData :user="user" :noUser="false" />
       </div>
     </div>
     <Results :posts="posts" />

@@ -1,6 +1,6 @@
 <template>
   <div class="text-box-container">
-    <InputText :categorieDescription="categorie.description" @newMessage="updateMessage" />
+    <InputText :categorieDescription="categoryDescription" @newMessage="updateMessage" />
   </div>
 </template>
 
@@ -9,7 +9,7 @@ import InputText from "./InputText";
 
 export default {
   name: "TextBoxContainer",
-  props: ["categorie"],
+  props: ["categoryDescription"],
   components: {
     InputText
   },
@@ -23,7 +23,7 @@ export default {
 
 <style>
 .text-box-container {
-  height: 150px;
+  height: 250px;
   width: 100%;
 }
 </style>
