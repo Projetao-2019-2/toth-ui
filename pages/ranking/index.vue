@@ -41,6 +41,6 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-top: 30px;
+  margin-top: 80px;
 }
 </style>

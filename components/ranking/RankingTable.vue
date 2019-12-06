@@ -1,12 +1,15 @@
 <template>
     <div class="board">
-        <b-list-group >
-            <b-list-group-item v-for="user in ranking" :key="user.id" >
-                <div class="index" id="first">
-                </div>
-                <div class="name"><p>{{ user.nome }}</p></div>
-            </b-list-group-item>
+        <b-list-group v-if="ranking && ranking.length > 0">
+                <b-list-group-item v-for="user in ranking" :key="user.id" >
+                    <div class="index" id="first">
+                    </div>
+                    <div class="name"><p>{{ user.nome }}</p></div>
+                </b-list-group-item>
         </b-list-group>
+        <div v-else class="empty-result">
+            <p>Não encontrei nada.</p>
+        </div>
         <div class="space"></div>
     </div>
     
@@ -19,7 +22,9 @@ export default {
     name: 'RankingTable',
     data() {
         return {
-            ranking: []
+            ranking: [],
+            users: [],
+            isRankingEmpty: true
         }
     },
     methods: {
@@ -27,7 +32,7 @@ export default {
             try{
                 const response = await this.$axios.$get("ranking");
                 this.ranking = response.rankings;
-                //console.log(this.ranking);
+                console.log(this.ranking);
             } catch (err) { 
                 console.log(err);
             }
@@ -107,5 +112,14 @@ p {
 .space {
     width: 100%;
     height: 50px;
+}
+
+.empty-result {
+  display: flex;
+  width: 100%;
+  height: 200px;
+  margin-top: 50px;
+  justify-content: center;
+  align-items: center;
 }
 </style>
