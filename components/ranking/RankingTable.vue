@@ -1,10 +1,10 @@
 <template>
     <div class="board">
         <b-list-group v-if="ranking && ranking.length > 0">
-                <b-list-group-item v-for="user in ranking" :key="user.id" >
+                <b-list-group-item v-for="user in ranking" :key="user.user.id" >
                     <div class="index" id="first">
                     </div>
-                    <div class="name"><p>{{ user.nome }}</p></div>
+                    <div class="name"><p>{{ user.user.nome }}</p></div>
                 </b-list-group-item>
         </b-list-group>
         <div v-else class="empty-result">
