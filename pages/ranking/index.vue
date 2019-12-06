@@ -38,11 +38,19 @@ export default {
 }
 
 .total {
+<<<<<<< Updated upstream
     width: 80%;
     display:flex;
     flex-direction: row;
     justify-content: space-around;
     margin-top: 30px;
+=======
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 80px;
+>>>>>>> Stashed changes
 }
 
 </style>
