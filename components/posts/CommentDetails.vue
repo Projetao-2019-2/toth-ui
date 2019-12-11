@@ -1,17 +1,19 @@
 <template>
   <div>
-    <b-card
-      class="comment-details-card"
-      :sub-title="comment.author ? comment.author.nome + ' | ' + comment.author.email : ''"
-    >
-      <b-card-text>{{comment.text}}</b-card-text>
+      <b-card
+        class="comment-details-card"
+        sub-title-variant="card_subtitle"
+        :sub-title="comment.author ? comment.author.nome + ' | ' + comment.author.email : ''"
+        v-on:click="goToProfile(comment.author.id)"
+      >
+        <b-card-text>{{comment.text}}</b-card-text>
 
-      <div v-on:click="click('voce clicou no reply')" class="reply-button">
-        Responder
-        <font-awesome-icon :icon="['fas', 'reply-all']"></font-awesome-icon>
-      </div>
-    </b-card>
-
+        <div v-on:click="click('voce clicou no reply')" class="reply-button">
+          Responder
+          <font-awesome-icon :icon="['fas', 'reply-all']"></font-awesome-icon>
+        </div>
+      </b-card>
+    
     <div v-if="comment.replys && comment.replys.length > 0" class="reply-section">
       <b-card
         class="comment-details-card"
@@ -32,6 +34,12 @@ export default {
   methods: {
     click(string) {
       alert(string);
+    },
+    goToProfile(string) {
+      if(string == this.$auth.$state.user.id)
+        this.$router.push(`/profile/me`);
+      else
+        this.$router.push(`/profile/${string}`);
     }
   }
 };
@@ -54,4 +62,9 @@ export default {
 p.card-text {
   margin-bottom: 2px;
 }
+
+.card-card_subtitle:hover {
+  text-decoration-line: underline;
+}
+
 </style>
