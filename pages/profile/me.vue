@@ -1,12 +1,12 @@
 <template>
-  <div class="profile-container" >
+  <div class="profile-container">
     <div class="profile-information-container">
       <div class="photo-networks-wrapper">
         <UserPhoto :user="user" />
         <SocialNetworks :user="user" />
       </div>
       <div class="name-course-rank-wrapper">
-        <UserData :user="user" :noUser="false"/>
+        <UserData :user="user" :noUser="false" />
       </div>
     </div>
     <Results :posts="posts" />

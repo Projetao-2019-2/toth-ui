@@ -51,6 +51,7 @@ export default {
 }
 .img-post {
   width: 100%;
+  min-width: 300px;
   max-height: 500px;
   border-radius: 15px;
 }

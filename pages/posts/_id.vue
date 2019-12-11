@@ -1,32 +1,31 @@
 <template>
   <div class="wrapper">
-    <div class="arrow-wrapper">
+    <!-- <div class="arrow-wrapper">
       <b-img
         src="~/assets/left-arrow.png"
         alt="Medal icon"
         v-on:click="backToSearch()"
         class="arrow"
       ></b-img>
-    </div>
+    </div> -->
 
     <div class="box rounded-border" v-if="post">
-      <div class="img-box">
-        <b-img
-          v-if="post.files[0]"
-          :src="post.files[0].path"
-          class="post-img rounded-border"
-          fluid-grow
-        />
+      <div class="img-box" v-if="post.files[0]">
+        <img :src="post.files[0].path" class="post-img rounded-border" />
       </div>
 
       <div class="content-box">
-        <h5 class="category-title">
+        <div class="category-title">
+          <div
+            class="category-circle"
+            :style="{ backgroundColor: post.category.color }"
+          ></div>
           <span
             class="inline-border"
             :style="{ borderColor: post.category.color }"
             >{{ post.category ? post.category.name : "Geral" }}</span
           >
-        </h5>
+        </div>
 
         <div class="post-details">
           <p class="post-text">{{ post.texto }}</p>
@@ -43,43 +42,48 @@
             <div v-else class="author-img no-photo">
               <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
             </div>
-            <p>
-              {{ post.author.nome }}
-            </p>
+            <p>{{ post.author.nome }}</p>
           </div>
 
           <div class="rate-section">
-            <div class="ml-3">{{ post.util }}</div>
-            <font-awesome-icon
-              :icon="['fas', 'thumbs-up']"
+            <div
+              class="rate-box"
               v-on:click="vote({ wasUseful: true, id: post.id })"
-              class="thumb-icon yes"
-            />
+            >
+              <div class="ml-3">{{ post.util }}</div>
+              <font-awesome-icon
+                :icon="['fas', 'thumbs-up']"
+                class="thumb-icon yes"
+              />
+            </div>
 
-            <div class="ml-3">{{ post.n_util }}</div>
-            <font-awesome-icon
-              :icon="['fas', 'thumbs-down']"
+            <div
+              class="rate-box"
               v-on:click="vote({ wasUseful: false, id: post.id })"
-              class="thumb-icon no"
-            />
+            >
+              <div class="ml-3">{{ post.n_util }}</div>
+              <font-awesome-icon
+                :icon="['fas', 'thumbs-down']"
+                class="thumb-icon no"
+              />
+            </div>
           </div>
         </div>
 
-        <div>
-          Comentários
-          <b-form-input
-            v-model="newComment"
-            type="text"
-            required
-            placeholder="Dê sua opinião"
-            v-on:keyup.enter="addComment"
-            :maxlength="1000"
-          ></b-form-input>
+        <h5>Comentários</h5>
+        <div class="comments-section">
+          <div v-for="(comment, index) in post.comments" :key="index">
+            <CommentDetails :comment="comment" />
+          </div>
         </div>
-
-        <div v-for="(comment, index) in post.comments" :key="index">
-          <CommentDetails :comment="comment" />
-        </div>
+        <b-form-input
+          v-model="newComment"
+          type="text"
+          required
+          placeholder="Dê sua opinião"
+          v-on:keyup.enter="addComment"
+          :maxlength="1000"
+        ></b-form-input>
       </div>
     </div>
     <div v-else>Nao tem post com esse id</div>
@@ -90,6 +94,7 @@
 import CommentDetails from "~/components/posts/CommentDetails";
 import { mapActions } from "vuex";
 export default {
+  loading: true,
   components: { CommentDetails },
   computed: {
     postId: function() {
@@ -107,8 +112,8 @@ export default {
     };
   },
 
-  fetch({ store, params }) {
-    return store.dispatch("posts/getDetails", params.id);
+  async fetch({ store, params }) {
+    await store.dispatch("posts/getDetails", params.id);
   },
   methods: {
     ...mapActions({
@@ -132,38 +137,64 @@ export default {
 
 <style scoped>
 .wrapper {
-  width: 100vw;
-  height: 100vh;
   display: flex;
   justify-content: center;
   position: relative;
 }
+
 .box {
   width: 75vw;
-  height: 75vh;
+  max-height: 75vh;
+
   margin-top: 60px;
-  margin: 60px 90px;
+  margin: 100px 90px;
 
   background-color: #ffffff;
+
   display: flex;
   flex-direction: row;
-  flex: 1;
+  flex-basis: auto;
 
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 20px 0px;
   border-radius: 32px;
 }
 
-.rounded-border {
-  border-radius: 16px;
-  border-bottom-left-radius: 0px !important;
+.img-box {
+  max-width: 75%;
+  flex: 1 1 0;
 }
 
 .post-img {
+  object-fit: contain;
+  display: block;
+  max-width: 100%;
   max-height: 100%;
 }
 
 .content-box {
-  padding: 0.5em 1.5em;
+  padding: 1.5em;
+  display: flex;
+  flex-flow: column;
+  flex: 1 1 100px;
+}
+
+.category-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.category-title span {
+  margin-left: 0.5em;
+  font-size: 0.9em;
+}
+
+.category-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 0px;
+  display: inline-block;
 }
 
 .post-secondary-info {
@@ -177,6 +208,20 @@ export default {
   flex-direction: row;
   display: flex;
   align-items: center;
+}
+
+.rate-box {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  border: 1px solid #efefef;
+  border-radius: 15px;
+  margin-left: 0.5em;
+}
+
+.rate-box:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .thumb-icon {
@@ -218,37 +263,14 @@ export default {
   font-size: 0.9em;
 }
 
-/* .post-details {
-  margin-bottom: 20px;
+.comments-section {
+  overflow: auto;
+  margin-bottom: 1em;
 }
 
-.category-title {
-  text-transform: uppercase;
-  margin-bottom: 20px;
+.post-details {
+  font-size: 1.25em;
 }
-
-.inline-border {
-  border-top: 8px solid black;
-}
-
-.white-bg {
-  padding: 16px;
-  background-color: white;
-}
-
-.post-img {
-  margin: 12px 0;
-}
-
-.post-text {
-  text-align: justify;
-}
-
-
-
-.screen-post-id {
-  padding-top: 24px;
-}*/
 
 .arrow-wrapper {
   position: fixed;
@@ -269,5 +291,10 @@ export default {
   width: 20px;
   height: 20px;
   margin: 12px;
+}
+
+.rounded-border {
+  border-radius: 16px;
+  border-bottom-left-radius: 0px !important;
 }
 </style>

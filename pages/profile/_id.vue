@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-container" >
+  <div class="profile-container">
     <div class="profile-information-container">
       <div class="photo-networks-wrapper">
         <UserPhoto :user="users" />
@@ -23,8 +23,8 @@ export default {
   name: "ProfileScreen",
   data() {
     return {
-        users: []
-    }
+      users: []
+    };
   },
   components: {
     UserPhoto,
@@ -43,10 +43,10 @@ export default {
             console.log(err);
           }
         }
-        
+
   },
   mounted() {
-      this.users = this.getUsers();   
+    this.users = this.getUsers();
   },
   computed: {
     userId: function() {

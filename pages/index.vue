@@ -2,7 +2,7 @@
   <div class="global">
     <FilterBar v-if="!loading" :categories="categories" @updateFilter="updateFilter" />
     <LoadingIcon v-if="loading" message="Buscando ..." />
-    <Results v-else :posts="results" />
+    <Results v-else :posts="posts" />
   </div>
 </template>
 
@@ -20,16 +20,27 @@ export default {
     LoadingIcon
   },
   computed: {
-    ...mapState("posts", {
-      results: "searchResults"
-    }),
     categories: function() {
       return this.$store.getters["categories/getAll"];
+    },
+    posts: function() {
+      if (this.activeFilter) {
+        let categoriesId = [];
+        this.categoriesFilter.forEach(cat => {
+          if (cat.selected) categoriesId.push(cat.categorie.id);
+        });
+        return this.$store.getters["posts/getSearchResultsByCategories"](
+          categoriesId
+        );
+      }
+      return this.$store.getters["posts/getAllSearchResults"];
     }
   },
   data() {
     return {
-      loading: false
+      loading: false,
+      activeFilter: false,
+      categoriesFilter: []
     };
   },
   methods: {
@@ -39,17 +50,8 @@ export default {
       this.loading = false;
     },
     updateFilter(categories) {
-      let posts = this.$store.getters["posts/getSearchResults"];
-      let output = [];
-      // Isso aqui ta uma merda, se tiver muitos posts, pode demorar demais
-      // Mas eu não queria auterar a ordem dos posts ...
-      posts.forEach(post => {
-        categories.forEach(cat => {
-          if (cat.selected && cat.categorie.id === post.category.id)
-            output.push(post);
-        });
-      });
-      console.log(output);
+      this.categoriesFilter = categories;
+      this.activeFilter = true;
     }
   },
   async mounted() {

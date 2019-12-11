@@ -1,11 +1,10 @@
 <template>
   <div class="navb-container">
     <b-navbar type="dark">
-      <nuxt-link to="/">
-        <b-navbar-brand>
-          <img src="~/static/logo2.png" class="logo" />
-        </b-navbar-brand>
-      </nuxt-link>
+      <b-navbar-brand>
+        <img src="~/static/logo.svg" class="logo" @click="goToHome" />
+      </b-navbar-brand>
+
       <NavbarInput class="input" />
 
       <b-collapse is-nav>
@@ -21,8 +20,8 @@
 
           <b-nav-item class="logged-links" v-if="$auth.$state.loggedIn" href="#">
             <NavbarIcon link="/profile/me" :icon="['fas', 'user']" :text="$auth.$state.user.nome" />
-
             <NavbarIcon :onClick="showNotifications" :icon="['fas', 'bell']" />
+            <NavbarIcon link="/likedPosts" :icon="['fas', 'thumbs-up']" />
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -55,6 +54,10 @@ export default {
   methods: {
     showNotifications() {
       this.notificationsActive = !this.notificationsActive;
+    },
+    goToHome() {
+      this.$root.$emit("cleanSearchInput");
+      this.$router.push({ path: "/" });
     }
   },
   computed: {
@@ -81,6 +84,7 @@ export default {
   position: fixed;
   width: 100%;
   z-index: 10;
+  border-bottom: 1px solid #efefef;
 }
 nav {
   background: #fff;
@@ -177,5 +181,9 @@ nav span,
   width: 32px;
   height: 32px;
   margin-left: 16px;
+}
+
+.logo:hover {
+  cursor: pointer;
 }
 </style>

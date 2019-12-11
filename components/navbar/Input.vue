@@ -27,7 +27,13 @@ export default {
         path: "/",
         query: { search: this.searchString }
       });
+    },
+    cleanSearchString() {
+      this.searchString = "";
     }
+  },
+  created() {
+    this.$root.$on("cleanSearchInput", this.cleanSearchString);
   }
 };
 </script>

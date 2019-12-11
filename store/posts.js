@@ -101,7 +101,7 @@ export const actions = {
     const post = getters.getById(id);
     const valueToIncrement = wasUseful ? "util" : "n_util";
 
-    await this.$axios.$patch(`posts/${id}`, {'increments': valueToIncrement});
+    await this.$axios.$patch(`posts/${id}`, { 'increments': valueToIncrement });
     commit("vote", { wasUseful, post });
   },
 
@@ -135,7 +135,17 @@ export const getters = {
     return state.list.filter(post => post.userid.toString() === id.toString());
   },
 
-  getSearchResults: state => {
+  getAllSearchResults: state => {
     return state.searchResults;
+  },
+
+  getSearchResultsByCategories: state => categoriesId => {
+    let output = [];
+    state.searchResults.forEach(post => {
+      categoriesId.forEach(catId => {
+        if (catId === post.category.id) output.push(post);
+      })
+    })
+    return output;
   }
 };
