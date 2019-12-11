@@ -48,6 +48,7 @@ export default {
 .profile-container {
   min-height: 100vh;
   width: 100%;
+  margin-top: 50px;
 }
 .profile-information-container {
   display: flex;

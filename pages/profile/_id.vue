@@ -2,11 +2,11 @@
   <div class="profile-container">
     <div class="profile-information-container">
       <div class="photo-networks-wrapper">
-        <UserPhoto :user="user" />
-        <SocialNetworks :user="user" />
+        <UserPhoto :user="users" />
+        <SocialNetworks :user="users" />
       </div>
       <div class="name-course-rank-wrapper">
-        <UserData :user="users[0]" :noUser="true" />
+        <UserData :user="users" :noUser="true" />
       </div>
     </div>
     <Results :posts="posts" />
@@ -33,15 +33,17 @@ export default {
     Results
   },
   methods: {
-    async getUsers() {
-      try {
-        const response = await this.$axios.$get("users");
-        this.users = response.users;
-        console.log(this.users);
-      } catch (err) {
-        console.log(err);
-      }
-    }
+        async getUsers() {
+          try {
+            const response = await this.$axios.$get("users/"+this.userId);
+            this.users = response.user;
+            console.log(this.users);
+            console.log(this.userId);
+          } catch (err) {
+            console.log(err);
+          }
+        }
+
   },
   mounted() {
     this.users = this.getUsers();
@@ -51,10 +53,9 @@ export default {
       return this.$route.params.id;
     },
     posts: function() {
-      return this.$store.getters["posts/getPostsByUserId"](this.userId);
-    },
-    user: function() {
-      return this.$auth.$state.user;
+      return this.$store.getters["posts/getPostsByUserId"](
+        this.userId
+      );
     }
   },
   async fetch({ store }) {
@@ -67,6 +68,7 @@ export default {
 .profile-container {
   min-height: 100vh;
   width: 100%;
+  margin-top: 50px;
 }
 .profile-information-container {
   display: flex;
